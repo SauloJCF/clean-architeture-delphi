@@ -5,6 +5,8 @@ interface
 uses System.SysUtils;
 
 type
+  EExceptionIdInvalido = class(Exception);
+
   EExceptionNome = class(Exception);
   EExceptionMinimoNome = class(Exception);
   EExceptionDocumento = class(Exception);
@@ -16,6 +18,9 @@ type
   EExceptionPlacaVeiculo = class(Exception);
   EExceptionMinimoPlacaVeiculo = class(Exception);
   EExceptionValorVeiculo = class(Exception);
+
+
+procedure ExceptionIdInvalido;
 
 procedure ExceptionNome;
 procedure ExceptionMinimoNome;
@@ -30,6 +35,11 @@ procedure ExceptionMinimoPlacaVeiculo;
 procedure ExceptionValorVeiculo;
 
 implementation
+
+procedure ExceptionIdInvalido;
+begin
+  raise EExceptionNome.Create('Id informado inválido!');
+end;
 
 procedure ExceptionNome;
 begin

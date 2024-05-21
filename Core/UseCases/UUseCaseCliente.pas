@@ -10,11 +10,13 @@ uses
   UDTOCliente,
   UIUseCaseCliente,
   UEnums,
-  UUtils;
+  UUtils,
+  UExceptions;
 
 type
   TUseCaseCliente = class(TInterfacedObject, IUseCaseCliente)
   private
+    procedure ValidarId(const Id: Integer);
   public
     function Cadastrar(const Cliente: TCliente): TResponse;
     function Alterar(const Cliente: TCliente): TResponse;
@@ -90,6 +92,7 @@ var
   Response: TResponse;
 begin
   try
+    ValidarId(Id);
     Response.Success := True;
     Response.ErrorCode := 0;
     Response.Message := UEnums.RetornarMsgResponse.DELETADO_COM_SUCESSO;
@@ -101,6 +104,12 @@ begin
     end;
   end;
   Result := Response;
+end;
+
+procedure TUseCaseCliente.ValidarId(const Id: Integer);
+begin
+  if Id <= 0 then
+    ExceptionIdInvalido;
 end;
 
 end.

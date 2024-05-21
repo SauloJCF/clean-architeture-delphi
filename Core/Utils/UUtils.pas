@@ -32,6 +32,14 @@ begin
     Response.ErrorCode := RetornarErrorsCode.TELEFONE_NAO_INFORMADO;
   if E.ClassType = EExceptionMinimoTelefone then
     Response.ErrorCode := RetornarErrorsCode.TELEFONE_INVALIDO;
+  if E.ClassType = EExceptionMinimoNomeVeiculo then
+    Response.ErrorCode := RetornarErrorsCode.NOME_INVALIDO;
+  if E.ClassType = EExceptionPlacaVeiculo then
+    Response.ErrorCode := RetornarErrorsCode.PLACA_NAO_INFORMADA;
+  if E.ClassType = EExceptionMinimoPlacaVeiculo then
+    Response.ErrorCode := RetornarErrorsCode.PLACA_INVALIDA;
+  if E.ClassType = EExceptionValorVeiculo then
+    Response.ErrorCode := RetornarErrorsCode.VALOR_INVALIDO;
 
   Result := Response;
 end;
