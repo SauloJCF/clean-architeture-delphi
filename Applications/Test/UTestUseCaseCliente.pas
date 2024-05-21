@@ -20,10 +20,10 @@ type
   public
     [Setup]
     procedure Setup;
+
     [TearDown]
     procedure TearDown;
-    // Sample Methods
-    // Simple single Test
+
     [Test]
     procedure CadastrarCliente;
 

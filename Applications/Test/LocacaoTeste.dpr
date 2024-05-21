@@ -13,7 +13,8 @@ uses
   DUnitX.Loggers.Xml.NUnit,
   {$ENDIF }
   DUnitX.TestFramework,
-  UTestUseCaseCliente in 'UTestUseCaseCliente.pas';
+  UTestUseCaseCliente in 'UTestUseCaseCliente.pas',
+  UTestUseCaseVeiculo in 'UTestUseCaseVeiculo.pas';
 
 {$IFNDEF TESTINSIGHT}
 var

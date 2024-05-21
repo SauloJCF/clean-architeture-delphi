@@ -66,7 +66,7 @@ begin
     ExceptionNome;
   end;
 
-  if Length(FNome) <= 3 then
+  if Length(FNome) < 3 then
   begin
     ExceptionMinimoNomeVeiculo;
   end;
@@ -76,7 +76,7 @@ begin
     ExceptionPlacaVeiculo;
   end;
 
-  if Length(FPlaca) <= 6 then
+  if Length(FPlaca) < 6 then
   begin
     ExceptionMinimoPlacaVeiculo;
   end;

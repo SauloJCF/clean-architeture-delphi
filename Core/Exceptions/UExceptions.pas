@@ -19,7 +19,6 @@ type
   EExceptionMinimoPlacaVeiculo = class(Exception);
   EExceptionValorVeiculo = class(Exception);
 
-
 procedure ExceptionIdInvalido;
 
 procedure ExceptionNome;
@@ -80,7 +79,7 @@ end;
 
 procedure ExceptionPlacaVeiculo;
 begin
-  raise EExceptionMinimoNome.Create('Placa deve ser informada!');
+  raise EExceptionPlacaVeiculo.Create('Placa deve ser informada!');
 end;
 
 procedure ExceptionMinimoPlacaVeiculo;
@@ -91,7 +90,7 @@ end;
 
 procedure ExceptionValorVeiculo;
 begin
-  raise EExceptionMinimoNomeVeiculo.Create('Valor deve ser maior que zero!');
+  raise EExceptionValorVeiculo.Create('Valor deve ser maior que zero!');
 end;
 
 end.

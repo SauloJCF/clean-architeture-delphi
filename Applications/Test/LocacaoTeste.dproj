@@ -53,6 +53,7 @@
         <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
         <DCC_UnitSearchPath>$(DUnitX);$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <SanitizedProjectName>LocacaoTeste</SanitizedProjectName>
+        <DCC_Define>TESTINSIGHT;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_UsePackage>soapserver;IndySystem;vclwinx;DevComponents;fmx;vclie;DbxCommonDriver;bindengine;vcldb;IndyIPCommon;VCLRESTComponents;FireDACCommonODBC;FireDACCommonDriver;appanalytics;IndyProtocols;vclx;IndyIPClient;dbxcds;vcledge;vclFireDAC;bindcompvclwinx;bindcomp;FireDACCommon;pkMeioTransporte;office2K;IndyCore;RESTBackendComponents;bindcompfmx;bindcompdbx;inetdb;rtl;FireDACMySQLDriver;FireDACSqliteDriver;DbxClientDriver;FireDACADSDriver;RESTComponents;soapmidas;DBXSqliteDriver;vcl;vclactnband;IndyIPServer;dsnapxml;fmxFireDAC;dbexpress;dsnapcon;adortl;pkPessoa;DBXMySQLDriver;VclSmp;inet;vclimg;vcltouch;FireDACPgDriver;FireDAC;fmxase;inetdbxpress;xmlrtl;tethering;dbrtl;bindcompvcl;dsnap;fmxdae;CloudService;FireDACMSAccDriver;CustomIPTransport;fmxobj;bindcompvclsmp;soaprtl;vcldsnap;DBXInterBaseDriver;FireDACIBDriver;$(DCC_UsePackage)</DCC_UsePackage>
@@ -94,6 +95,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="UTestUseCaseCliente.pas"/>
+        <DCCReference Include="UTestUseCaseVeiculo.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
