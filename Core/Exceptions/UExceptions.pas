@@ -12,12 +12,22 @@ type
   EExceptionTelefone = class(Exception);
   EExceptionMinimoTelefone = class(Exception);
 
+  EExceptionMinimoNomeVeiculo = class(Exception);
+  EExceptionPlacaVeiculo = class(Exception);
+  EExceptionMinimoPlacaVeiculo = class(Exception);
+  EExceptionValorVeiculo = class(Exception);
+
 procedure ExceptionNome;
 procedure ExceptionMinimoNome;
 procedure ExceptionDocumento;
 procedure ExceptionMinimoDocumento;
 procedure ExceptionTelefone;
 procedure ExceptionMinimoTelefone;
+
+procedure ExceptionMinimoNomeVeiculo;
+procedure ExceptionPlacaVeiculo;
+procedure ExceptionMinimoPlacaVeiculo;
+procedure ExceptionValorVeiculo;
 
 implementation
 
@@ -51,6 +61,27 @@ procedure ExceptionMinimoTelefone;
 begin
   raise EExceptionMinimoTelefone.Create
     ('Telefone deve conter no mínimo 8 caracteres!');
+end;
+
+procedure ExceptionMinimoNomeVeiculo;
+begin
+  raise EExceptionMinimoNome.Create('Nome deve conter no mínimo 3 caracteres!');
+end;
+
+procedure ExceptionPlacaVeiculo;
+begin
+  raise EExceptionMinimoNome.Create('Placa deve ser informada!');
+end;
+
+procedure ExceptionMinimoPlacaVeiculo;
+begin
+  raise EExceptionMinimoNomeVeiculo.Create
+    ('Placa deve conter no mínimo 6 caracteres!');
+end;
+
+procedure ExceptionValorVeiculo;
+begin
+  raise EExceptionMinimoNomeVeiculo.Create('Valor deve ser maior que zero!');
 end;
 
 end.
