@@ -1,12 +1,12 @@
-unit UDTOCliente;
+unit UDTOVeiculo;
 
 interface
 
 type
-  DTOCliente = record
+  DTOVeiculo = record
     Id: Integer;
     Nome: String;
-    Documento: String;
+    Placa: String;
   end;
 
 implementation

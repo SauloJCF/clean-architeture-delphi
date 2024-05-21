@@ -13,7 +13,7 @@ type
     function Cadastrar(const Cliente: TCliente): TResponse;
     function Alterar(const Cliente: TCliente): TResponse;
     function Deletar(const Id: Integer): TResponse;
-    function Consultar(const Dto: DtoCliente): TResponse;
+    function Consultar(const Dto: DTOCliente): TResponse;
   end;
 
 implementation

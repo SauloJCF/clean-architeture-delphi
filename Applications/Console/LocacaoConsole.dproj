@@ -99,6 +99,8 @@
         <DCCReference Include="..\..\Core\Exceptions\UExceptions.pas"/>
         <DCCReference Include="..\..\Core\Utils\UUtils.pas"/>
         <DCCReference Include="..\..\Core\Models\UVeiculo.pas"/>
+        <DCCReference Include="..\..\Core\Ports\UIUseCaseVeiculo.pas"/>
+        <DCCReference Include="..\..\Core\DTO\UDTOVeiculo.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
