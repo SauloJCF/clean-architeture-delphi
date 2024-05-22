@@ -18,7 +18,9 @@ uses
   UIUseCaseVeiculo in '..\..\Core\Ports\UIUseCaseVeiculo.pas',
   UDTOVeiculo in '..\..\Core\DTO\UDTOVeiculo.pas',
   UUseCaseVeiculo in '..\..\Core\UseCases\UUseCaseVeiculo.pas',
-  ULocacao in '..\..\Core\Models\ULocacao.pas';
+  ULocacao in '..\..\Core\Models\ULocacao.pas',
+  UIUseCaseLocacao in '..\..\Core\Ports\UIUseCaseLocacao.pas',
+  UDTOLocacao in '..\..\Core\DTO\UDTOLocacao.pas';
 
 begin
   try
