@@ -19,6 +19,10 @@ type
   EExceptionMinimoPlacaVeiculo = class(Exception);
   EExceptionValorVeiculo = class(Exception);
 
+  EExceptionLocacaoVeiculo = class(Exception);
+  EExceptionLocacaoCliente = class(Exception);
+  EExceptionLocacaoVeiculoAlugado = class(Exception);
+
 procedure ExceptionIdInvalido;
 
 procedure ExceptionNome;
@@ -32,6 +36,10 @@ procedure ExceptionMinimoNomeVeiculo;
 procedure ExceptionPlacaVeiculo;
 procedure ExceptionMinimoPlacaVeiculo;
 procedure ExceptionValorVeiculo;
+
+procedure ExceptionLocacaoVeiculo;
+procedure ExceptionLocacaoCliente;
+procedure ExceptionLocacaoVeiculoAlugado;
 
 implementation
 
@@ -92,5 +100,21 @@ procedure ExceptionValorVeiculo;
 begin
   raise EExceptionValorVeiculo.Create('Valor deve ser maior que zero!');
 end;
+
+procedure ExceptionLocacaoVeiculo;
+begin
+  raise EExceptionLocacaoVeiculo.Create('Veículo deve ser informado!');
+end;
+
+procedure ExceptionLocacaoCliente;
+begin
+  raise EExceptionLocacaoCliente.Create('Cliente deve ser informado!');
+end;
+
+procedure ExceptionLocacaoVeiculoAlugado;
+begin
+  raise EExceptionLocacaoVeiculoAlugado.Create('Veículo já consta alugado!');
+end;
+
 
 end.

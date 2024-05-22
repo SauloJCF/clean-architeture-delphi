@@ -2,7 +2,13 @@ unit ULocacao;
 
 interface
 
-uses UCliente, UVeiculo;
+uses
+  System.DateUtils,
+  System.SysUtils,
+  UEnums,
+  UCliente,
+  UVeiculo,
+  UExceptions;
 
 type
   TLocacao = class
@@ -28,11 +34,37 @@ type
     property DataDevolucao: TDateTime read FDataDevolucao
       write SetDataDevolucao;
     property Valor: Currency read FValor write SetValor;
+
+    procedure ValidarRegrasNegocio;
+
+    function CalcularTotal: Currency;
   end;
 
 implementation
 
 { TLocacao }
+
+function TLocacao.CalcularTotal: Currency;
+var
+  Total: Currency;
+  QtdDias: Integer;
+begin
+  Total := 0;
+  QtdDias := 1;
+
+  if ((FDataLocacao <> StrToDate('30/12/1899')) and
+    (FDataDevolucao <> StrToDate('30/12/1899'))) then
+  begin
+    QtdDias := DaysBetween(FDataLocacao, FDataDevolucao);
+
+    if QtdDias <= 0 then
+      QtdDias := 1;
+  end;
+
+  Total := QtdDias * FVeiculo.Valor;
+
+  Result := Total;
+end;
 
 procedure TLocacao.SetCliente(const Value: TCliente);
 begin
@@ -62,6 +94,16 @@ end;
 procedure TLocacao.SetVeiculo(const Value: TVeiculo);
 begin
   FVeiculo := Value;
+end;
+
+procedure TLocacao.ValidarRegrasNegocio;
+begin
+  if FCliente = nil then
+    ExceptionLocacaoCliente;
+  if FVeiculo = nil then
+    ExceptionLocacaoVeiculo;
+  if FVeiculo.Status = sAlugado then
+    ExceptionLocacaoVeiculoAlugado;
 end;
 
 end.

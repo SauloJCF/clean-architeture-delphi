@@ -40,7 +40,12 @@ begin
     Response.ErrorCode := RetornarErrorsCode.PLACA_INVALIDA;
   if E.ClassType = EExceptionValorVeiculo then
     Response.ErrorCode := RetornarErrorsCode.VALOR_INVALIDO;
-
+  if E.ClassType = EExceptionLocacaoVeiculo then
+    Response.ErrorCode := RetornarErrorsCode.VEICULO_NAO_INFORMADO;
+  if E.ClassType = EExceptionLocacaoCliente then
+    Response.ErrorCode := RetornarErrorsCode.CLIENTE_NAO_INFORMADO;
+  if E.ClassType = EExceptionLocacaoVeiculoAlugado then
+    Response.ErrorCode := RetornarErrorsCode.VEICULO_ALUGADO;
   Result := Response;
 end;
 

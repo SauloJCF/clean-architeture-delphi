@@ -20,7 +20,8 @@ uses
   UUseCaseVeiculo in '..\..\Core\UseCases\UUseCaseVeiculo.pas',
   ULocacao in '..\..\Core\Models\ULocacao.pas',
   UIUseCaseLocacao in '..\..\Core\Ports\UIUseCaseLocacao.pas',
-  UDTOLocacao in '..\..\Core\DTO\UDTOLocacao.pas';
+  UDTOLocacao in '..\..\Core\DTO\UDTOLocacao.pas',
+  UUseCaseLocacao in '..\..\Core\UseCases\UUseCaseLocacao.pas';
 
 begin
   try
