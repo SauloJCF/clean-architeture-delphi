@@ -17,7 +17,8 @@ uses
   UVeiculo in '..\..\Core\Models\UVeiculo.pas',
   UIUseCaseVeiculo in '..\..\Core\Ports\UIUseCaseVeiculo.pas',
   UDTOVeiculo in '..\..\Core\DTO\UDTOVeiculo.pas',
-  UUseCaseVeiculo in '..\..\Core\UseCases\UUseCaseVeiculo.pas';
+  UUseCaseVeiculo in '..\..\Core\UseCases\UUseCaseVeiculo.pas',
+  ULocacao in '..\..\Core\Models\ULocacao.pas';
 
 begin
   try
