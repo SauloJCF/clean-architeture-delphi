@@ -114,6 +114,7 @@
         <DCCReference Include="..\..\Core\UseCases\UUseCaseLocacao.pas"/>
         <DCCReference Include="..\..\Core\Ports\UIRepositoryCliente.pas"/>
         <DCCReference Include="..\..\Repository\UConfiguracaoDB.pas"/>
+        <DCCReference Include="..\..\Repository\URepositoryCliente.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

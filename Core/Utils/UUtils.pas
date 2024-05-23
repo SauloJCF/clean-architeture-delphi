@@ -4,11 +4,16 @@ interface
 
 uses
   System.SysUtils,
+  System.Generics.Collections,
   UResponse,
   UExceptions,
-  UEnums;
+  UEnums,
+  UCliente;
 
 function TratarException(const E: Exception): TResponse;
+
+function ListaClienteParaListaObject(const ListaClientes: TObjectList<TCliente>)
+  : TObjectList<TObject>;
 
 implementation
 
@@ -20,6 +25,8 @@ begin
   Response.Message := E.Message;
   Response.Data := Nil;
 
+  if E.ClassType = EExceptionDatabase then
+    Response.ErrorCode := RetornarErrorsCode.ERRO_BANCO_DADOS;
   if E.ClassType = EExceptionNome then
     Response.ErrorCode := RetornarErrorsCode.NOME_NAO_INFORMADO;
   if E.ClassType = EExceptionMinimoNome then
@@ -47,6 +54,22 @@ begin
   if E.ClassType = EExceptionLocacaoVeiculoAlugado then
     Response.ErrorCode := RetornarErrorsCode.VEICULO_ALUGADO;
   Result := Response;
+end;
+
+function ListaClienteParaListaObject(const ListaClientes: TObjectList<TCliente>)
+  : TObjectList<TObject>;
+var
+  Cliente: TCliente;
+begin
+  Result := TObjectList<TObject>.Create;
+
+  if ListaClientes.Count > 0 then
+  begin
+    for Cliente in ListaClientes do
+    begin
+      Result.Add(Cliente);
+    end;
+  end;
 end;
 
 end.
