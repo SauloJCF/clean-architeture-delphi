@@ -22,7 +22,8 @@ uses
   UIUseCaseLocacao in '..\..\Core\Ports\UIUseCaseLocacao.pas',
   UDTOLocacao in '..\..\Core\DTO\UDTOLocacao.pas',
   UUseCaseLocacao in '..\..\Core\UseCases\UUseCaseLocacao.pas',
-  UIRepositoryCliente in '..\..\Core\Ports\UIRepositoryCliente.pas';
+  UIRepositoryCliente in '..\..\Core\Ports\UIRepositoryCliente.pas',
+  UConfiguracaoDB in '..\..\Repository\UConfiguracaoDB.pas';
 
 begin
   try

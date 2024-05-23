@@ -23,6 +23,8 @@ type
   EExceptionLocacaoCliente = class(Exception);
   EExceptionLocacaoVeiculoAlugado = class(Exception);
 
+  EExceptionDatabase = class(Exception);
+
 procedure ExceptionIdInvalido;
 
 procedure ExceptionNome;
@@ -40,6 +42,8 @@ procedure ExceptionValorVeiculo;
 procedure ExceptionLocacaoVeiculo;
 procedure ExceptionLocacaoCliente;
 procedure ExceptionLocacaoVeiculoAlugado;
+
+procedure ExceptionDatabase(const Message: string);
 
 implementation
 
@@ -116,5 +120,9 @@ begin
   raise EExceptionLocacaoVeiculoAlugado.Create('Veículo já consta alugado!');
 end;
 
+procedure ExceptionDatabase(const Message: string);
+begin
+  raise EExceptionDatabase.Create(Message);
+end;
 
 end.
