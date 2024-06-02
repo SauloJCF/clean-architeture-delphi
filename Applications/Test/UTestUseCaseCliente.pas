@@ -7,16 +7,21 @@ uses
   DUnitX.TestFramework,
   UUseCaseCliente,
   UEnums,
+  UUtils,
   UResponse,
   UCliente,
   UIUseCaseCliente,
   UDTOCliente,
-  UUtils;
+  UIRepositoryCliente,
+  URepositoryCliente;
 
 type
 
   [TestFixture]
   TTestUseCaseCliente = class
+  private
+    FRepositoryCliente: IRepositoryCliente;
+
   public
     [Setup]
     procedure Setup;
@@ -35,6 +40,12 @@ type
 
     [Test]
     procedure ValiadarDocumentoCliente;
+
+    [Test]
+    procedure ConsultaCliente;
+
+    [Test]
+    procedure ExcluirCliente;
   end;
 
 implementation
@@ -46,7 +57,10 @@ var
 procedure TTestUseCaseCliente.Setup;
 begin
   Cliente := TCliente.Create;
-  UseCaseCliente := TUseCaseCliente.Create;
+
+  FRepositoryCliente := TRepositoryCliente.Create;
+
+  UseCaseCliente := TUseCaseCliente.Create(FRepositoryCliente);
 end;
 
 procedure TTestUseCaseCliente.TearDown;
@@ -65,7 +79,8 @@ begin
   Response := UseCaseCliente.Alterar(Cliente);
 
   Assert.IsFalse(Response.Success);
-  Assert.AreEqual(RetornarErrorsCode.DOCUMENTO_NAO_INFORMADO, Response.ErrorCode);
+  Assert.AreEqual(RetornarErrorsCode.DOCUMENTO_NAO_INFORMADO,
+    Response.ErrorCode);
 end;
 
 procedure TTestUseCaseCliente.ValiadarNomeCliente;
@@ -88,7 +103,15 @@ var
 begin
   Cliente.Nome := 'Fulano de Tal';
   Cliente.Documento := '123456';
-  Cliente.Telefone := '(33) 3277-7777';
+  Cliente.Telefone := '3332777777';
+  Cliente.Cep := '56740000';
+  Cliente.Logradouro := 'Rua dos Loucos';
+  Cliente.Numero := '0';
+  Cliente.Complemento := 'Casa';
+  Cliente.Bairro := 'Centro';
+  Cliente.Cidade := 'Guanhães';
+  Cliente.UF := 'MG';
+  Cliente.Id := 1;
 
   Response := UseCaseCliente.Alterar(Cliente);
 
@@ -100,14 +123,44 @@ procedure TTestUseCaseCliente.CadastrarCliente;
 var
   Response: TResponse;
 begin
+  Cliente.Id := 1;
   Cliente.Nome := 'Fulano de Tal';
   Cliente.Documento := '123456';
-  Cliente.Telefone := '(33) 3277-7777';
+  Cliente.Telefone := '3332777777';
+  Cliente.Cep := '56740000';
+  Cliente.Logradouro := 'Rua dos Loucos';
+  Cliente.Numero := '0';
+  Cliente.Complemento := 'Casa';
+  Cliente.Bairro := 'Centro';
+  Cliente.Cidade := 'Guanhães';
+  Cliente.UF := 'MG';
 
   Response := UseCaseCliente.Cadastrar(Cliente);
 
   Assert.IsTrue(Response.Success);
   Assert.AreEqual(RetornarMsgResponse.CADASTRADO_COM_SUCESSO, Response.Message);
+end;
+
+procedure TTestUseCaseCliente.ConsultaCliente;
+var
+  Response: TResponse;
+  Dto: DToCliente;
+begin
+  Dto.Id := 4;
+  Response := UseCaseCliente.Consultar(Dto);
+
+  Assert.IsTrue(Response.Success);
+  Assert.AreEqual(RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO, Response.Message);
+end;
+
+procedure TTestUseCaseCliente.ExcluirCliente;
+var
+  Response: TResponse;
+begin
+  Response := UseCaseCliente.Deletar(1);
+
+  Assert.IsTrue(Response.Success);
+  Assert.AreEqual(RetornarMsgResponse.DELETADO_COM_SUCESSO, Response.Message);
 end;
 
 initialization

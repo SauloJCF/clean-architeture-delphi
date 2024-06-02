@@ -10,7 +10,7 @@ type
     Success: Boolean;
     ErrorCode: Integer;
     Message: String;
-    Data: TObjectList<TObject>;
+    Data: TList<TObject>;
   end;
 
 implementation

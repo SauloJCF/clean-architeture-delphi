@@ -18,12 +18,12 @@ type
   TUseCaseCliente = class(TInterfacedObject, IUseCaseCliente)
   private
     FRepository: IRepositoryCliente;
-    FLista: TObjectList<TCliente>;
-    FListaObject: TObjectList<TObject>;
+    FLista: TList<TCliente>;
+    FListaGenerica: TList<TObject>;
 
     procedure ValidarId(const Id: Integer);
-    procedure SetLista(const Value: TObjectList<TCliente>);
-    procedure SetListaObject(const Value: TObjectList<TObject>);
+    procedure SetLista(const Value: TList<TCliente>);
+    procedure SetListaGenerica(const Value: TList<TObject>);
   public
     function Cadastrar(const Cliente: TCliente): TResponse;
     function Alterar(const Cliente: TCliente): TResponse;
@@ -33,9 +33,9 @@ type
     constructor Create(const RepositoryCliente: IRepositoryCliente);
     destructor Destroy; Override;
 
-    property Lista: TObjectList<TCliente> read FLista write SetLista;
-    property ListaObject: TObjectList<TObject> read FListaObject
-      write SetListaObject;
+    property Lista: TList<TCliente> read FLista write SetLista;
+    property ListaGenerica: TList<TObject> read FListaGenerica
+      write SetListaGenerica;
   end;
 
 implementation
@@ -100,7 +100,7 @@ begin
       Response.ErrorCode := 0;
       Response.Message := UEnums.RetornarMsgResponse.
         CONSULTA_REALIZADA_COM_SUCESSO;
-      Response.Data := ListaClienteParaListaObject(FLista);
+      Response.Data := ListaClienteParaListaGenerica(FLista);
     end
     else
     begin
@@ -147,25 +147,34 @@ end;
 constructor TUseCaseCliente.Create(const RepositoryCliente: IRepositoryCliente);
 begin
   FRepository := RepositoryCliente;
-  FLista := TObjectList<TCliente>.Create;
-  FListaObject := TObjectList<TObject>.Create;
+  FLista := TList<TCliente>.Create;
+  FListaGenerica := TList<TObject>.Create;
 end;
 
 destructor TUseCaseCliente.Destroy;
+var
+  Cliente: TObject;
 begin
-  FLista.Free;
-  FListaObject.Free;
+  if Assigned(FListaGenerica) then
+  begin
+    for Cliente in FListaGenerica do
+    begin
+      Cliente.Free;
+    end;
+
+    FreeAndNil(FListaGenerica);
+  end;
   inherited;
 end;
 
-procedure TUseCaseCliente.SetLista(const Value: TObjectList<TCliente>);
+procedure TUseCaseCliente.SetLista(const Value: TList<TCliente>);
 begin
   FLista := Value;
 end;
 
-procedure TUseCaseCliente.SetListaObject(const Value: TObjectList<TObject>);
+procedure TUseCaseCliente.SetListaGenerica(const Value: TList<TObject>);
 begin
-  FListaObject := Value;
+  FListaGenerica := Value;
 end;
 
 end.

@@ -12,8 +12,8 @@ uses
 
 function TratarException(const E: Exception): TResponse;
 
-function ListaClienteParaListaObject(const ListaClientes: TObjectList<TCliente>)
-  : TObjectList<TObject>;
+function ListaClienteParaListaGenerica(const ListaClientes : TList<TCliente>):
+    TList<TObject>;
 
 implementation
 
@@ -56,12 +56,12 @@ begin
   Result := Response;
 end;
 
-function ListaClienteParaListaObject(const ListaClientes: TObjectList<TCliente>)
-  : TObjectList<TObject>;
+function ListaClienteParaListaGenerica(const ListaClientes
+  : TList<TCliente>): TList<TObject>;
 var
   Cliente: TCliente;
 begin
-  Result := TObjectList<TObject>.Create;
+  Result := TList<TObject>.Create;
 
   if ListaClientes.Count > 0 then
   begin

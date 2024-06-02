@@ -4,9 +4,17 @@ interface
 
 uses
   System.SysUtils,
+  System.Classes,
   IniFiles,
-  Firedac.Comp.Client,
-  Firedac.Phys.FB,
+  FireDAC.VCLUI.Wait,
+  FireDAC.FMXUI.Wait,
+  FireDAC.Comp.UI,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.ConsoleUI.Wait,
+  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
+  FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, FireDAC.Phys.FB, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   UExceptions;
 
 type
@@ -15,6 +23,7 @@ type
   private
     FConnection: TFDConnection;
     FDPhsysFBDDriverLink: TFDPhysFBDriverLink;
+
     FQuery: TFDQuery;
     procedure SetQuery(const Value: TFDQuery);
   published
@@ -67,15 +76,15 @@ begin
   Password := ArquivoIni.ReadString('conexao', 'password', EmptyStr);
 
   try
-    FConnection := TFDConnection(nil);
+    FConnection := TFDConnection.Create(nil);
+    FConnection.LoginPrompt := False;
 
     FDPhsysFBDDriverLink := TFDPhysFBDriverLink.Create(nil);
-    FConnection.LoginPrompt := False;
     FConnection.Params.Clear;
     FConnection.Params.Add('DriverID=' + Driver);
     FConnection.Params.Add('Server=' + Server);
     FConnection.Params.Add('Database=' + Database);
-    FConnection.Params.Add('User=' + User);
+    FConnection.Params.Add('User_Name=' + User);
     FConnection.Params.Add('Password=' + Password);
 
     FConnection.Open();

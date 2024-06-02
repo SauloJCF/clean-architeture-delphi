@@ -13,17 +13,17 @@ uses
 type
   TRepositoryCliente = class(TInterfacedObject, IRepositoryCliente)
   private
-    FLista: TObjectList<TCliente>;
+    FLista: TList<TCliente>;
     FConfiguracaoDB: TConfiguracaoDB;
 
-    procedure SetLista(const Value: TObjectList<TCliente>);
+    procedure SetLista(const Value: TList<TCliente>);
   published
     procedure Cadastrar(const Cliente: TCliente);
     procedure Alterar(const Cliente: TCliente);
     procedure Excluir(const Codigo: Integer);
-    function Consultar(const DTO: DTOCliente): TObjectList<TCliente>;
+    function Consultar(const DTO: DTOCliente): TList<TCliente>;
 
-    property Lista: TObjectList<TCliente> read FLista write SetLista;
+    property Lista: TList<TCliente> read FLista write SetLista;
 
     constructor Create;
     destructor Destroy; override;
@@ -65,8 +65,7 @@ begin
   FConfiguracaoDB.ExecSQL(SQLFormatado);
 end;
 
-function TRepositoryCliente.Consultar(const DTO: DTOCliente)
-  : TObjectList<TCliente>;
+function TRepositoryCliente.Consultar(const DTO: DTOCliente): TList<TCliente>;
 const
   SQL_BASE = 'SELECT * FROM CLIENTES WHERE 1 = 1';
   FILTRO_ID = 'AND ID = %d';
@@ -124,6 +123,8 @@ begin
           Cliente.Telefone := Query.FieldByName('TELEFONE').AsString;
 
           FLista.Add(Cliente);
+
+          Query.Next;
         end;
       end;
     end;
@@ -144,21 +145,33 @@ begin
   FConfiguracaoDB.ExecSQL(SQLFormatado);
 end;
 
-procedure TRepositoryCliente.SetLista(const Value: TObjectList<TCliente>);
+procedure TRepositoryCliente.SetLista(const Value: TList<TCliente>);
 begin
   FLista := Value;
 end;
 
 constructor TRepositoryCliente.Create;
 begin
-  FLista := TObjectList<TCliente>.Create;
+  FLista := TList<TCliente>.Create;
   FConfiguracaoDB := TConfiguracaoDB.Create;
 end;
 
 destructor TRepositoryCliente.Destroy;
+var
+  Cliente: TObject;
 begin
-  FLista.Free;
-  FConfiguracaoDB.Free;
+  if Assigned(FLista) then
+  begin
+    for Cliente in FLista do
+    begin
+      Cliente.Free;
+    end;
+
+    FreeAndNil(FLista);
+  end;
+
+  if Assigned(FConfiguracaoDB) then
+    FreeAndNil(FConfiguracaoDB);
   inherited;
 end;
 
