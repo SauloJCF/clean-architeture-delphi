@@ -102,7 +102,7 @@ begin
     ExceptionLocacaoCliente;
   if FVeiculo = nil then
     ExceptionLocacaoVeiculo;
-  if FVeiculo.Status = sAlugado then
+  if FVeiculo.Status = Alugado then
     ExceptionLocacaoVeiculoAlugado;
 end;
 

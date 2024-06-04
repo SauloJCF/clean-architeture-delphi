@@ -5,6 +5,7 @@ interface
 uses
   System.SysUtils,
   System.Generics.Collections,
+  TypInfo,
   UResponse,
   UExceptions,
   UEnums,
@@ -12,8 +13,10 @@ uses
 
 function TratarException(const E: Exception): TResponse;
 
-function ListaClienteParaListaGenerica(const ListaClientes : TList<TCliente>):
-    TList<TObject>;
+function ListaClienteParaListaGenerica(const ListaClientes: TList<TCliente>)
+  : TList<TObject>;
+
+function ConverterStatusStr(const Value: Status): string;
 
 implementation
 
@@ -56,8 +59,8 @@ begin
   Result := Response;
 end;
 
-function ListaClienteParaListaGenerica(const ListaClientes
-  : TList<TCliente>): TList<TObject>;
+function ListaClienteParaListaGenerica(const ListaClientes: TList<TCliente>)
+  : TList<TObject>;
 var
   Cliente: TCliente;
 begin
@@ -70,6 +73,11 @@ begin
       Result.Add(Cliente);
     end;
   end;
+end;
+
+function ConverterStatusStr(const Value: Status): string;
+begin
+  Result := GetEnumName(TypeInfo(Status), integer(Value));
 end;
 
 end.

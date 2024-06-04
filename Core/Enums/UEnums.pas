@@ -3,7 +3,7 @@ unit UEnums;
 interface
 
 type
-  Status = (sDisponivel, sAlugado);
+  Status = (Disponivel, Alugado);
 
   TErrosCode = record
     NOME_NAO_INFORMADO, NOME_INVALIDO, DOCUMENTO_NAO_INFORMADO,
