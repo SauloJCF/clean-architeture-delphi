@@ -9,14 +9,20 @@ uses
   UResponse,
   UExceptions,
   UEnums,
-  UCliente;
+  UCliente,
+  UVeiculo;
 
 function TratarException(const E: Exception): TResponse;
 
 function ListaClienteParaListaGenerica(const ListaClientes: TList<TCliente>)
   : TList<TObject>;
 
+function ListaVeiculoParaListaGenerica(const ListaVeiculos: TList<TVeiculo>):
+    TList<TObject>;
+
 function ConverterStatusStr(const Value: Status): string;
+
+function ConverterStrStatus(const Value: string): Status;
 
 implementation
 
@@ -75,9 +81,30 @@ begin
   end;
 end;
 
+function ListaVeiculoParaListaGenerica(const ListaVeiculos: TList<TVeiculo>)
+  : TList<TObject>;
+var
+  Veiculo: TVeiculo;
+begin
+  Result := TList<TObject>.Create;
+
+  if ListaVeiculos.Count > 0 then
+  begin
+    for Veiculo in ListaVeiculos do
+    begin
+      Result.Add(Veiculo);
+    end;
+  end;
+end;
+
 function ConverterStatusStr(const Value: Status): string;
 begin
   Result := GetEnumName(TypeInfo(Status), integer(Value));
+end;
+
+function ConverterStrStatus(const Value: string): Status;
+begin
+  Result := Status(GetEnumValue(TypeInfo(Status), Value));
 end;
 
 end.

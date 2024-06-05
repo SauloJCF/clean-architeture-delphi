@@ -36,8 +36,17 @@ implementation
 { TRepositoryVeiculo }
 
 procedure TRepositoryVeiculo.Alterar(const Veiculo: TVeiculo);
+const
+  SQL = 'UPDATE VEICULOS SET NOME = %s, PLACA = %s, VALOR = %s, STATUS = %s WHERE (ID = %d);';
+var
+  SQLFormatado: String;
 begin
+  SQLFormatado := Format(SQL, [Veiculo.Nome.QuotedString,
+    Veiculo.Placa.QuotedString, Veiculo.Valor.ToString.Replace(',',
+    '.').QuotedString, ConverterStatusStr(Veiculo.Status).QuotedString,
+    Veiculo.Id]);
 
+  FConfiguracaoDB.ExecSQL(SQLFormatado);
 end;
 
 procedure TRepositoryVeiculo.Cadastrar(const Veiculo: TVeiculo);
@@ -47,13 +56,74 @@ var
   SQLFormatado: String;
 begin
   SQLFormatado := Format(SQL, [Veiculo.Nome.QuotedString,
-    Veiculo.Placa.QuotedString, Veiculo.Valor.ToString.Replace(',', '.').QuotedString, ConverterStatusStr(Veiculo.Status).QuotedString]);
+    Veiculo.Placa.QuotedString, Veiculo.Valor.ToString.Replace(',',
+    '.').QuotedString, ConverterStatusStr(Veiculo.Status).QuotedString]);
 
   FConfiguracaoDB.ExecSQL(SQLFormatado);
 end;
 
 function TRepositoryVeiculo.Consultar(const DTO: DTOVeiculo): TList<TVeiculo>;
+const
+  SQL_BASE = 'SELECT * FROM VEICULOS WHERE 1 = 1';
+  FILTRO_ID = 'AND ID = %d';
+  FILTRO_NOME = 'AND NOME LIKE %s';
+  FILTRO_PLACA = 'AND PLACA = %s';
+var
+  BuilderSQL: TStringBuilder;
+  SQLFormatado: String;
+  Veiculo: TVeiculo;
 begin
+  try
+    BuilderSQL := TStringBuilder.Create;
+    BuilderSQL.Append(SQL_BASE);
+
+    if DTO.Id > 0 then
+    begin
+      BuilderSQL.AppendFormat(FILTRO_ID, [DTO.Id]);
+    end
+    else
+    begin
+      if Trim(DTO.Nome) <> EmptyStr then
+      begin
+        BuilderSQL.AppendFormat(FILTRO_NOME, [QuotedStr('%' + DTO.Nome + '%')]);
+      end;
+
+      if Trim(DTO.Placa) <> EmptyStr then
+      begin
+        BuilderSQL.AppendFormat(FILTRO_PLACA, [QuotedStr(DTO.Placa)]);
+      end;
+    end;
+
+    SQLFormatado := BuilderSQL.ToString;
+
+    if FConfiguracaoDB.Consulta(SQLFormatado) then
+    begin
+      FLista.Clear;
+
+      with FConfiguracaoDB do
+      begin
+        Query.First;
+        while not Query.Eof do
+        begin
+          Veiculo := TVeiculo.Create;
+          Veiculo.Id := Query.FieldByName('ID').AsInteger;
+          Veiculo.Nome := Query.FieldByName('NOME').AsString;
+          Veiculo.Placa := Query.FieldByName('PLACA').AsString;
+          Veiculo.Valor := Query.FieldByName('VALOR').AsCurrency;
+          Veiculo.Status := ConverterStrStatus(Query.FieldByName('STATUS')
+            .AsString);
+
+          FLista.Add(Veiculo);
+
+          Query.Next;
+        end;
+      end;
+    end;
+
+    Result := FLista;
+  finally
+    BuilderSQL.Free;
+  end;
 
 end;
 
@@ -83,13 +153,18 @@ begin
 end;
 
 procedure TRepositoryVeiculo.Excluir(const Codigo: Integer);
+const
+  SQL = 'DELETE FROM VEICULOS WHERE ID = %d;';
+var
+  SQLFormatado: String;
 begin
-
+  SQLFormatado := Format(SQL, [Codigo]);
+  FConfiguracaoDB.ExecSQL(SQLFormatado);
 end;
 
 procedure TRepositoryVeiculo.SetLista(const Value: TList<TVeiculo>);
 begin
-
+  FLista := Value;
 end;
 
 end.

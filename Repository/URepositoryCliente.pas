@@ -86,12 +86,12 @@ begin
     end
     else
     begin
-      if DTO.Nome <> EmptyStr then
+      if Trim(DTO.Nome) <> EmptyStr then
       begin
         BuilderSQL.AppendFormat(FILTRO_NOME, [QuotedStr('%' + DTO.Nome + '%')]);
       end;
 
-      if DTO.Documento <> EmptyStr then
+      if Trim(DTO.Documento) <> EmptyStr then
       begin
         BuilderSQL.AppendFormat(FILTRO_DOCUMENTO,
           [QuotedStr('%' + DTO.Documento + '%')]);
