@@ -37,8 +37,29 @@ implementation
 { TRepositoryLocacao }
 
 procedure TRepositoryLocacao.Alterar(const Locacao: TLocacao);
+const
+  SQL_UPDATE_LOCACAO =
+    'UPDATE LOCACAO SET ID_CLIENTE = %s, DATA_DEVOLUCAO = %s, TOTAL = %s WHERE (ID = %s);';
+  SQL_UPDATE_LOCACAO_VEICULOS =
+    'UPDATE LOCACAO_VEICULOS SET ID_VEICULO = %s WHERE (ID = %s);';
+var
+  SQLFormatado: String;
 begin
+  SQLFormatado := Format(SQL_UPDATE_LOCACAO,
+    [Locacao.Cliente.Id.ToString.QuotedString,
+    Locacao.DataDevolucao.Format('dd.MM.yyyy').QuotedString,
+    Locacao.CalcularTotal.ToString.Replace(',', '.').Replace('R$',
+    '').QuotedString, Locacao.Id.ToString.QuotedString]);
 
+  FConfiguracaoDB.ExecSQL(SQLFormatado);
+  if Locacao.Veiculo.Id <> Locacao.VeiculoAtual.Id then
+  begin
+    SQLFormatado := Format(SQL_UPDATE_LOCACAO_VEICULOS,
+      [Locacao.Veiculo.Id.ToString.QuotedString,
+      Locacao.Id.ToString.QuotedString]);
+
+    FConfiguracaoDB.ExecSQL(SQLFormatado);
+  end;
 end;
 
 procedure TRepositoryLocacao.Cadastrar(const Locacao: TLocacao);
@@ -80,7 +101,6 @@ end;
 
 function TRepositoryLocacao.Consultar(const DTO: DTOLocacao): TList<TLocacao>;
 begin
-
 end;
 
 constructor TRepositoryLocacao.Create;
@@ -109,8 +129,17 @@ begin
 end;
 
 procedure TRepositoryLocacao.Excluir(const Codigo: Integer);
+const
+  SQL_EXCLUIR_LOCACAO = 'DELETE FROM LOCACAO WHERE ID = %s;';
+  SQL_EXCLUIR_LOCACAO_VEICULOS = 'DELETE FROM LOCACAO_VEICULOS WHERE ID_LOCACAO = %s;';
+var
+  SQLFormatado: String;
 begin
+  SQLFormatado := Format(SQL_EXCLUIR_LOCACAO, [Codigo]);
+  FConfiguracaoDB.ExecSQL(SQLFormatado);
 
+  SQLFormatado := Format(SQL_EXCLUIR_LOCACAO_VEICULOS, [Codigo]);
+  FConfiguracaoDB.ExecSQL(SQLFormatado);
 end;
 
 procedure TRepositoryLocacao.SetLista(const Value: TList<TLocacao>);
