@@ -9,8 +9,8 @@ uses
 
 type
 
-  IRepositoryVeiculo = interface
-    ['{C60AA142-FAE4-4B5A-A2B2-6140B411C696}']
+  IRepositoryLocacao = interface
+    ['{9CCB368B-20E3-44C3-A78A-29DBE4552D31}']
     procedure Cadastrar(const Locacao: TLocacao);
     procedure Alterar(const Locacao: TLocacao);
     procedure Excluir(const Codigo: Integer);
