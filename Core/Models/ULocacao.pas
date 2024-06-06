@@ -19,12 +19,14 @@ type
     FId: Integer;
     FDataDevolucao: TDateTime;
     FVeiculo: TVeiculo;
+    FHash: String;
     procedure SetCliente(const Value: TCliente);
     procedure SetDataDevolucao(const Value: TDateTime);
     procedure SetDataLocacao(const Value: TDateTime);
     procedure SetId(const Value: Integer);
     procedure SetValor(const Value: Currency);
     procedure SetVeiculo(const Value: TVeiculo);
+    procedure SetHash(const Value: String);
 
   published
     property Id: Integer read FId write SetId;
@@ -34,10 +36,13 @@ type
     property DataDevolucao: TDateTime read FDataDevolucao
       write SetDataDevolucao;
     property Valor: Currency read FValor write SetValor;
+    property Hash: String read FHash write SetHash;
 
     procedure ValidarRegrasNegocio;
 
     function CalcularTotal: Currency;
+
+    constructor Create;
   end;
 
 implementation
@@ -66,6 +71,11 @@ begin
   Result := Total;
 end;
 
+constructor TLocacao.Create;
+begin
+  FHash := IntToStr(Self.GetHashCode);
+end;
+
 procedure TLocacao.SetCliente(const Value: TCliente);
 begin
   FCliente := Value;
@@ -79,6 +89,11 @@ end;
 procedure TLocacao.SetDataLocacao(const Value: TDateTime);
 begin
   FDataLocacao := Value;
+end;
+
+procedure TLocacao.SetHash(const Value: String);
+begin
+  FHash := Value;
 end;
 
 procedure TLocacao.SetId(const Value: Integer);
