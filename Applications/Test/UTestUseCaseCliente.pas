@@ -22,6 +22,9 @@ type
   private
     FRepositoryCliente: IRepositoryCliente;
 
+    FUseCaseCliente: IUseCaseCliente;
+    FCliente: TCliente;
+
   public
     [Setup]
     procedure Setup;
@@ -50,33 +53,29 @@ type
 
 implementation
 
-var
-  UseCaseCliente: IUseCaseCliente;
-  Cliente: TCliente;
-
 procedure TTestUseCaseCliente.Setup;
 begin
-  Cliente := TCliente.Create;
+  FCliente := TCliente.Create;
 
   FRepositoryCliente := TRepositoryCliente.Create;
 
-  UseCaseCliente := TUseCaseCliente.Create(FRepositoryCliente);
+  FUseCaseCliente := TUseCaseCliente.Create(FRepositoryCliente);
 end;
 
 procedure TTestUseCaseCliente.TearDown;
 begin
-  Cliente.Free;
+  FCliente.Free;
 end;
 
 procedure TTestUseCaseCliente.ValiadarDocumentoCliente;
 var
   Response: TResponse;
 begin
-  Cliente.Nome := 'Fulano de Tal';
-  Cliente.Documento := EmptyStr;
-  Cliente.Telefone := '(33) 3277-7777';
+  FCliente.Nome := 'Fulano de Tal';
+  FCliente.Documento := EmptyStr;
+  FCliente.Telefone := '(33) 3277-7777';
 
-  Response := UseCaseCliente.Alterar(Cliente);
+  Response := FUseCaseCliente.Alterar(FCliente);
 
   Assert.IsFalse(Response.Success);
   Assert.AreEqual(RetornarErrorsCode.DOCUMENTO_NAO_INFORMADO,
@@ -87,11 +86,11 @@ procedure TTestUseCaseCliente.ValiadarNomeCliente;
 var
   Response: TResponse;
 begin
-  Cliente.Nome := EmptyStr;
-  Cliente.Documento := '123456';
-  Cliente.Telefone := '(33) 3277-7777';
+  FCliente.Nome := EmptyStr;
+  FCliente.Documento := '123456';
+  FCliente.Telefone := '(33) 3277-7777';
 
-  Response := UseCaseCliente.Alterar(Cliente);
+  Response := FUseCaseCliente.Alterar(FCliente);
 
   Assert.IsFalse(Response.Success);
   Assert.AreEqual(RetornarErrorsCode.NOME_NAO_INFORMADO, Response.ErrorCode);
@@ -101,19 +100,19 @@ procedure TTestUseCaseCliente.AlterarCliente;
 var
   Response: TResponse;
 begin
-  Cliente.Nome := 'Fulano de Tal';
-  Cliente.Documento := '123456';
-  Cliente.Telefone := '3332777777';
-  Cliente.Cep := '56740000';
-  Cliente.Logradouro := 'Rua dos Loucos';
-  Cliente.Numero := '0';
-  Cliente.Complemento := 'Casa';
-  Cliente.Bairro := 'Centro';
-  Cliente.Cidade := 'Guanhães';
-  Cliente.UF := 'MG';
-  Cliente.Id := 1;
+  FCliente.Nome := 'Fulano de Tal';
+  FCliente.Documento := '123456';
+  FCliente.Telefone := '3332777777';
+  FCliente.Cep := '56740000';
+  FCliente.Logradouro := 'Rua dos Loucos';
+  FCliente.Numero := '0';
+  FCliente.Complemento := 'Casa';
+  FCliente.Bairro := 'Centro';
+  FCliente.Cidade := 'Guanhães';
+  FCliente.UF := 'MG';
+  FCliente.Id := 1;
 
-  Response := UseCaseCliente.Alterar(Cliente);
+  Response := FUseCaseCliente.Alterar(FCliente);
 
   Assert.IsTrue(Response.Success);
   Assert.AreEqual(RetornarMsgResponse.ALTERADO_COM_SUCESSO, Response.Message);
@@ -123,19 +122,19 @@ procedure TTestUseCaseCliente.CadastrarCliente;
 var
   Response: TResponse;
 begin
-  Cliente.Id := 1;
-  Cliente.Nome := 'Fulano de Tal';
-  Cliente.Documento := '123456';
-  Cliente.Telefone := '3332777777';
-  Cliente.Cep := '56740000';
-  Cliente.Logradouro := 'Rua dos Loucos';
-  Cliente.Numero := '0';
-  Cliente.Complemento := 'Casa';
-  Cliente.Bairro := 'Centro';
-  Cliente.Cidade := 'Guanhães';
-  Cliente.UF := 'MG';
+  FCliente.Id := 1;
+  FCliente.Nome := 'Fulano de Tal';
+  FCliente.Documento := '123456';
+  FCliente.Telefone := '3332777777';
+  FCliente.Cep := '56740000';
+  FCliente.Logradouro := 'Rua dos Loucos';
+  FCliente.Numero := '0';
+  FCliente.Complemento := 'Casa';
+  FCliente.Bairro := 'Centro';
+  FCliente.Cidade := 'Guanhães';
+  FCliente.UF := 'MG';
 
-  Response := UseCaseCliente.Cadastrar(Cliente);
+  Response := FUseCaseCliente.Cadastrar(FCliente);
 
   Assert.IsTrue(Response.Success);
   Assert.AreEqual(RetornarMsgResponse.CADASTRADO_COM_SUCESSO, Response.Message);
@@ -147,17 +146,18 @@ var
   Dto: DToCliente;
 begin
   Dto.Id := 4;
-  Response := UseCaseCliente.Consultar(Dto);
+  Response := FUseCaseCliente.Consultar(Dto);
 
   Assert.IsTrue(Response.Success);
-  Assert.AreEqual(RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO, Response.Message);
+  Assert.AreEqual(RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO,
+    Response.Message);
 end;
 
 procedure TTestUseCaseCliente.ExcluirCliente;
 var
   Response: TResponse;
 begin
-  Response := UseCaseCliente.Deletar(1);
+  Response := FUseCaseCliente.Deletar(1);
 
   Assert.IsTrue(Response.Success);
   Assert.AreEqual(RetornarMsgResponse.DELETADO_COM_SUCESSO, Response.Message);

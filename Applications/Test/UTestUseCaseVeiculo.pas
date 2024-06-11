@@ -21,6 +21,8 @@ type
   TTestUseCaseVeiculo = class
   private
     FRepositoryVeiculo: IRepositoryVeiculo;
+    FUseCaseVeiculo: IUseCaseVeiculo;
+    FVeiculo: TVeiculo;
 
   public
     [Setup]
@@ -53,33 +55,29 @@ type
 
 implementation
 
-var
-  UseCaseVeiculo: IUseCaseVeiculo;
-  Veiculo: TVeiculo;
-
 procedure TTestUseCaseVeiculo.Setup;
 begin
-  Veiculo := TVeiculo.Create;
+  FVeiculo := TVeiculo.Create;
 
   FRepositoryVeiculo := TRepositoryVeiculo.Create;
 
-  UseCaseVeiculo := TUseCaseVeiculo.Create(FRepositoryVeiculo);
+  FUseCaseVeiculo := TUseCaseVeiculo.Create(FRepositoryVeiculo);
 end;
 
 procedure TTestUseCaseVeiculo.TearDown;
 begin
-  Veiculo.Free;
+  FVeiculo.Free;
 end;
 
 procedure TTestUseCaseVeiculo.ValidarPlacaVeiculo;
 var
   Response: TResponse;
 begin
-  Veiculo.Nome := 'Fulano de Tal';
-  Veiculo.Placa := EmptyStr;
-  Veiculo.Valor := 10.0;
+  FVeiculo.Nome := 'Fulano de Tal';
+  FVeiculo.Placa := EmptyStr;
+  FVeiculo.Valor := 10.0;
 
-  Response := UseCaseVeiculo.Alterar(Veiculo);
+  Response := FUseCaseVeiculo.Alterar(FVeiculo);
 
   Assert.IsFalse(Response.Success);
   Assert.AreEqual(RetornarErrorsCode.PLACA_NAO_INFORMADA, Response.ErrorCode);
@@ -89,11 +87,11 @@ procedure TTestUseCaseVeiculo.ValidarValorVeiculo;
 var
   Response: TResponse;
 begin
-  Veiculo.Nome := 'Fulano de Tal';
-  Veiculo.Placa := '123456';
-  Veiculo.Valor := 0.0;
+  FVeiculo.Nome := 'Fulano de Tal';
+  FVeiculo.Placa := '123456';
+  FVeiculo.Valor := 0.0;
 
-  Response := UseCaseVeiculo.Alterar(Veiculo);
+  Response := FUseCaseVeiculo.Alterar(FVeiculo);
 
   Assert.IsFalse(Response.Success);
   Assert.AreEqual(RetornarErrorsCode.VALOR_INVALIDO, Response.ErrorCode);
@@ -103,11 +101,11 @@ procedure TTestUseCaseVeiculo.ValidarNomeVeiculo;
 var
   Response: TResponse;
 begin
-  Veiculo.Nome := EmptyStr;
-  Veiculo.Placa := '123456';
-  Veiculo.Valor := 10.0;
+  FVeiculo.Nome := EmptyStr;
+  FVeiculo.Placa := '123456';
+  FVeiculo.Valor := 10.0;
 
-  Response := UseCaseVeiculo.Alterar(Veiculo);
+  Response := FUseCaseVeiculo.Alterar(FVeiculo);
 
   Assert.IsFalse(Response.Success);
   Assert.AreEqual(RetornarErrorsCode.NOME_NAO_INFORMADO, Response.ErrorCode);
@@ -117,12 +115,12 @@ procedure TTestUseCaseVeiculo.AlterarVeiculo;
 var
   Response: TResponse;
 begin
-  Veiculo.Nome := 'Fulano de Tal';
-  Veiculo.Placa := '123456';
-  Veiculo.Valor := 10.0;
-  Veiculo.Status := Disponivel;
+  FVeiculo.Nome := 'Fulano de Tal';
+  FVeiculo.Placa := '123456';
+  FVeiculo.Valor := 10.0;
+  FVeiculo.Status := Disponivel;
 
-  Response := UseCaseVeiculo.Alterar(Veiculo);
+  Response := FUseCaseVeiculo.Alterar(FVeiculo);
 
   Assert.IsTrue(Response.Success);
   Assert.AreEqual(RetornarMsgResponse.ALTERADO_COM_SUCESSO, Response.Message);
@@ -132,13 +130,13 @@ procedure TTestUseCaseVeiculo.CadastrarVeiculo;
 var
   Response: TResponse;
 begin
-  Veiculo.Id := 2;
-  Veiculo.Nome := 'Ciclano Deltrano';
-  Veiculo.Placa := '654321';
-  Veiculo.Valor := 15.0;
-  Veiculo.Status := Alugado;
+  FVeiculo.Id := 2;
+  FVeiculo.Nome := 'Ciclano Deltrano';
+  FVeiculo.Placa := '654321';
+  FVeiculo.Valor := 15.0;
+  FVeiculo.Status := Alugado;
 
-  Response := UseCaseVeiculo.Cadastrar(Veiculo);
+  Response := FUseCaseVeiculo.Cadastrar(FVeiculo);
 
   Assert.IsTrue(Response.Success);
   Assert.AreEqual(RetornarMsgResponse.CADASTRADO_COM_SUCESSO, Response.Message);
@@ -150,7 +148,7 @@ var
   Dto: DTOVeiculo;
 begin
   Dto.Id := 2;
-  Response := UseCaseVeiculo.Consultar(Dto);
+  Response := FUseCaseVeiculo.Consultar(Dto);
 
   Assert.IsTrue(Response.Success);
   Assert.AreEqual(RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO,
@@ -161,7 +159,7 @@ procedure TTestUseCaseVeiculo.ExcluirVeiculo;
 var
   Response: TResponse;
 begin
-  Response := UseCaseVeiculo.Deletar(1);
+  Response := FUseCaseVeiculo.Deletar(1);
 
   Assert.IsTrue(Response.Success);
   Assert.AreEqual(RetornarMsgResponse.DELETADO_COM_SUCESSO, Response.Message);
