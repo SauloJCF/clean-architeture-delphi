@@ -64,7 +64,7 @@ end;
 
 function TRepositoryVeiculo.Consultar(const DTO: DTOVeiculo): TList<TVeiculo>;
 const
-  SQL_BASE = 'SELECT * FROM VEICULOS WHERE 1 = 1';
+  SQL_BASE = 'SELECT * FROM VEICULOS WHERE 1 = 1 ';
   FILTRO_ID = 'AND ID = %d';
   FILTRO_NOME = 'AND NOME LIKE %s';
   FILTRO_PLACA = 'AND PLACA = %s';

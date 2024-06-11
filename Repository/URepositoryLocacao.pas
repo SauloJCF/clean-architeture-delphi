@@ -8,9 +8,10 @@ uses
   System.Generics.Collections,
   UConfiguracaoDB,
   UIRepositoryLocacao,
-  ULocacao,
-  UDTOLocacao,
-  UUtils;
+  ULocacao, UVeiculo, UCliente,
+  UDTOLocacao, UDTOVeiculo, UDTOCliente,
+  UUtils,
+  UIRepositoryCliente, UIRepositoryVeiculo;
 
 type
 
@@ -28,7 +29,8 @@ type
 
     property Lista: TList<TLocacao> read FLista write SetLista;
 
-    constructor Create;
+    constructor Create(const RepositoryCliente: IRepositoryCliente;
+      const RepositoryVeiculo: IRepositoryVeiculo);
     destructor Destroy; override;
   end;
 
@@ -75,15 +77,52 @@ begin
 
     FConfiguracaoDB.ExecSQL(SQLFormatado);
   end;
-
 end;
 
 function TRepositoryLocacao.Consultar(const DTO: DTOLocacao): TList<TLocacao>;
+const
+  SQL_BASE = 'SELECT L.*, LV.* FROM LOCACAO L ' +
+    'INNER JOIN LOCACAO_VEICULOS LV ON (L.ID = LV.ID_LOCACAO) ' +
+    'WHERE 1 = 1 ';
+  FILTRO_ID = 'AND L.ID = %d ';
+  FILTRO_ID_CLIENTE = 'AND L.ID_CLIENTE = %d';
+  FILTRO_PLACA = 'AND L.DATA = %s ';
+var
+  _DtoCliente: DTOCliente;
+  _DtoVeiculo: DTOVeiculo;
+  BuilderSQL: TStringBuilder;
+  SQLFormatado: String;
 begin
+  BuilderSQL := TStringBuilder.Create;
+  BuilderSQL.Append(SQL_BASE);
+  if DTO.Id > 0 then
+  begin
+    BuilderSQL.AppendFormat(FILTRO_ID, [DTO.Id]);
+  end
+  else
+  begin
+    if DTO.ClienteId > 0 then
+    begin
+      BuilderSQL.AppendFormat(FILTRO_ID_CLIENTE, [DTO.ClienteId]);
+    end;
+
+    if DTO.DataLocacao <> StrToDate('30/12/1899') then
+    begin
+      BuilderSQL.AppendFormat(FILTRO_PLACA,
+        [QuotedStr(DateToStr(DTO.DataLocacao))]);
+    end;
+
+    if DTO.DataDevolucao <> StrToDate('30/12/1899') then
+    begin
+      BuilderSQL.AppendFormat(FILTRO_PLACA,
+        [QuotedStr(DateToStr(DTO.DataDevolucao))]);
+    end;
+  end;
 
 end;
 
-constructor TRepositoryLocacao.Create;
+constructor TRepositoryLocacao.Create(const RepositoryCliente
+  : IRepositoryCliente; const RepositoryVeiculo: IRepositoryVeiculo);
 begin
   FLista := TList<TLocacao>.Create;
   FConfiguracaoDB := TConfiguracaoDB.Create;
@@ -115,7 +154,7 @@ end;
 
 procedure TRepositoryLocacao.SetLista(const Value: TList<TLocacao>);
 begin
-
+  FLista := Value;
 end;
 
 end.
