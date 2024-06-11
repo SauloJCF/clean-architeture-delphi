@@ -14,7 +14,8 @@ uses
   {$ENDIF }
   DUnitX.TestFramework,
   UTestUseCaseCliente in 'UTestUseCaseCliente.pas',
-  UTestUseCaseVeiculo in 'UTestUseCaseVeiculo.pas';
+  UTestUseCaseVeiculo in 'UTestUseCaseVeiculo.pas',
+  UTestUseCaseLocacao in 'UTestUseCaseLocacao.pas';
 
 var
   runner: ITestRunner;

@@ -26,7 +26,9 @@ uses
   UConfiguracaoDB in '..\..\Repository\UConfiguracaoDB.pas',
   URepositoryCliente in '..\..\Repository\URepositoryCliente.pas',
   UIRepositoryVeiculo in '..\..\Core\Ports\UIRepositoryVeiculo.pas',
-  URepositoryVeiculo in '..\..\Repository\URepositoryVeiculo.pas';
+  URepositoryVeiculo in '..\..\Repository\URepositoryVeiculo.pas',
+  UIRepositoryLocacao in '..\..\Core\Ports\UIRepositoryLocacao.pas',
+  URepositoryLocacao in '..\..\Repository\URepositoryLocacao.pas';
 
 begin
   try

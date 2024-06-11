@@ -4,7 +4,7 @@ interface
 
 type
 
-  DTOLocacao = class
+  DTOLocacao = record
     Id: Integer;
     ClienteId: Integer;
     DataLocacao: TDateTime;

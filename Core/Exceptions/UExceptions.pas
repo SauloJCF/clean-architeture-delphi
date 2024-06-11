@@ -107,17 +107,17 @@ end;
 
 procedure ExceptionLocacaoVeiculo;
 begin
-  raise EExceptionLocacaoVeiculo.Create('Veículo deve ser informado!');
+  raise EExceptionLocacaoVeiculo.Create('Veículo não informado!');
 end;
 
 procedure ExceptionLocacaoCliente;
 begin
-  raise EExceptionLocacaoCliente.Create('Cliente deve ser informado!');
+  raise EExceptionLocacaoCliente.Create('Cliente não informado!');
 end;
 
 procedure ExceptionLocacaoVeiculoAlugado;
 begin
-  raise EExceptionLocacaoVeiculoAlugado.Create('Veículo já consta alugado!');
+  raise EExceptionLocacaoVeiculoAlugado.Create('Veículo alugado!');
 end;
 
 procedure ExceptionDatabase(const Message: string);

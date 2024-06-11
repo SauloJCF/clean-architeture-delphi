@@ -95,6 +95,7 @@
         </DelphiCompile>
         <DCCReference Include="UTestUseCaseCliente.pas"/>
         <DCCReference Include="UTestUseCaseVeiculo.pas"/>
+        <DCCReference Include="UTestUseCaseLocacao.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

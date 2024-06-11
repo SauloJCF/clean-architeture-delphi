@@ -19,7 +19,6 @@ type
     FId: Integer;
     FDataDevolucao: TDateTime;
     FVeiculo: TVeiculo;
-    FVeiculoAtual: TVeiculo;
     FHash: String;
     procedure SetCliente(const Value: TCliente);
     procedure SetDataDevolucao(const Value: TDateTime);
@@ -33,7 +32,6 @@ type
     property Id: Integer read FId write SetId;
     property Cliente: TCliente read FCliente write SetCliente;
     property Veiculo: TVeiculo read FVeiculo write SetVeiculo;
-    property VeiculoAtual: TVeiculo read FVeiculoAtual write FVeiculoAtual;
     property DataLocacao: TDateTime read FDataLocacao write SetDataLocacao;
     property DataDevolucao: TDateTime read FDataDevolucao
       write SetDataDevolucao;

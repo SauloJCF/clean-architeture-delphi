@@ -117,6 +117,8 @@
         <DCCReference Include="..\..\Repository\URepositoryCliente.pas"/>
         <DCCReference Include="..\..\Core\Ports\UIRepositoryVeiculo.pas"/>
         <DCCReference Include="..\..\Repository\URepositoryVeiculo.pas"/>
+        <DCCReference Include="..\..\Core\Ports\UIRepositoryLocacao.pas"/>
+        <DCCReference Include="..\..\Repository\URepositoryLocacao.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
