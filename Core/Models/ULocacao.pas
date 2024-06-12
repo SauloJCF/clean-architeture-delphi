@@ -13,29 +13,33 @@ uses
 type
   TLocacao = class
   private
-    FValor: Currency;
+    FTotal: Currency;
     FCliente: TCliente;
     FDataLocacao: TDateTime;
     FId: Integer;
     FDataDevolucao: TDateTime;
     FVeiculo: TVeiculo;
+    FVeiculoAtual: TVeiculo;
+
     FHash: String;
     procedure SetCliente(const Value: TCliente);
     procedure SetDataDevolucao(const Value: TDateTime);
     procedure SetDataLocacao(const Value: TDateTime);
     procedure SetId(const Value: Integer);
-    procedure SetValor(const Value: Currency);
+    procedure SetTotal(const Value: Currency);
     procedure SetVeiculo(const Value: TVeiculo);
     procedure SetHash(const Value: String);
+    procedure SetVeiculoAtual(const Value: TVeiculo);
 
-  published
+  public
     property Id: Integer read FId write SetId;
     property Cliente: TCliente read FCliente write SetCliente;
     property Veiculo: TVeiculo read FVeiculo write SetVeiculo;
+    property VeiculoAtual: TVeiculo read FVeiculoAtual write SetVeiculoAtual;
     property DataLocacao: TDateTime read FDataLocacao write SetDataLocacao;
     property DataDevolucao: TDateTime read FDataDevolucao
       write SetDataDevolucao;
-    property Valor: Currency read FValor write SetValor;
+    property Total: Currency read FTotal write SetTotal;
     property Hash: String read FHash write SetHash;
 
     procedure ValidarRegrasNegocio;
@@ -101,14 +105,19 @@ begin
   FId := Value;
 end;
 
-procedure TLocacao.SetValor(const Value: Currency);
+procedure TLocacao.SetTotal(const Value: Currency);
 begin
-  FValor := Value;
+  FTotal := Value;
 end;
 
 procedure TLocacao.SetVeiculo(const Value: TVeiculo);
 begin
   FVeiculo := Value;
+end;
+
+procedure TLocacao.SetVeiculoAtual(const Value: TVeiculo);
+begin
+  FVeiculoAtual := Value;
 end;
 
 procedure TLocacao.ValidarRegrasNegocio;

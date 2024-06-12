@@ -10,15 +10,19 @@ uses
   UExceptions,
   UEnums,
   UCliente,
-  UVeiculo;
+  UVeiculo,
+  ULocacao;
 
 function TratarException(const E: Exception): TResponse;
 
 function ListaClienteParaListaGenerica(const ListaClientes: TList<TCliente>)
   : TList<TObject>;
 
-function ListaVeiculoParaListaGenerica(const ListaVeiculos: TList<TVeiculo>):
-    TList<TObject>;
+function ListaVeiculoParaListaGenerica(const ListaVeiculos: TList<TVeiculo>)
+  : TList<TObject>;
+
+function ListaLocacaoParaListaGenerica(const ListaLocacoes: TList<TLocacao>)
+  : TList<TObject>;
 
 function ConverterStatusStr(const Value: Status): string;
 
@@ -93,6 +97,22 @@ begin
     for Veiculo in ListaVeiculos do
     begin
       Result.Add(Veiculo);
+    end;
+  end;
+end;
+
+function ListaLocacaoParaListaGenerica(const ListaLocacoes: TList<TLocacao>)
+  : TList<TObject>;
+var
+  Locacao: TLocacao;
+begin
+  Result := TList<TObject>.Create;
+
+  if ListaLocacoes.Count > 0 then
+  begin
+    for Locacao in ListaLocacoes do
+    begin
+      Result.Add(Locacao);
     end;
   end;
 end;
