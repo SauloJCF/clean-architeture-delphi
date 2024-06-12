@@ -19,6 +19,10 @@ type
   private
     FLista: TList<TLocacao>;
     FConfiguracaoDB: TConfiguracaoDB;
+    FRepositoryCliente: IRepositoryCliente;
+    FRepositoryVeiculo: IRepositoryVeiculo;
+    FListaClientes: TList<TCliente>;
+    FListaVeiculos: TList<TVeiculo>;
 
     procedure SetLista(const Value: TList<TLocacao>);
   published
@@ -92,6 +96,7 @@ var
   _DtoVeiculo: DTOVeiculo;
   BuilderSQL: TStringBuilder;
   SQLFormatado: String;
+  Locacao: TLocacao;
 begin
   BuilderSQL := TStringBuilder.Create;
   BuilderSQL.Append(SQL_BASE);
@@ -119,6 +124,50 @@ begin
     end;
   end;
 
+  SQLFormatado := BuilderSQL.ToString;
+
+  if FConfiguracaoDB.Consulta(SQLFormatado) then
+  begin
+    FLista.Clear;
+
+    with FConfiguracaoDB do
+    begin
+      Query.First;
+      while not Query.Eof do
+      begin
+        Locacao := TLocacao.Create;
+        Locacao.Id := Query.FieldByName('ID').AsInteger;
+        Locacao.DataLocacao := Query.FieldByName('DATA_LOCACAO').AsDateTime;
+        Locacao.DataDevolucao := Query.FieldByName('DATA_DEVOLUCAO').AsDateTime;
+
+        _DtoCliente.Id := Query.FieldByName('ID_CLIENTE').AsInteger;
+
+        FListaClientes := FRepositoryCliente.Consultar(_DtoCliente);
+
+        if FListaClientes.Count > 0 then
+        begin
+          Locacao.Cliente := FListaClientes.First;
+        end;
+
+        _DtoVeiculo.Id := Query.FieldByName('ID_VEICULO').AsInteger;
+
+        FListaVeiculos := FRepositoryVeiculo.Consultar(_DtoVeiculo);
+
+        if FListaVeiculos.Count > 0 then
+        begin
+          Locacao.Veiculo := FListaVeiculos.First;
+
+          Locacao.VeiculoAtual := Locacao.Veiculo;
+        end;
+
+        FLista.Add(Locacao);
+
+        Query.Next;
+      end;
+    end;
+  end;
+
+  Result := FLista;
 end;
 
 constructor TRepositoryLocacao.Create(const RepositoryCliente
@@ -126,6 +175,12 @@ constructor TRepositoryLocacao.Create(const RepositoryCliente
 begin
   FLista := TList<TLocacao>.Create;
   FConfiguracaoDB := TConfiguracaoDB.Create;
+
+  FRepositoryCliente := RepositoryCliente;
+  FRepositoryVeiculo := RepositoryVeiculo;
+
+  FListaClientes := TList<TCliente>.Create;
+  FListaVeiculos := TList<TVeiculo>.Create;
 end;
 
 destructor TRepositoryLocacao.Destroy;
@@ -144,6 +199,7 @@ begin
 
   if Assigned(FConfiguracaoDB) then
     FreeAndNil(FConfiguracaoDB);
+
   inherited;
 end;
 
