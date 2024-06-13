@@ -43,8 +43,27 @@ implementation
 { TRepositoryLocacao }
 
 procedure TRepositoryLocacao.Alterar(const Locacao: TLocacao);
+const
+  SQL_LOCACAO =
+    'UPDATE LOCACAO SET ID_CLIENTE = %d, DATA_DEVOLUCAO = %s WHERE (ID = %d);';
+  SQL_LOCACAO_VEICULOS =
+    'UPDATE LOCACAO_VEICULOS SET ID_VEICULO = %d WHERE ID_LOCACAO = %d;';
+var
+  SQLFormatado: String;
 begin
+  SQLFormatado := Format(SQL_LOCACAO, [Locacao.Cliente.Id,
+    Locacao.DataDevolucao.ToString.QuotedString,
+    Locacao.Total.ToString.Replace(',', '.').QuotedString, Locacao.Id]);
 
+  FConfiguracaoDB.ExecSQL(SQLFormatado);
+
+  if Locacao.Veiculo.Id <> Locacao.VeiculoAtual.Id then
+  begin
+    SQLFormatado := Format(SQL_LOCACAO_VEICULOS,
+      [Locacao.Veiculo.Id, Locacao.Id]);
+
+    FConfiguracaoDB.ExecSQL(SQLFormatado);
+  end;
 end;
 
 procedure TRepositoryLocacao.Cadastrar(const Locacao: TLocacao);
@@ -188,14 +207,7 @@ var
   Locacao: TObject;
 begin
   if Assigned(FLista) then
-  begin
-//    for Locacao in FLista do
-//    begin
-//      FreeAndNil(Locacao);
-//    end;
-
     FreeAndNil(FLista);
-  end;
 
   if Assigned(FConfiguracaoDB) then
     FreeAndNil(FConfiguracaoDB);
@@ -204,8 +216,17 @@ begin
 end;
 
 procedure TRepositoryLocacao.Excluir(const Codigo: Integer);
+const
+  SQL_LOCACAO = 'DELETE FROM LOCACAO WHERE ID = %d;';
+  SQL_LOCACAO_VEICULOS = 'DELETE FROM LOCACAO_VEICULOS WHERE ID_LOCACAO = %d;';
+var
+  SQLFormatado: String;
 begin
+  SQLFormatado := Format(SQL_LOCACAO, [Codigo]);
+  FConfiguracaoDB.ExecSQL(SQLFormatado);
 
+  SQLFormatado := Format(SQL_LOCACAO_VEICULOS, [Codigo]);
+  FConfiguracaoDB.ExecSQL(SQLFormatado);
 end;
 
 procedure TRepositoryLocacao.SetLista(const Value: TList<TLocacao>);
