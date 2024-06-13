@@ -7,26 +7,32 @@ uses
 
   DUnitX.TestFramework,
 
-  ULocacao,
-  UVeiculo,
-  UCliente,
+  ULocacao, UVeiculo, UCliente,
   UEnums,
   UResponse,
   UUtils,
-  UIUseCaseLocacao,
-  UUseCaseLocacao,
-  UDTOLocacao;
+  UIUseCaseLocacao, UIUseCaseCliente, UIUseCaseVeiculo,
+  UUseCaseLocacao, UUseCaseCliente, UUseCaseVeiculo,
+  UDTOLocacao, UDTOCliente, UDTOVeiculo,
+  UIRepositoryLocacao, UIRepositoryCliente, UIRepositoryVeiculo,
+  URepositoryLocacao, URepositoryCliente, URepositoryVeiculo;
 
 type
 
   [TestFixture]
   TTestUseCaseLocacao = class
   private
+    FRepositoryLocacao: IRepositoryLocacao;
+    FRepositoryCliente: IRepositoryCliente;
+    FRepositoryVeiculo: IRepositoryVeiculo;
+
     FCliente: TCliente;
     FVeiculo: TVeiculo;
     FLocacao: TLocacao;
 
     FUseCaseLocacao: IUseCaseLocacao;
+    FUseCaseCliente: IUseCaseCliente;
+    FUseCaseVeiculo: IUseCaseVeiculo;
 
   public
     [Setup]
@@ -85,15 +91,29 @@ end;
 procedure TTestUseCaseLocacao.CadastrarLocacao;
 var
   Response: TResponse;
+  _DtoCliente: DTOCliente;
+  _DtoVeiculo: DTOVeiculo;
 begin
-  FCliente.Nome := 'Fulano de Tal';
-  FCliente.Documento := '12345678';
-  FCliente.Telefone := '3334219878';
+  _DtoCliente.Id := 0;
+  _DtoCliente.Documento := '123456';
+  Response := FUseCaseCliente.Consultar(_DtoCliente);
 
-  FVeiculo.Nome := 'Fiat Uno';
-  FVeiculo.Placa := '1234567';
-  FVeiculo.Valor := 100;
-  FVeiculo.Status := Disponivel;
+  if (Response.Success) and
+    (Response.Message = RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO) then
+  begin
+    FCliente := TCliente(Response.Data.First);
+  end;
+
+  _DtoVeiculo.Id := 0;
+  _DtoVeiculo.Placa := '654321';
+
+  Response := FUseCaseVeiculo.Consultar(_DtoVeiculo);
+
+  if (Response.Success) and
+    (Response.Message = RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO) then
+  begin
+    FVeiculo := TVeiculo(Response.Data.First);
+  end;
 
   FLocacao.Cliente := FCliente;
   FLocacao.Veiculo := FVeiculo;
@@ -114,7 +134,8 @@ begin
   Response := FUseCaseLocacao.Consultar(Dto);
 
   Assert.IsTrue(Response.Success);
-  Assert.AreEqual(RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO, Response.Message);
+  Assert.AreEqual(RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO,
+    Response.Message);
 end;
 
 procedure TTestUseCaseLocacao.ExcluirCliente;
@@ -132,7 +153,16 @@ begin
   FCliente := TCliente.Create;
   FVeiculo := TVeiculo.Create;
   FLocacao := TLocacao.Create;
-  FUseCaseLocacao := TUseCaseLocacao.Create;
+
+  FRepositoryCliente := TRepositoryCliente.Create;
+  FRepositoryVeiculo := TRepositoryVeiculo.Create;
+
+  FRepositoryLocacao := TRepositoryLocacao.Create(FRepositoryCliente,
+    FRepositoryVeiculo);
+
+  FUseCaseLocacao := TUseCaseLocacao.Create(FRepositoryLocacao);
+  FUseCaseCliente := TUseCaseCliente.Create(FRepositoryCliente);
+  FUseCaseVeiculo := TUseCaseVeiculo.Create(FRepositoryVeiculo);
 end;
 
 procedure TTestUseCaseLocacao.TearDown;

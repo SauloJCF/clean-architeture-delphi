@@ -56,8 +56,9 @@ var
   SQLFormatado: String;
 begin
   SQLFormatado := Format(SQL, [Veiculo.Nome.QuotedString,
-    Veiculo.Placa.QuotedString, Veiculo.Valor.ToString.Replace('R$', '').Replace(',',
-    '.').QuotedString, ConverterStatusStr(Veiculo.Status).QuotedString]);
+    Veiculo.Valor.ToString.Replace('R$', '').Replace(',', '.').QuotedString,
+    Veiculo.Placa.QuotedString, ConverterStatusStr(Veiculo.Status)
+    .QuotedString]);
 
   FConfiguracaoDB.ExecSQL(SQLFormatado);
 end;
@@ -139,10 +140,10 @@ var
 begin
   if Assigned(FLista) then
   begin
-    for Veiculo in FLista do
-    begin
-      Veiculo.Free;
-    end;
+//    for Veiculo in FLista do
+//    begin
+//      FreeAndNil(Veiculo);
+//    end;
 
     FreeAndNil(FLista);
   end;

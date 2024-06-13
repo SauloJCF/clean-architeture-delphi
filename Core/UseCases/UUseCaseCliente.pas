@@ -156,14 +156,8 @@ var
   Cliente: TObject;
 begin
   if Assigned(FListaGenerica) then
-  begin
-    for Cliente in FListaGenerica do
-    begin
-      Cliente.Free;
-    end;
-
     FreeAndNil(FListaGenerica);
-  end;
+
   inherited;
 end;
 

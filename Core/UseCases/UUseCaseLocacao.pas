@@ -155,14 +155,8 @@ var
   Locacao: TObject;
 begin
   if Assigned(FListaGenerica) then
-  begin
-    for Locacao in FListaGenerica do
-    begin
-      Locacao.Free;
-    end;
-
     FreeAndNil(FListaGenerica);
-  end;
+
   inherited;
 end;
 

@@ -189,10 +189,10 @@ var
 begin
   if Assigned(FLista) then
   begin
-    for Locacao in FLista do
-    begin
-      Locacao.Free;
-    end;
+//    for Locacao in FLista do
+//    begin
+//      FreeAndNil(Locacao);
+//    end;
 
     FreeAndNil(FLista);
   end;

@@ -162,10 +162,10 @@ var
 begin
   if Assigned(FLista) then
   begin
-    for Cliente in FLista do
-    begin
-      Cliente.Free;
-    end;
+//    for Cliente in FLista do
+//    begin
+//      FreeAndNil(Cliente);
+//    end;
 
     FreeAndNil(FLista);
   end;

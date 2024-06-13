@@ -150,14 +150,8 @@ var
   Veiculo: TObject;
 begin
   if Assigned(FListaGenerica) then
-  begin
-    for Veiculo in FListaGenerica do
-    begin
-      Veiculo.Free;
-    end;
-
     FreeAndNil(FListaGenerica);
-  end;
+
   inherited;
 end;
 
