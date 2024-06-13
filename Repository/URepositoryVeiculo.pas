@@ -139,14 +139,7 @@ var
   Veiculo: TObject;
 begin
   if Assigned(FLista) then
-  begin
-//    for Veiculo in FLista do
-//    begin
-//      FreeAndNil(Veiculo);
-//    end;
-
     FreeAndNil(FLista);
-  end;
 
   if Assigned(FConfiguracaoDB) then
     FreeAndNil(FConfiguracaoDB);

@@ -161,14 +161,7 @@ var
   Cliente: TObject;
 begin
   if Assigned(FLista) then
-  begin
-//    for Cliente in FLista do
-//    begin
-//      FreeAndNil(Cliente);
-//    end;
-
     FreeAndNil(FLista);
-  end;
 
   if Assigned(FConfiguracaoDB) then
     FreeAndNil(FConfiguracaoDB);
