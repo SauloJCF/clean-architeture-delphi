@@ -120,6 +120,7 @@
         <DCCReference Include="..\..\Core\Ports\CleanArchiteture.Core.Ports.IRepositoryLocacao.pas"/>
         <DCCReference Include="..\..\Repository\CleanArchiteture.Repository.RepositoryLocacao.pas"/>
         <DCCReference Include="..\..\Controllers\CleanArchiteture.Controllers.ControllerCliente.pas"/>
+        <DCCReference Include="..\..\Controllers\CleanArchiteture.Controllers.ControllerVeiculo.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

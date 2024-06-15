@@ -29,7 +29,8 @@ uses
   CleanArchiteture.Repository.RepositoryVeiculo in '..\..\Repository\CleanArchiteture.Repository.RepositoryVeiculo.pas',
   CleanArchiteture.Core.Ports.IRepositoryLocacao in '..\..\Core\Ports\CleanArchiteture.Core.Ports.IRepositoryLocacao.pas',
   CleanArchiteture.Repository.RepositoryLocacao in '..\..\Repository\CleanArchiteture.Repository.RepositoryLocacao.pas',
-  CleanArchiteture.Controllers.ControllerCliente in '..\..\Controllers\CleanArchiteture.Controllers.ControllerCliente.pas';
+  CleanArchiteture.Controllers.ControllerCliente in '..\..\Controllers\CleanArchiteture.Controllers.ControllerCliente.pas',
+  CleanArchiteture.Controllers.ControllerVeiculo in '..\..\Controllers\CleanArchiteture.Controllers.ControllerVeiculo.pas';
 
 begin
   try

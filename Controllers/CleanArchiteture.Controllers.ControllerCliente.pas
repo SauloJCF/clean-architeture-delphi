@@ -46,13 +46,13 @@ function TControllerCliente.Alterar(const Id: Integer;
 var
   Cliente: TCliente;
   Response: TResponse;
-  _dtoCliente: DTOCliente;
+  DTO: DTOCliente;
 begin
-  _dtoCliente.Id := Id;
-  _dtoCliente.Nome := EmptyStr;
-  _dtoCliente.Documento := EmptyStr;
+  DTO.Id := Id;
+  DTO.Nome := EmptyStr;
+  DTO.Documento := EmptyStr;
 
-  Response := FUseCase.Consultar(_dtoCliente);
+  Response := FUseCase.Consultar(DTO);
 
   if Response.Success and
     (Response.Message = RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO) then
