@@ -18,7 +18,7 @@ type
   private
     FUseCase: IUseCaseCliente;
     procedure SetUseCase(const Value: IUseCaseCliente);
-  published
+  public
     constructor Create(const Repository: IRepositoryCliente);
     destructor Destroy; Override;
 
