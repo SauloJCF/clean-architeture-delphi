@@ -3,6 +3,7 @@ unit UControllerCliente;
 interface
 
 uses
+  System.SysUtils,
   UIRepositoryCliente,
   UIUseCaseCliente,
   UUseCaseCliente,
@@ -48,20 +49,46 @@ var
   _dtoCliente: DtoCliente;
 begin
   _dtoCliente.Id := Id;
+  _dtoCliente.Nome := EmptyStr;
+  _dtoCliente.Documento := EmptyStr;
 
   Response := FUseCase.Consultar(_dtoCliente);
 
-  Cliente := TCliente.Create;
-  Cliente.Nome := Nome;
-  Cliente.Documento := Documento;
-  Cliente.Cep := Cep;
-  Cliente.Logradouro := Logradouro;
-  Cliente.Numero := Numero;
-  Cliente.Complemento := Complemento;
-  Cliente.Bairro := Bairro;
-  Cliente.Cidade := Cidade;
-  Cliente.Uf := Uf;
-  Cliente.Telefone := Telefone;
+  if Response.Success and
+    (Response.Message = RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO) then
+  begin
+    Cliente := TCliente(Response.Data.First);
+  end;
+
+  if not Nome.IsEmpty then
+    Cliente.Nome := Nome;
+
+  if not Documento.IsEmpty then
+    Cliente.Documento := Documento;
+
+  if not Cep.IsEmpty then
+    Cliente.Cep := Cep;
+
+  if not Logradouro.IsEmpty then
+    Cliente.Logradouro := Logradouro;
+
+  if not Numero.IsEmpty then
+    Cliente.Numero := Numero;
+
+  if not Complemento.IsEmpty then
+    Cliente.Complemento := Complemento;
+
+  if not Bairro.IsEmpty then
+    Cliente.Bairro := Bairro;
+
+  if not Cidade.IsEmpty then
+    Cliente.Cidade := Cidade;
+
+  if not Uf.IsEmpty then
+    Cliente.Uf := Uf;
+
+  if not Telefone.IsEmpty then
+    Cliente.Telefone := Telefone;
 
 end;
 
