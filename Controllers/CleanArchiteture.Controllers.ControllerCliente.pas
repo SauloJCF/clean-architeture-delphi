@@ -58,38 +58,45 @@ begin
     (Response.Message = RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO) then
   begin
     Cliente := TCliente(Response.Data.First);
+
+    if not Nome.IsEmpty then
+      Cliente.Nome := Nome;
+
+    if not Documento.IsEmpty then
+      Cliente.Documento := Documento;
+
+    if not Cep.IsEmpty then
+      Cliente.Cep := Cep;
+
+    if not Logradouro.IsEmpty then
+      Cliente.Logradouro := Logradouro;
+
+    if not Numero.IsEmpty then
+      Cliente.Numero := Numero;
+
+    if not Complemento.IsEmpty then
+      Cliente.Complemento := Complemento;
+
+    if not Bairro.IsEmpty then
+      Cliente.Bairro := Bairro;
+
+    if not Cidade.IsEmpty then
+      Cliente.Cidade := Cidade;
+
+    if not Uf.IsEmpty then
+      Cliente.Uf := Uf;
+
+    if not Telefone.IsEmpty then
+      Cliente.Telefone := Telefone;
+
+    Response := FUseCase.Alterar(Cliente);
+
+    if Response.Success and
+      (Response.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO) then
+      Result := 'Alterado com sucesso!'
+    else
+      Result := 'Erro ao alterar!';
   end;
-
-  if not Nome.IsEmpty then
-    Cliente.Nome := Nome;
-
-  if not Documento.IsEmpty then
-    Cliente.Documento := Documento;
-
-  if not Cep.IsEmpty then
-    Cliente.Cep := Cep;
-
-  if not Logradouro.IsEmpty then
-    Cliente.Logradouro := Logradouro;
-
-  if not Numero.IsEmpty then
-    Cliente.Numero := Numero;
-
-  if not Complemento.IsEmpty then
-    Cliente.Complemento := Complemento;
-
-  if not Bairro.IsEmpty then
-    Cliente.Bairro := Bairro;
-
-  if not Cidade.IsEmpty then
-    Cliente.Cidade := Cidade;
-
-  if not Uf.IsEmpty then
-    Cliente.Uf := Uf;
-
-  if not Telefone.IsEmpty then
-    Cliente.Telefone := Telefone;
-
 end;
 
 function TControllerCliente.Cadastrar(const Nome, Documento, Cep, Logradouro,
@@ -114,7 +121,8 @@ begin
 
   Cliente.Free;
 
-  if Response.Success then
+  if Response.Success and
+    (Response.Message = RetornarMsgResponse.CADASTRADO_COM_SUCESSO) then
     Result := 'Cadastrado com sucesso!'
   else
     Result := 'Erro ao cadastrar!';
@@ -122,8 +130,20 @@ end;
 
 function TControllerCliente.Consultar(const Id: Integer;
   const Nome, Documento: string): string;
+var
+  Response: TResponse;
+  Dto: DTOCliente;
 begin
+  Dto.Id := Id;
+  Dto.Nome := Nome;
+  Dto.Documento := Documento;
 
+  Response := FUseCase.Consultar(Dto);
+
+  if Response.Success then
+    Result := Response.Message
+  else
+    Result := 'Erro ao consultar!';
 end;
 
 constructor TControllerCliente.Create(const Repository: IRepositoryCliente);
@@ -132,8 +152,16 @@ begin
 end;
 
 function TControllerCliente.Deletar(const Id: Integer): string;
+var
+  Response: TResponse;
 begin
+  Response := FUseCase.Deletar(Id);
 
+  if Response.Success and
+    (Response.Message = RetornarMsgResponse.DELETADO_COM_SUCESSO) then
+    Result := 'Excluído com sucesso!'
+  else
+    Result := 'Erro ao excluir!';
 end;
 
 destructor TControllerCliente.Destroy;
