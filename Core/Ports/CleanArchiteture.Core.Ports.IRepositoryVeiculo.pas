@@ -1,11 +1,11 @@
-unit UIRepositoryVeiculo;
+unit CleanArchiteture.Core.Ports.IRepositoryVeiculo;
 
 interface
 
 uses
   System.Generics.Collections,
-  UVeiculo,
-  UDTOVeiculo;
+  CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Core.DTO.DTOVeiculo;
 
 type
 

@@ -93,9 +93,9 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="UTestUseCaseCliente.pas"/>
-        <DCCReference Include="UTestUseCaseVeiculo.pas"/>
-        <DCCReference Include="UTestUseCaseLocacao.pas"/>
+        <DCCReference Include="CleanArchiteture.Core.UseCases.TestUseCaseCliente.pas"/>
+        <DCCReference Include="CleanArchiteture.Core.UseCases.TestUseCaseVeiculo.pas"/>
+        <DCCReference Include="CleanArchiteture.Core.UseCases.TestUseCaseLocacao.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

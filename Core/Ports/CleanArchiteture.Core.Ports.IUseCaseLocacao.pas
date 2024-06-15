@@ -1,11 +1,11 @@
-unit UIUseCaseLocacao;
+unit CleanArchiteture.Core.Ports.IUseCaseLocacao;
 
 interface
 
 uses
-  UResponse,
-  ULocacao,
-  UDTOLocacao;
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Core.Models.Locacao,
+  CleanArchiteture.Core.DTO.DTOLocacao;
 
 type
   IUseCaseLocacao = interface

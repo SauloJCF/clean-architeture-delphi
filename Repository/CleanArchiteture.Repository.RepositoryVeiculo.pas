@@ -1,15 +1,15 @@
-unit URepositoryVeiculo;
+unit CleanArchiteture.Repository.RepositoryVeiculo;
 
 interface
 
 uses
   System.SysUtils,
   System.Generics.Collections,
-  UConfiguracaoDB,
-  UIRepositoryVeiculo,
-  UVeiculo,
-  UDTOVeiculo,
-  UUtils;
+  CleanArchiteture.Repository.ConfiguracaoDB,
+  CleanArchiteture.Core.Ports.IRepositoryVeiculo,
+  CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Core.DTO.DTOVeiculo,
+  CleanArchiteture.Core.Utils.Utils;
 
 type
 

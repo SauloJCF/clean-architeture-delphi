@@ -1,11 +1,11 @@
-unit UIRepositoryCliente;
+unit CleanArchiteture.Core.Ports.IRepositoryCliente;
 
 interface
 
 uses
   System.Generics.Collections,
-  UCliente,
-  UDTOCliente;
+  CleanArchiteture.Core.Models.Cliente,
+  CleanArchiteture.Core.DTO.DTOCliente;
 
 type
 

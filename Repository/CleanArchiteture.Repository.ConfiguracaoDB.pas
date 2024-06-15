@@ -1,4 +1,4 @@
-unit UConfiguracaoDB;
+unit CleanArchiteture.Repository.ConfiguracaoDB;
 
 interface
 
@@ -15,7 +15,7 @@ uses
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt,
   FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, FireDAC.Phys.FB, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  UExceptions;
+  CleanArchiteture.Core.Exceptions.Exceptions;
 
 type
 

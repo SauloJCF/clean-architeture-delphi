@@ -1,4 +1,4 @@
-unit UTestUseCaseLocacao;
+unit CleanArchiteture.Core.UseCases.TestUseCaseLocacao;
 
 interface
 
@@ -6,15 +6,27 @@ uses
   System.SysUtils,
   DUnitX.TestFramework,
 
-  ULocacao, UVeiculo, UCliente,
-  UEnums,
-  UResponse,
-  UUtils,
-  UIUseCaseLocacao, UIUseCaseCliente, UIUseCaseVeiculo,
-  UUseCaseLocacao, UUseCaseCliente, UUseCaseVeiculo,
-  UDTOLocacao, UDTOCliente, UDTOVeiculo,
-  UIRepositoryLocacao, UIRepositoryCliente, UIRepositoryVeiculo,
-  URepositoryLocacao, URepositoryCliente, URepositoryVeiculo;
+  CleanArchiteture.Core.Models.Locacao,
+  CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Core.Models.Cliente,
+  CleanArchiteture.Core.Enums.Enums,
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Core.Utils.Utils,
+  CleanArchiteture.Core.Ports.IUseCaseLocacao,
+  CleanArchiteture.Core.Ports.IUseCaseCliente,
+  CleanArchiteture.Core.Ports.IUseCaseVeiculo,
+  CleanArchiteture.Core.UseCases.UseCaseLocacao,
+  CleanArchiteture.Core.UseCases.UseCaseCliente,
+  CleanArchiteture.Core.UseCases.UseCaseVeiculo,
+  CleanArchiteture.Core.DTO.DTOLocacao,
+  CleanArchiteture.Core.DTO.DTOCliente,
+  CleanArchiteture.Core.DTO.DTOVeiculo,
+  CleanArchiteture.Core.Ports.IRepositoryLocacao,
+  CleanArchiteture.Core.Ports.IRepositoryCliente,
+  CleanArchiteture.Core.Ports.IRepositoryVeiculo,
+  CleanArchiteture.Repository.RepositoryLocacao,
+  CleanArchiteture.Repository.RepositoryCliente,
+  CleanArchiteture.Repository.RepositoryVeiculo;
 
 type
 

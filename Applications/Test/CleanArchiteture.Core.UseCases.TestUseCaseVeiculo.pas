@@ -1,19 +1,19 @@
-unit UTestUseCaseVeiculo;
+unit CleanArchiteture.Core.UseCases.TestUseCaseVeiculo;
 
 interface
 
 uses
   System.SysUtils,
   DUnitX.TestFramework,
-  UUseCaseVeiculo,
-  UEnums,
-  UResponse,
-  UVeiculo,
-  UIUseCaseVeiculo,
-  UDTOVeiculo,
-  UUtils,
-  UIRepositoryVeiculo,
-  URepositoryVeiculo;
+  CleanArchiteture.Core.UseCases.UseCaseVeiculo,
+  CleanArchiteture.Core.Enums.Enums,
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Core.Ports.IUseCaseVeiculo,
+  CleanArchiteture.Core.DTO.DTOVeiculo,
+  CleanArchiteture.Core.Utils.Utils,
+  CleanArchiteture.Core.Ports.IRepositoryVeiculo,
+  CleanArchiteture.Repository.RepositoryVeiculo;
 
 type
 
@@ -145,10 +145,10 @@ end;
 procedure TTestUseCaseVeiculo.ConsultaVeiculo;
 var
   Response: TResponse;
-  Dto: DTOVeiculo;
+  DTO: DTOVeiculo;
 begin
-  Dto.Id := 2;
-  Response := FUseCaseVeiculo.Consultar(Dto);
+  DTO.Id := 2;
+  Response := FUseCaseVeiculo.Consultar(DTO);
 
   Assert.IsTrue(Response.Success);
   Assert.AreEqual(RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO,

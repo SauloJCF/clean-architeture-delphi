@@ -1,14 +1,14 @@
-unit ULocacao;
+unit CleanArchiteture.Core.Models.Locacao;
 
 interface
 
 uses
   System.DateUtils,
   System.SysUtils,
-  UEnums,
-  UCliente,
-  UVeiculo,
-  UExceptions;
+  CleanArchiteture.Core.Enums.Enums,
+  CleanArchiteture.Core.Models.Cliente,
+  CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Core.Exceptions.Exceptions;
 
 type
   TLocacao = class

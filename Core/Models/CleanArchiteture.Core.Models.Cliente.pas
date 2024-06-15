@@ -1,10 +1,10 @@
-unit UCliente;
+unit CleanArchiteture.Core.Models.Cliente;
 
 interface
 
 uses
   System.SysUtils,
-  UExceptions;
+  CleanArchiteture.Core.Exceptions.Exceptions;
 
 type
 

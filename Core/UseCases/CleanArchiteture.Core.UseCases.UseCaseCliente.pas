@@ -1,18 +1,18 @@
-unit UUseCaseCliente;
+unit CleanArchiteture.Core.UseCases.UseCaseCliente;
 
 interface
 
 uses
   System.SysUtils,
   System.Generics.Collections,
-  UCliente,
-  UResponse,
-  UDTOCliente,
-  UIUseCaseCliente,
-  UIRepositoryCliente,
-  UEnums,
-  UUtils,
-  UExceptions;
+  CleanArchiteture.Core.Models.Cliente,
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Core.DTO.DTOCliente,
+  CleanArchiteture.Core.Ports.IUseCaseCliente,
+  CleanArchiteture.Core.Ports.IRepositoryCliente,
+  CleanArchiteture.Core.Enums.Enums,
+  CleanArchiteture.Core.Utils.Utils,
+  CleanArchiteture.Core.Exceptions.Exceptions;
 
 type
   TUseCaseCliente = class(TInterfacedObject, IUseCaseCliente)
@@ -28,7 +28,7 @@ type
     function Cadastrar(const Cliente: TCliente): TResponse;
     function Alterar(const Cliente: TCliente): TResponse;
     function Deletar(const Id: Integer): TResponse;
-    function Consultar(const Dto: DtoCliente): TResponse;
+    function Consultar(const DTO: DTOCliente): TResponse;
 
     constructor Create(const RepositoryCliente: IRepositoryCliente);
     destructor Destroy; Override;
@@ -53,7 +53,7 @@ begin
 
     Response.Success := True;
     Response.ErrorCode := 0;
-    Response.Message := UEnums.RetornarMsgResponse.ALTERADO_COM_SUCESSO;
+    Response.Message := RetornarMsgResponse.ALTERADO_COM_SUCESSO;
     Response.Data := nil;
   except
     on E: Exception do
@@ -75,7 +75,7 @@ begin
 
     Response.Success := True;
     Response.ErrorCode := 0;
-    Response.Message := UEnums.RetornarMsgResponse.CADASTRADO_COM_SUCESSO;
+    Response.Message := RetornarMsgResponse.CADASTRADO_COM_SUCESSO;
     Response.Data := nil;
   except
     on E: Exception do
@@ -86,19 +86,19 @@ begin
   Result := Response;
 end;
 
-function TUseCaseCliente.Consultar(const Dto: DtoCliente): TResponse;
+function TUseCaseCliente.Consultar(const DTO: DTOCliente): TResponse;
 var
   Response: TResponse;
 begin
   try
     FLista.Clear;
-    FLista := FRepository.Consultar(Dto);
+    FLista := FRepository.Consultar(DTO);
 
     if FLista.Count > 0 then
     begin
       Response.Success := True;
       Response.ErrorCode := 0;
-      Response.Message := UEnums.RetornarMsgResponse.
+      Response.Message := RetornarMsgResponse.
         CONSULTA_REALIZADA_COM_SUCESSO;
       Response.Data := ListaClienteParaListaGenerica(FLista);
     end
@@ -106,7 +106,7 @@ begin
     begin
       Response.Success := True;
       Response.ErrorCode := 0;
-      Response.Message := UEnums.RetornarMsgResponse.CONSULTA_SEM_RETORNO;
+      Response.Message := RetornarMsgResponse.CONSULTA_SEM_RETORNO;
       Response.Data := nil;
     end;
   except
@@ -127,7 +127,7 @@ begin
     FRepository.Excluir(Id);
     Response.Success := True;
     Response.ErrorCode := 0;
-    Response.Message := UEnums.RetornarMsgResponse.DELETADO_COM_SUCESSO;
+    Response.Message := RetornarMsgResponse.DELETADO_COM_SUCESSO;
     Response.Data := nil;
   except
     on E: Exception do

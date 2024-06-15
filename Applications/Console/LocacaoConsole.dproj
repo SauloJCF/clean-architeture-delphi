@@ -95,30 +95,31 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="UMenuPrincipal.pas"/>
-        <DCCReference Include="..\..\Core\Models\UCliente.pas"/>
-        <DCCReference Include="..\..\Core\Ports\UIUseCaseCliente.pas"/>
-        <DCCReference Include="..\..\Core\Responses\UResponse.pas"/>
-        <DCCReference Include="..\..\Core\DTO\UDTOCliente.pas"/>
-        <DCCReference Include="..\..\Core\UseCases\UUseCaseCliente.pas"/>
-        <DCCReference Include="..\..\Core\Enums\UEnums.pas"/>
-        <DCCReference Include="..\..\Core\Exceptions\UExceptions.pas"/>
-        <DCCReference Include="..\..\Core\Utils\UUtils.pas"/>
-        <DCCReference Include="..\..\Core\Models\UVeiculo.pas"/>
-        <DCCReference Include="..\..\Core\Ports\UIUseCaseVeiculo.pas"/>
-        <DCCReference Include="..\..\Core\DTO\UDTOVeiculo.pas"/>
-        <DCCReference Include="..\..\Core\UseCases\UUseCaseVeiculo.pas"/>
-        <DCCReference Include="..\..\Core\Models\ULocacao.pas"/>
-        <DCCReference Include="..\..\Core\Ports\UIUseCaseLocacao.pas"/>
-        <DCCReference Include="..\..\Core\DTO\UDTOLocacao.pas"/>
-        <DCCReference Include="..\..\Core\UseCases\UUseCaseLocacao.pas"/>
-        <DCCReference Include="..\..\Core\Ports\UIRepositoryCliente.pas"/>
-        <DCCReference Include="..\..\Repository\UConfiguracaoDB.pas"/>
-        <DCCReference Include="..\..\Repository\URepositoryCliente.pas"/>
-        <DCCReference Include="..\..\Core\Ports\UIRepositoryVeiculo.pas"/>
-        <DCCReference Include="..\..\Repository\URepositoryVeiculo.pas"/>
-        <DCCReference Include="..\..\Core\Ports\UIRepositoryLocacao.pas"/>
-        <DCCReference Include="..\..\Repository\URepositoryLocacao.pas"/>
+        <DCCReference Include="CleanArchiteture.Applications.LocacaoConsole.MenuPrincipal.pas"/>
+        <DCCReference Include="..\..\Core\Models\CleanArchiteture.Core.Models.Cliente.pas"/>
+        <DCCReference Include="..\..\Core\Ports\CleanArchiteture.Core.Ports.IUseCaseCliente.pas"/>
+        <DCCReference Include="..\..\Core\Responses\CleanArchiteture.Core.Responses.Response.pas"/>
+        <DCCReference Include="..\..\Core\DTO\CleanArchiteture.Core.DTO.DTOCliente.pas"/>
+        <DCCReference Include="..\..\Core\UseCases\CleanArchiteture.Core.UseCases.UseCaseCliente.pas"/>
+        <DCCReference Include="..\..\Core\Enums\CleanArchiteture.Core.Enums.Enums.pas"/>
+        <DCCReference Include="..\..\Core\Exceptions\CleanArchiteture.Core.Exceptions.Exceptions.pas"/>
+        <DCCReference Include="..\..\Core\Utils\CleanArchiteture.Core.Utils.Utils.pas"/>
+        <DCCReference Include="..\..\Core\Models\CleanArchiteture.Core.Models.Veiculo.pas"/>
+        <DCCReference Include="..\..\Core\Ports\CleanArchiteture.Core.Ports.IUseCaseVeiculo.pas"/>
+        <DCCReference Include="..\..\Core\DTO\CleanArchiteture.Core.DTO.DTOVeiculo.pas"/>
+        <DCCReference Include="..\..\Core\UseCases\CleanArchiteture.Core.UseCases.UseCaseVeiculo.pas"/>
+        <DCCReference Include="..\..\Core\Models\CleanArchiteture.Core.Models.Locacao.pas"/>
+        <DCCReference Include="..\..\Core\Ports\CleanArchiteture.Core.Ports.IUseCaseLocacao.pas"/>
+        <DCCReference Include="..\..\Core\DTO\CleanArchiteture.Core.DTO.DTOLocacao.pas"/>
+        <DCCReference Include="..\..\Core\UseCases\CleanArchiteture.Core.UseCases.UseCaseLocacao.pas"/>
+        <DCCReference Include="..\..\Core\Ports\CleanArchiteture.Core.Ports.IRepositoryCliente.pas"/>
+        <DCCReference Include="..\..\Repository\CleanArchiteture.Repository.ConfiguracaoDB.pas"/>
+        <DCCReference Include="..\..\Repository\CleanArchiteture.Repository.RepositoryCliente.pas"/>
+        <DCCReference Include="..\..\Core\Ports\CleanArchiteture.Core.Ports.IRepositoryVeiculo.pas"/>
+        <DCCReference Include="..\..\Repository\CleanArchiteture.Repository.RepositoryVeiculo.pas"/>
+        <DCCReference Include="..\..\Core\Ports\CleanArchiteture.Core.Ports.IRepositoryLocacao.pas"/>
+        <DCCReference Include="..\..\Repository\CleanArchiteture.Repository.RepositoryLocacao.pas"/>
+        <DCCReference Include="..\..\Controllers\CleanArchiteture.Controllers.ControllerCliente.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

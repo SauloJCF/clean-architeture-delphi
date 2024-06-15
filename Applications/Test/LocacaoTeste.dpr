@@ -13,9 +13,9 @@ uses
   DUnitX.Loggers.Console,
   {$ENDIF }
   DUnitX.TestFramework,
-  UTestUseCaseCliente in 'UTestUseCaseCliente.pas',
-  UTestUseCaseVeiculo in 'UTestUseCaseVeiculo.pas',
-  UTestUseCaseLocacao in 'UTestUseCaseLocacao.pas';
+  CleanArchiteture.Core.UseCases.TestUseCaseCliente in 'CleanArchiteture.Core.UseCases.TestUseCaseCliente.pas',
+  CleanArchiteture.Core.UseCases.TestUseCaseVeiculo in 'CleanArchiteture.Core.UseCases.TestUseCaseVeiculo.pas',
+  CleanArchiteture.Core.UseCases.TestUseCaseLocacao in 'CleanArchiteture.Core.UseCases.TestUseCaseLocacao.pas';
 
 var
   runner: ITestRunner;

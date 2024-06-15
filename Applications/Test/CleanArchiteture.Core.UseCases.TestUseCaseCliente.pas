@@ -1,19 +1,19 @@
-unit UTestUseCaseCliente;
+unit CleanArchiteture.Core.UseCases.TestUseCaseCliente;
 
 interface
 
 uses
   System.SysUtils,
   DUnitX.TestFramework,
-  UUseCaseCliente,
-  UEnums,
-  UUtils,
-  UResponse,
-  UCliente,
-  UIUseCaseCliente,
-  UDTOCliente,
-  UIRepositoryCliente,
-  URepositoryCliente;
+  CleanArchiteture.Core.UseCases.UseCaseCliente,
+  CleanArchiteture.Core.Enums.Enums,
+  CleanArchiteture.Core.Utils.Utils,
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Core.Models.Cliente,
+  CleanArchiteture.Core.Ports.IUseCaseCliente,
+  CleanArchiteture.Core.DTO.DTOCliente,
+  CleanArchiteture.Core.Ports.IRepositoryCliente,
+  CleanArchiteture.Repository.RepositoryCliente;
 
 type
 

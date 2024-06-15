@@ -1,4 +1,4 @@
-unit URepositoryLocacao;
+unit CleanArchiteture.Repository.RepositoryLocacao;
 
 interface
 
@@ -6,12 +6,21 @@ uses
   System.SysUtils,
   System.DateUtils,
   System.Generics.Collections,
-  UConfiguracaoDB,
-  UIRepositoryLocacao,
-  ULocacao, UVeiculo, UCliente,
-  UDTOLocacao, UDTOVeiculo, UDTOCliente,
-  UUtils,
-  UIRepositoryCliente, UIRepositoryVeiculo;
+  CleanArchiteture.Repository.ConfiguracaoDB,
+  CleanArchiteture.Core.Ports.IRepositoryLocacao,
+
+  CleanArchiteture.Core.Models.Locacao,
+  CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Core.Models.Cliente,
+
+  CleanArchiteture.Core.DTO.DTOLocacao,
+  CleanArchiteture.Core.DTO.DTOVeiculo,
+  CleanArchiteture.Core.DTO.DTOCliente,
+
+  CleanArchiteture.Core.Utils.Utils,
+
+  CleanArchiteture.Core.Ports.IRepositoryCliente,
+  CleanArchiteture.Core.Ports.IRepositoryVeiculo;
 
 type
 
@@ -53,7 +62,8 @@ var
 begin
   SQLFormatado := Format(SQL_LOCACAO, [Locacao.Cliente.Id,
     Locacao.DataDevolucao.Format('dd.MM.yyyy').QuotedString,
-    Locacao.Total.ToString.Replace(',', '.').Replace('R$', '').QuotedString, Locacao.Id]);
+    Locacao.Total.ToString.Replace(',', '.').Replace('R$', '').QuotedString,
+    Locacao.Id]);
 
   FConfiguracaoDB.ExecSQL(SQLFormatado);
 

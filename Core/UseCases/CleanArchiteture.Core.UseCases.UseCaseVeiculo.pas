@@ -1,18 +1,18 @@
-unit UUseCaseVeiculo;
+unit CleanArchiteture.Core.UseCases.UseCaseVeiculo;
 
 interface
 
 uses
   System.SysUtils,
   System.Generics.Collections,
-  UEnums,
-  UVeiculo,
-  UUtils,
-  UResponse,
-  UDTOVeiculo,
-  UIUseCaseVeiculo,
-  UExceptions,
-  UIRepositoryVeiculo;
+  CleanArchiteture.Core.Enums.Enums,
+  CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Core.Utils.Utils,
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Core.DTO.DTOVeiculo,
+  CleanArchiteture.Core.Ports.IUseCaseVeiculo,
+  CleanArchiteture.Core.Exceptions.Exceptions,
+  CleanArchiteture.Core.Ports.IRepositoryVeiculo;
 
 type
   TUseCaseVeiculo = class(TInterfacedObject, IUseCaseVeiculo)
@@ -28,7 +28,7 @@ type
     function Cadastrar(const Veiculo: TVeiculo): TResponse;
     function Alterar(const Veiculo: TVeiculo): TResponse;
     function Deletar(const Id: Integer): TResponse;
-    function Consultar(const Dto: DTOVeiculo): TResponse;
+    function Consultar(const DTO: DTOVeiculo): TResponse;
 
     property Lista: TList<TVeiculo> read FLista write SetLista;
     property ListaGenerica: TList<TObject> read FListaGenerica
@@ -53,7 +53,7 @@ begin
 
     Response.Success := True;
     Response.ErrorCode := 0;
-    Response.Message := UEnums.RetornarMsgResponse.ALTERADO_COM_SUCESSO;
+    Response.Message := RetornarMsgResponse.ALTERADO_COM_SUCESSO;
     Response.Data := nil;
   except
     on E: Exception do
@@ -75,7 +75,7 @@ begin
 
     Response.Success := True;
     Response.ErrorCode := 0;
-    Response.Message := UEnums.RetornarMsgResponse.CADASTRADO_COM_SUCESSO;
+    Response.Message := RetornarMsgResponse.CADASTRADO_COM_SUCESSO;
     Response.Data := nil;
   except
     on E: Exception do
@@ -86,19 +86,19 @@ begin
   Result := Response;
 end;
 
-function TUseCaseVeiculo.Consultar(const Dto: DTOVeiculo): TResponse;
+function TUseCaseVeiculo.Consultar(const DTO: DTOVeiculo): TResponse;
 var
   Response: TResponse;
 begin
   try
     FLista.Clear;
-    FLista := FRepository.Consultar(Dto);
+    FLista := FRepository.Consultar(DTO);
 
     if FLista.Count > 0 then
     begin
       Response.Success := True;
       Response.ErrorCode := 0;
-      Response.Message := UEnums.RetornarMsgResponse.
+      Response.Message := RetornarMsgResponse.
         CONSULTA_REALIZADA_COM_SUCESSO;
       Response.Data := ListaVeiculoParaListaGenerica(FLista);
     end
@@ -106,7 +106,7 @@ begin
     begin
       Response.Success := True;
       Response.ErrorCode := 0;
-      Response.Message := UEnums.RetornarMsgResponse.CONSULTA_SEM_RETORNO;
+      Response.Message := RetornarMsgResponse.CONSULTA_SEM_RETORNO;
       Response.Data := nil;
     end;
   except
@@ -134,7 +134,7 @@ begin
     FRepository.Excluir(Id);
     Response.Success := True;
     Response.ErrorCode := 0;
-    Response.Message := UEnums.RetornarMsgResponse.DELETADO_COM_SUCESSO;
+    Response.Message := RetornarMsgResponse.DELETADO_COM_SUCESSO;
     Response.Data := nil;
   except
     on E: Exception do

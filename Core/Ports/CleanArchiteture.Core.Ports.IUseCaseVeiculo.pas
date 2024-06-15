@@ -1,11 +1,11 @@
-unit UIUseCaseVeiculo;
+unit CleanArchiteture.Core.Ports.IUseCaseVeiculo;
 
 interface
 
 uses
-  UResponse,
-  UVeiculo,
-  UDTOVeiculo;
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Core.DTO.DTOVeiculo;
 
 type
   IUseCaseVeiculo = interface

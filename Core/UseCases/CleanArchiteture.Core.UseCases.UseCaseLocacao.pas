@@ -1,18 +1,18 @@
-unit UUseCaseLocacao;
+unit CleanArchiteture.Core.UseCases.UseCaseLocacao;
 
 interface
 
 uses
   System.SysUtils,
   System.Generics.Collections,
-  UEnums,
-  UExceptions,
-  UResponse,
-  ULocacao,
-  UDTOLocacao,
-  UUtils,
-  UIUseCaseLocacao,
-  UIRepositoryLocacao;
+  CleanArchiteture.Core.Enums.Enums,
+  CleanArchiteture.Core.Exceptions.Exceptions,
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Core.Models.Locacao,
+  CleanArchiteture.Core.DTO.DTOLocacao,
+  CleanArchiteture.Core.Utils.Utils,
+  CleanArchiteture.Core.Ports.IUseCaseLocacao,
+  CleanArchiteture.Core.Ports.IRepositoryLocacao;
 
 type
 
@@ -54,7 +54,7 @@ begin
 
     Response.Success := True;
     Response.ErrorCode := 0;
-    Response.Message := UEnums.RetornarMsgResponse.ALTERADO_COM_SUCESSO;
+    Response.Message := RetornarMsgResponse.ALTERADO_COM_SUCESSO;
     Response.Data := nil;
   except
     on E: Exception do
@@ -78,7 +78,7 @@ begin
 
     Response.Success := True;
     Response.ErrorCode := 0;
-    Response.Message := UEnums.RetornarMsgResponse.CADASTRADO_COM_SUCESSO;
+    Response.Message := RetornarMsgResponse.CADASTRADO_COM_SUCESSO;
     Response.Data := nil;
   except
     on E: Exception do
@@ -101,7 +101,7 @@ begin
     begin
       Response.Success := True;
       Response.ErrorCode := 0;
-      Response.Message := UEnums.RetornarMsgResponse.
+      Response.Message := RetornarMsgResponse.
         CONSULTA_REALIZADA_COM_SUCESSO;
       Response.Data := ListaLocacaoParaListaGenerica(FLista);
     end
@@ -109,7 +109,7 @@ begin
     begin
       Response.Success := True;
       Response.ErrorCode := 0;
-      Response.Message := UEnums.RetornarMsgResponse.CONSULTA_SEM_RETORNO;
+      Response.Message := RetornarMsgResponse.CONSULTA_SEM_RETORNO;
       Response.Data := nil;
     end;
   except
@@ -139,7 +139,7 @@ begin
 
     Response.Success := True;
     Response.ErrorCode := 0;
-    Response.Message := UEnums.RetornarMsgResponse.DELETADO_COM_SUCESSO;
+    Response.Message := RetornarMsgResponse.DELETADO_COM_SUCESSO;
     Response.Data := nil;
   except
     on E: Exception do

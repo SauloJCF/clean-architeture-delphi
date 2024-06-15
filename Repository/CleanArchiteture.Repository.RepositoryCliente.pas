@@ -1,14 +1,14 @@
-unit URepositoryCliente;
+unit CleanArchiteture.Repository.RepositoryCliente;
 
 interface
 
 uses
   System.SysUtils,
   System.Generics.Collections,
-  UConfiguracaoDB,
-  UCliente,
-  UDTOCliente,
-  UIRepositoryCliente;
+  CleanArchiteture.Repository.ConfiguracaoDB,
+  CleanArchiteture.Core.Models.Cliente,
+  CleanArchiteture.Core.DTO.DTOCliente,
+  CleanArchiteture.Core.Ports.IRepositoryCliente;
 
 type
   TRepositoryCliente = class(TInterfacedObject, IRepositoryCliente)

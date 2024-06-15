@@ -1,11 +1,11 @@
-unit UIRepositoryLocacao;
+unit CleanArchiteture.Core.Ports.IRepositoryLocacao;
 
 interface
 
 uses
   System.Generics.Collections,
-  ULocacao,
-  UDTOLocacao;
+  CleanArchiteture.Core.Models.Locacao,
+  CleanArchiteture.Core.DTO.DTOLocacao;
 
 type
 

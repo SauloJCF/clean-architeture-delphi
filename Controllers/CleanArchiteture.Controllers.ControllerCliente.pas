@@ -1,16 +1,16 @@
-unit UControllerCliente;
+unit CleanArchiteture.Controllers.ControllerCliente;
 
 interface
 
 uses
   System.SysUtils,
-  UIRepositoryCliente,
-  UIUseCaseCliente,
-  UUseCaseCliente,
-  UResponse,
-  UDTOCliente,
-  UCliente,
-  UEnums;
+  CleanArchiteture.Core.Ports.IRepositoryCliente,
+  CleanArchiteture.Core.Ports.IUseCaseCliente,
+  CleanArchiteture.Core.UseCases.UseCaseCliente,
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Core.DTO.DTOCliente,
+  CleanArchiteture.Core.Models.Cliente,
+  CleanArchiteture.Core.Enums.Enums;
 
 type
 
@@ -46,7 +46,7 @@ function TControllerCliente.Alterar(const Id: Integer;
 var
   Cliente: TCliente;
   Response: TResponse;
-  _dtoCliente: DtoCliente;
+  _dtoCliente: DTOCliente;
 begin
   _dtoCliente.Id := Id;
   _dtoCliente.Nome := EmptyStr;

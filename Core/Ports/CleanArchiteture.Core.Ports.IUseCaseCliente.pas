@@ -1,9 +1,11 @@
-unit UIUseCaseCliente;
+unit CleanArchiteture.Core.Ports.IUseCaseCliente;
 
 interface
 
 uses
-  UCliente, UResponse, UDTOCliente;
+  CleanArchiteture.Core.Models.Cliente,
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Core.DTO.DTOCliente;
 
 type
 
@@ -13,7 +15,7 @@ type
     function Cadastrar(const Cliente: TCliente): TResponse;
     function Alterar(const Cliente: TCliente): TResponse;
     function Deletar(const Id: Integer): TResponse;
-    function Consultar(const Dto: DTOCliente): TResponse;
+    function Consultar(const DTO: DTOCliente): TResponse;
   end;
 
 implementation

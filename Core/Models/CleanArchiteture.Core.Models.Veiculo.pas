@@ -1,11 +1,11 @@
-unit UVeiculo;
+unit CleanArchiteture.Core.Models.Veiculo;
 
 interface
 
 uses
   System.SysUtils,
-  UExceptions,
-  UEnums;
+  CleanArchiteture.Core.Exceptions.Exceptions,
+  CleanArchiteture.Core.Enums.Enums;
 
 type
   TVeiculo = class

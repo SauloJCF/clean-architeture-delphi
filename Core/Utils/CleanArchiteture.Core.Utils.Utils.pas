@@ -1,4 +1,4 @@
-unit UUtils;
+unit CleanArchiteture.Core.Utils.Utils;
 
 interface
 
@@ -6,12 +6,12 @@ uses
   System.SysUtils,
   System.Generics.Collections,
   TypInfo,
-  UResponse,
-  UExceptions,
-  UEnums,
-  UCliente,
-  UVeiculo,
-  ULocacao;
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Core.Exceptions.Exceptions,
+  CleanArchiteture.Core.Enums.Enums,
+  CleanArchiteture.Core.Models.Cliente,
+  CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Core.Models.Locacao;
 
 function TratarException(const E: Exception): TResponse;
 
