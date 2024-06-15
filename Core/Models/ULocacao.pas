@@ -128,6 +128,8 @@ begin
     ExceptionLocacaoVeiculo;
   if FVeiculo.Status = Alugado then
     ExceptionLocacaoVeiculoAlugado;
+
+  FTotal := CalcularTotal;
 end;
 
 end.

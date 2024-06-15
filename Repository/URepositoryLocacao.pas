@@ -45,15 +45,15 @@ implementation
 procedure TRepositoryLocacao.Alterar(const Locacao: TLocacao);
 const
   SQL_LOCACAO =
-    'UPDATE LOCACAO SET ID_CLIENTE = %d, DATA_DEVOLUCAO = %s WHERE (ID = %d);';
+    'UPDATE LOCACAO SET ID_CLIENTE = %d, DATA_DEVOLUCAO = %s, TOTAL = %s WHERE (ID = %d);';
   SQL_LOCACAO_VEICULOS =
     'UPDATE LOCACAO_VEICULOS SET ID_VEICULO = %d WHERE ID_LOCACAO = %d;';
 var
   SQLFormatado: String;
 begin
   SQLFormatado := Format(SQL_LOCACAO, [Locacao.Cliente.Id,
-    Locacao.DataDevolucao.ToString.QuotedString,
-    Locacao.Total.ToString.Replace(',', '.').QuotedString, Locacao.Id]);
+    Locacao.DataDevolucao.Format('dd.MM.yyyy').QuotedString,
+    Locacao.Total.ToString.Replace(',', '.').Replace('R$', '').QuotedString, Locacao.Id]);
 
   FConfiguracaoDB.ExecSQL(SQLFormatado);
 

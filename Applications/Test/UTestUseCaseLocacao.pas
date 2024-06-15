@@ -4,7 +4,6 @@ interface
 
 uses
   System.SysUtils,
-
   DUnitX.TestFramework,
 
   ULocacao, UVeiculo, UCliente,
@@ -54,7 +53,7 @@ type
     procedure ValidarVeiculoAlugado;
 
     [Test]
-    procedure AlterarLocacao;
+    procedure DevolverVeiculoLocacao;
 
     [Test]
     procedure ConsultaLocacao;
@@ -65,22 +64,23 @@ type
 
 implementation
 
-procedure TTestUseCaseLocacao.AlterarLocacao;
+procedure TTestUseCaseLocacao.DevolverVeiculoLocacao;
 var
   Response: TResponse;
+  _dtoLocacao: DTOLocacao;
 begin
-  FCliente.Nome := 'Ciclano Beltrano';
-  FCliente.Documento := '87654321';
-  FCliente.Telefone := '99999999';
+  _dtoLocacao.Id := 2;
+  _dtoLocacao.ClienteId := 0;
 
-  FVeiculo.Nome := 'Gol Bola';
-  FVeiculo.Placa := '7654321';
-  FVeiculo.Valor := 200;
-  FVeiculo.Status := Disponivel;
+  Response := FUseCaseLocacao.Consultar(_dtoLocacao);
 
-  FLocacao.Cliente := FCliente;
-  FLocacao.Veiculo := FVeiculo;
-  FLocacao.DataLocacao := StrToDate('29/06/2024');
+  if (Response.Success) and
+    (Response.Message = RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO) then
+  begin
+    FLocacao := TLocacao(Response.Data.First);
+  end;
+
+  FLocacao.DataDevolucao := FLocacao.DataLocacao + 3;
 
   Response := FUseCaseLocacao.Alterar(FLocacao);
 
@@ -128,7 +128,7 @@ end;
 procedure TTestUseCaseLocacao.ConsultaLocacao;
 var
   Response: TResponse;
-  Dto: DToLocacao;
+  Dto: DTOLocacao;
 begin
   Dto.Id := 4;
   Response := FUseCaseLocacao.Consultar(Dto);
