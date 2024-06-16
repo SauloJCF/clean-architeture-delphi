@@ -60,7 +60,60 @@ implementation
 
 function TControllerLocacao.Alterar(const IdLocacao, IdCliente,
   IdVeiculo: integer; const DataDevolucao: TDateTime): String;
+var
+  Response: TResponse;
+  Cliente: TCliente;
+  Veiculo: TVeiculo;
+  Locacao: TLocacao;
+  _DTOCliente: DTOCliente;
+  _DTOVeiculo: DTOVeiculo;
+  _DTOLocacao: DTOLocacao;
 begin
+  _DTOLocacao.Id := IdLocacao;
+
+  Response := FUseCaseLocacao.Consultar(_DTOLocacao);
+
+  if Response.Success and
+    (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
+  begin
+    Exit('Id da locação inválido!');
+  end;
+
+  Locacao := TLocacao(Response.Data.First);
+
+  if IdCliente > 0 then
+  begin
+    _DTOCliente.Id := IdCliente;
+    Response := FUseCaseCliente.Consultar(_DTOCliente);
+
+    if Response.Success and
+      (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
+    begin
+      Exit('Id do cliente inválido!');
+    end;
+
+    Cliente := TCliente(Response.Data.First);
+
+    Locacao.Cliente := Cliente;
+  end;
+
+  if IdVeiculo > 0 then
+  begin
+    _DTOVeiculo.Id := IdVeiculo;
+
+    Response := FUseCaseVeiculo.Consultar(_DTOVeiculo);
+
+    if Response.Success and
+      (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
+    begin
+      Exit('Id do veículo inválido!');
+    end;
+
+    Veiculo := TVeiculo(Response.Data.First);
+
+    Locacao.Veiculo := Veiculo;
+  end;
+  Locacao.DataDevolucao := DataDevolucao;
 
 end;
 
@@ -91,7 +144,7 @@ begin
   Response := FUseCaseVeiculo.Consultar(_DTOVeiculo);
 
   if Response.Success and
-    (Response.Message = RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO) then
+    (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
   begin
     Exit('Id do veículo inválido!');
   end;
