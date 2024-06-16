@@ -19,7 +19,8 @@ uses
   CleanArchiteture.Core.UseCases.UseCaseCliente,
   CleanArchiteture.Core.UseCases.UseCaseVeiculo,
   CleanArchiteture.Core.Enums.Enums,
-  CleanArchiteture.Core.Utils.Utils;
+  CleanArchiteture.Core.Utils.Utils,
+  CleanArchiteture.Core.Responses.Response;
 
 type
   TControllerLocacao = class
@@ -65,8 +66,61 @@ end;
 
 function TControllerLocacao.Cadastrar(const IdCliente,
   IdVeiculo: integer): string;
+var
+  Response, ResponseVeiculo: TResponse;
+  Cliente: TCliente;
+  Veiculo: TVeiculo;
+  Locacao: TLocacao;
+  _DTOCliente: DTOCliente;
+  _DTOVeiculo: DTOVeiculo;
 begin
+  _DTOCliente.Id := IdCliente;
 
+  Response := FUseCaseCliente.Consultar(_DTOCliente);
+
+  if Response.Success and
+    (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
+  begin
+    Exit('Id do cliente inválido!');
+  end;
+
+  Cliente := TCliente(Response.Data.First);
+
+  _DTOVeiculo.Id := IdVeiculo;
+
+  Response := FUseCaseVeiculo.Consultar(_DTOVeiculo);
+
+  if Response.Success and
+    (Response.Message = RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO) then
+  begin
+    Exit('Id do veículo inválido!');
+  end;
+
+  Veiculo := TVeiculo(Response.Data.First);
+
+  Locacao := TLocacao.Create;
+
+  Locacao.Cliente := Cliente;
+  Locacao.Veiculo := Veiculo;
+
+  Response := FUseCaseLocacao.Cadastrar(Locacao);
+
+  Locacao.Free;
+
+  if Response.Success and
+    (Response.Message = RetornarMsgResponse.CADASTRADO_COM_SUCESSO) then
+  begin
+    Veiculo.Status := Alugado;
+
+    ResponseVeiculo := FUseCaseVeiculo.Alterar(Veiculo);
+
+    if ResponseVeiculo.Success then
+      Result := 'Cadastrado com sucesso!'
+    else
+      Result := 'Erro ao alterar status do veículo!';
+  end
+  else
+    Result := 'Erro ao cadastrar!';
 end;
 
 function TControllerLocacao.Consultar(const IdLocaco: integer;

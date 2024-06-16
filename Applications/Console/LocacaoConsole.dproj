@@ -121,6 +121,7 @@
         <DCCReference Include="..\..\Repository\CleanArchiteture.Repository.RepositoryLocacao.pas"/>
         <DCCReference Include="..\..\Controllers\CleanArchiteture.Controllers.ControllerCliente.pas"/>
         <DCCReference Include="..\..\Controllers\CleanArchiteture.Controllers.ControllerVeiculo.pas"/>
+        <DCCReference Include="..\..\Controllers\CleanArchiteture.Controllers.ControllerLocacao.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
