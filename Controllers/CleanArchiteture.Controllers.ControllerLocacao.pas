@@ -38,8 +38,8 @@ type
     function Alterar(const IdLocacao, IdCliente, IdVeiculo: integer;
       const DataDevolucao: TDateTime): String;
     function Deletar(const IdLocacao: integer): String;
-    function Consultar(const IdLocaco: integer;
-      const DataDevolucao: TDateTime): string;
+    function Consultar(const IdLocacao, IdCliente: integer;
+      const DataLocacao, DataDevolucao: TDateTime): string;
 
     constructor Create(const RepositoryLocacao: IRepositoryLocacao;
       const RepositoryCliente: IRepositoryCliente;
@@ -210,10 +210,23 @@ begin
     Result := 'Erro ao cadastrar!';
 end;
 
-function TControllerLocacao.Consultar(const IdLocaco: integer;
-  const DataDevolucao: TDateTime): string;
+function TControllerLocacao.Consultar(const IdLocacao, IdCliente: integer;
+  const DataLocacao, DataDevolucao: TDateTime): string;
+var
+  Response: TResponse;
+  DTO: DTOLocacao;
 begin
+  DTO.Id := IdLocacao;
+  DTO.ClienteId := IdCliente;
+  DTO.DataLocacao := DataLocacao;
+  DTO.DataDevolucao := DataDevolucao;
 
+  Response := FUseCaseLocacao.Consultar(DTO);
+
+  if Response.Success then
+    Result := Response.Message
+  else
+    Result := 'Erro ao consultar!';
 end;
 
 constructor TControllerLocacao.Create(const RepositoryLocacao
@@ -228,13 +241,14 @@ end;
 function TControllerLocacao.Deletar(const IdLocacao: integer): String;
 var
   Response: TResponse;
-  _DTOLocacao: DtoLocacao;
+  _DTOLocacao: DTOLocacao;
 begin
   _DTOLocacao.Id := IdLocacao;
 
   Response := FUseCaseLocacao.Consultar(_DTOLocacao);
 
-  if Response.Success and (response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
+  if Response.Success and
+    (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
   begin
     Exit('Id locação inválido!');
   end;
