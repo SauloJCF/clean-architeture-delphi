@@ -20,7 +20,7 @@ uses
   CleanArchiteture.Core.UseCases.UseCaseVeiculo,
   CleanArchiteture.Core.Enums.Enums,
   CleanArchiteture.Core.Utils.Utils,
-  CleanArchiteture.Core.Responses.Response;
+  CleanArchiteture.Core.Responses.Response, System.SysUtils;
 
 type
   TControllerLocacao = class
@@ -61,7 +61,7 @@ implementation
 function TControllerLocacao.Alterar(const IdLocacao, IdCliente,
   IdVeiculo: integer; const DataDevolucao: TDateTime): String;
 var
-  Response: TResponse;
+  Response, ResponseVeiculo: TResponse;
   Cliente: TCliente;
   Veiculo: TVeiculo;
   Locacao: TLocacao;
@@ -113,8 +113,42 @@ begin
 
     Locacao.Veiculo := Veiculo;
   end;
-  Locacao.DataDevolucao := DataDevolucao;
 
+  if DataDevolucao <> StrToDate('30/12/1899') then
+    Locacao.DataDevolucao := DataDevolucao;
+
+  Response := FUseCaseLocacao.Alterar(Locacao);
+
+  if Response.Success then
+  begin
+    if Locacao.Veiculo.Id <> Locacao.VeiculoAtual.Id then
+    begin
+      Locacao.VeiculoAtual.Status := Disponivel;
+      ResponseVeiculo := FUseCaseVeiculo.Alterar(Locacao.VeiculoAtual);
+
+      if not ResponseVeiculo.Success and
+        not(ResponseVeiculo.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO)
+      then
+      begin
+        Exit('Erro ao atualizar status veículo!');
+      end;
+
+      Locacao.Veiculo.Status := Alugado;
+      ResponseVeiculo := FUseCaseVeiculo.Alterar(Locacao.Veiculo);
+
+      if not ResponseVeiculo.Success and
+        not(ResponseVeiculo.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO)
+      then
+      begin
+        Exit('Erro ao atualizar status veículo!');
+      end;
+    end;
+    Result := 'Alterado com sucesso!';
+  end
+  else
+  begin
+    Result := 'Erro ao alterar!';
+  end;
 end;
 
 function TControllerLocacao.Cadastrar(const IdCliente,
@@ -192,8 +226,26 @@ begin
 end;
 
 function TControllerLocacao.Deletar(const IdLocacao: integer): String;
+var
+  Response: TResponse;
+  _DTOLocacao: DtoLocacao;
 begin
+  _DTOLocacao.Id := IdLocacao;
 
+  Response := FUseCaseLocacao.Consultar(_DTOLocacao);
+
+  if Response.Success and (response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
+  begin
+    Exit('Id locação inválido!');
+  end;
+
+  Response := FUseCaseLocacao.Deletar(IdLocacao);
+
+  if Response.Success and
+    (Response.Message = RetornarMsgResponse.DELETADO_COM_SUCESSO) then
+    Result := 'Excluído com sucesso!'
+  else
+    Result := 'Erro ao excluir!';
 end;
 
 destructor TControllerLocacao.Destroy;
