@@ -11,25 +11,30 @@ uses
   CleanArchiteture.Core.DTO.DTOVeiculo,
   CleanArchiteture.Core.Models.Veiculo,
   CleanArchiteture.Core.Enums.Enums,
-  CleanArchiteture.Core.Utils.Utils;
+  CleanArchiteture.Core.Utils.Utils,
+  CleanArchiteture.Presenters.IPresenter;
 
 type
 
   TControllerVeiculo = class
   private
     FUseCase: IUseCaseVeiculo;
+    FPresenter: IPresenter;
     procedure SetUseCase(const Value: IUseCaseVeiculo);
+    procedure SetPresenter(const Value: IPresenter);
   public
     function Cadastrar(const Nome, Placa: string; const Valor: Double): String;
-    function Alterar(const Id: Integer; const Nome, Placa, Status: string; const
-        Valor: Double): String;
+    function Alterar(const Id: Integer; const Nome, Placa, Status: string;
+      const Valor: Double): String;
     function Deletar(const Id: Integer): string;
     function Consultar(const Id: Integer; const Nome, Placa: string): string;
 
-    constructor Create(const Repository: IRepositoryVeiculo);
+    constructor Create(const Repository: IRepositoryVeiculo;
+      const Presenter: IPresenter);
     destructor Destroy; override;
 
     property UseCase: IUseCaseVeiculo read FUseCase write SetUseCase;
+    property Presenter: IPresenter read FPresenter write SetPresenter;
   end;
 
 implementation
@@ -65,11 +70,7 @@ begin
 
     Response := FUseCase.Alterar(Veiculo);
 
-    if Response.Success and
-      (Response.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO) then
-      Result := 'Alterado com sucesso!'
-    else
-      Result := 'Erro ao alterar!';
+    Result := FPresenter.ConverterReponse(Response);
   end;
 end;
 
@@ -89,12 +90,7 @@ begin
 
   Veiculo.Free;
 
-  if Response.Success and
-    (Response.Message = RetornarMsgResponse.CADASTRADO_COM_SUCESSO) then
-    Result := 'Cadastrado com sucesso!'
-  else
-    Result := 'Erro ao cadastrar!';
-
+  Result := FPresenter.ConverterReponse(Response);
 end;
 
 function TControllerVeiculo.Consultar(const Id: Integer;
@@ -109,15 +105,14 @@ begin
 
   Response := FUseCase.Consultar(DTO);
 
-  if Response.Success then
-    Result := Response.Message
-  else
-    Result := 'Erro ao consultar!';
+  Result := FPresenter.ConverterReponse(Response);
 end;
 
-constructor TControllerVeiculo.Create(const Repository: IRepositoryVeiculo);
+constructor TControllerVeiculo.Create(const Repository: IRepositoryVeiculo;
+  const Presenter: IPresenter);
 begin
   FUseCase := TUseCaseVeiculo.Create(Repository);
+  FPresenter := Presenter;
 end;
 
 function TControllerVeiculo.Deletar(const Id: Integer): string;
@@ -126,17 +121,18 @@ var
 begin
   Response := FUseCase.Deletar(Id);
 
-  if Response.Success and
-    (Response.Message = RetornarMsgResponse.DELETADO_COM_SUCESSO) then
-    Result := 'Excluído com sucesso!'
-  else
-    Result := 'Erro ao excluir!';
+  Result := FPresenter.ConverterReponse(Response);
 end;
 
 destructor TControllerVeiculo.Destroy;
 begin
 
   inherited;
+end;
+
+procedure TControllerVeiculo.SetPresenter(const Value: IPresenter);
+begin
+  FPresenter := Value;
 end;
 
 procedure TControllerVeiculo.SetUseCase(const Value: IUseCaseVeiculo);
