@@ -3,6 +3,7 @@ unit CleanArchiteture.Controllers.ControllerLocacao;
 interface
 
 uses
+  System.SysUtils,
   CleanArchiteture.Core.Models.Locacao,
   CleanArchiteture.Core.Models.Cliente,
   CleanArchiteture.Core.Models.Veiculo,
@@ -20,7 +21,8 @@ uses
   CleanArchiteture.Core.UseCases.UseCaseVeiculo,
   CleanArchiteture.Core.Enums.Enums,
   CleanArchiteture.Core.Utils.Utils,
-  CleanArchiteture.Core.Responses.Response, System.SysUtils;
+  CleanArchiteture.Core.Responses.Response,
+  CleanArchiteture.Presenters.IPresenter;
 
 type
   TControllerLocacao = class
@@ -28,10 +30,12 @@ type
     FUseCaseCliente: IUseCaseCliente;
     FUseCaseLocacao: IUseCaseLocacao;
     FUseCaseVeiculo: IUseCaseVeiculo;
+    FPresenter: IPresenter;
 
     procedure SetUseCaseCliente(const Value: IUseCaseCliente);
     procedure SetUseCaseLocacao(const Value: IUseCaseLocacao);
     procedure SetUseCaseVeiculo(const Value: IUseCaseVeiculo);
+    procedure SetPresenter(const Value: IPresenter);
 
   public
     function Cadastrar(const IdCliente, IdVeiculo: integer): string;
@@ -43,7 +47,7 @@ type
 
     constructor Create(const RepositoryLocacao: IRepositoryLocacao;
       const RepositoryCliente: IRepositoryCliente;
-      const RepositoryVeiculo: IRepositoryVeiculo);
+      const RepositoryVeiculo: IRepositoryVeiculo; const Presenter: IPresenter);
     destructor Destroy; override;
 
     property UseCaseLocacao: IUseCaseLocacao read FUseCaseLocacao
@@ -52,6 +56,7 @@ type
       write SetUseCaseCliente;
     property UseCaseVeiculo: IUseCaseVeiculo read FUseCaseVeiculo
       write SetUseCaseVeiculo;
+    property Presenter: IPresenter read FPresenter write SetPresenter;
   end;
 
 implementation
@@ -76,7 +81,9 @@ begin
   if Response.Success and
     (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
   begin
-    Exit('Id da locação inválido!');
+    Response.Message := 'Id da locação inválido!';
+    Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
+    Exit(FPresenter.ConverterReponse(Response));
   end;
 
   Locacao := TLocacao(Response.Data.First);
@@ -89,7 +96,9 @@ begin
     if Response.Success and
       (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
     begin
-      Exit('Id do cliente inválido!');
+      Response.Message := 'Id do cliente inválido!';
+      Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
+      Exit(FPresenter.ConverterReponse(Response));
     end;
 
     Cliente := TCliente(Response.Data.First);
@@ -106,7 +115,9 @@ begin
     if Response.Success and
       (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
     begin
-      Exit('Id do veículo inválido!');
+      Response.Message := 'Id do veículo inválido!';
+      Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
+      Exit(FPresenter.ConverterReponse(Response));
     end;
 
     Veiculo := TVeiculo(Response.Data.First);
@@ -130,7 +141,9 @@ begin
         not(ResponseVeiculo.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO)
       then
       begin
-        Exit('Erro ao atualizar status veículo!');
+        ResponseVeiculo.Message := 'Erro ao atualizar status veículo!';
+        ResponseVeiculo.ErrorCode := RetornarErrorsCode.ERRO_BANCO_DADOS;
+        Exit(FPresenter.ConverterReponse(ResponseVeiculo));
       end;
 
       Locacao.Veiculo.Status := Alugado;
@@ -140,15 +153,14 @@ begin
         not(ResponseVeiculo.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO)
       then
       begin
-        Exit('Erro ao atualizar status veículo!');
+        ResponseVeiculo.Message := 'Erro ao atualizar status veículo!';
+        ResponseVeiculo.ErrorCode := RetornarErrorsCode.ERRO_BANCO_DADOS;
+        Exit(FPresenter.ConverterReponse(ResponseVeiculo));
       end;
     end;
-    Result := 'Alterado com sucesso!';
-  end
-  else
-  begin
-    Result := 'Erro ao alterar!';
   end;
+
+  Result := FPresenter.ConverterReponse(Response);
 end;
 
 function TControllerLocacao.Cadastrar(const IdCliente,
@@ -168,7 +180,9 @@ begin
   if Response.Success and
     (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
   begin
-    Exit('Id do cliente inválido!');
+    Response.Message := 'Id do cliente inválido!';
+    Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
+    Exit(FPresenter.ConverterReponse(Response));
   end;
 
   Cliente := TCliente(Response.Data.First);
@@ -180,7 +194,9 @@ begin
   if Response.Success and
     (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
   begin
-    Exit('Id do veículo inválido!');
+    Response.Message := 'Id do veículo inválido!';
+    Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
+    Exit(FPresenter.ConverterReponse(Response));
   end;
 
   Veiculo := TVeiculo(Response.Data.First);
@@ -201,13 +217,12 @@ begin
 
     ResponseVeiculo := FUseCaseVeiculo.Alterar(Veiculo);
 
-    if ResponseVeiculo.Success then
-      Result := 'Cadastrado com sucesso!'
-    else
-      Result := 'Erro ao alterar status do veículo!';
-  end
-  else
-    Result := 'Erro ao cadastrar!';
+    ResponseVeiculo.Message := 'Erro ao atualizar status veículo!';
+    ResponseVeiculo.ErrorCode := RetornarErrorsCode.ERRO_BANCO_DADOS;
+    Exit(FPresenter.ConverterReponse(ResponseVeiculo));
+  end;
+
+  Result := FPresenter.ConverterReponse(Response);
 end;
 
 function TControllerLocacao.Consultar(const IdLocacao, IdCliente: integer;
@@ -223,19 +238,17 @@ begin
 
   Response := FUseCaseLocacao.Consultar(DTO);
 
-  if Response.Success then
-    Result := Response.Message
-  else
-    Result := 'Erro ao consultar!';
+  Result := FPresenter.ConverterReponse(Response);
 end;
 
 constructor TControllerLocacao.Create(const RepositoryLocacao
   : IRepositoryLocacao; const RepositoryCliente: IRepositoryCliente;
-  const RepositoryVeiculo: IRepositoryVeiculo);
+  const RepositoryVeiculo: IRepositoryVeiculo; const Presenter: IPresenter);
 begin
   FUseCaseLocacao := TUseCaseLocacao.Create(RepositoryLocacao);
   FUseCaseCliente := TUseCaseCliente.Create(RepositoryCliente);
   FUseCaseVeiculo := TUseCaseVeiculo.Create(RepositoryVeiculo);
+  FPresenter := Presenter;
 end;
 
 function TControllerLocacao.Deletar(const IdLocacao: integer): String;
@@ -250,22 +263,25 @@ begin
   if Response.Success and
     (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
   begin
-    Exit('Id locação inválido!');
+    Response.Message := 'Id da locação inválido!';
+    Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
+    Exit(FPresenter.ConverterReponse(Response));
   end;
 
   Response := FUseCaseLocacao.Deletar(IdLocacao);
 
-  if Response.Success and
-    (Response.Message = RetornarMsgResponse.DELETADO_COM_SUCESSO) then
-    Result := 'Excluído com sucesso!'
-  else
-    Result := 'Erro ao excluir!';
+  Result := FPresenter.ConverterReponse(Response);
 end;
 
 destructor TControllerLocacao.Destroy;
 begin
 
   inherited;
+end;
+
+procedure TControllerLocacao.SetPresenter(const Value: IPresenter);
+begin
+  FPresenter := Value;
 end;
 
 procedure TControllerLocacao.SetUseCaseCliente(const Value: IUseCaseCliente);
