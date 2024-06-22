@@ -9,6 +9,7 @@ uses
   CleanArchiteture.Core.Responses.Response,
   CleanArchiteture.Core.Models.Cliente,
   CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Core.Models.Locacao,
   CleanArchiteture.Presenters.IPresenter,
   CleanArchiteture.Core.Utils.Utils;
 
@@ -19,6 +20,7 @@ type
     function ConverterReponse(const Response: TResponse): string;
     function ConverterCliente(const Cliente: TCliente): string;
     function ConverterVeiculo(const Veiculo: TVeiculo): string;
+    function ConverterLocacao(const Locacao: TLocacao): string;
     function ConverterLista(const Lista: TList<TObject>): string;
   end;
 
@@ -57,10 +59,26 @@ begin
         ListaStr := ListaStr + ConverterCliente(TCliente(Objeto)) + #13#10;
       if Objeto is TVeiculo then
         ListaStr := ListaStr + ConverterVeiculo(TVeiculo(Objeto)) + #13#10;
+      if Objeto is TLocacao then
+        ListaStr := ListaStr + ConverterLocacao(TLocacao(Objeto)) + #13#10;
     end;
   end;
 
   Result := ListaStr;
+end;
+
+function TPresenterStr.ConverterLocacao(const Locacao: TLocacao): string;
+var
+  LocacaoStr: String;
+begin
+  LocacaoStr := 'Id: ' + IntToStr(Locacao.Id) + #13#10 + 'Cliente: ' +
+    ConverterCliente(Locacao.Cliente) + #13#10 + 'Veiculo: ' +
+    ConverterVeiculo(Locacao.Veiculo) + #13#10 + 'Data Locação: ' +
+    DateToStr(Locacao.DataLocacao) + #13#10 + 'Data Devolução: ' +
+    DateToStr(Locacao.DataDevolucao) + #13#10 + 'Total: ' +
+    Locacao.Total.ToString() + #13#10;
+
+  Result := LocacaoStr;
 end;
 
 function TPresenterStr.ConverterReponse(const Response: TResponse): string;
