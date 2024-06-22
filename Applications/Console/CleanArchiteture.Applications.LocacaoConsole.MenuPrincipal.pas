@@ -151,7 +151,7 @@ end;
 procedure CadastrarCliente;
 var
   Nome, Documento, Cep, Logradouro, Numero, Complemento, Bairro, Cidade, Uf,
-    Telefone, response: string;
+    Telefone, Response: string;
 begin
   Clear;
   Writeln('Cadastro de Clientes');
@@ -188,33 +188,102 @@ begin
   Write('Telefone: ');
   readln(Input, Telefone);
 
-  WriteLn;
+  Writeln;
 
-  WriteLn('Resultado');
+  Writeln('Resultado');
 
-  WriteLn;
+  Writeln;
 
-  response := FControllerCliente.Cadastrar(Nome, Documento, Cep, Logradouro,
+  Response := FControllerCliente.Cadastrar(Nome, Documento, Cep, Logradouro,
     Numero, Complemento, Bairro, Cidade, Uf, Telefone);
 
-  Writeln(response);
+  Writeln(Response);
 
   readln;
   Menu;
 end;
 
 procedure AlterarCliente;
+var
+  Id: Integer;
+  Nome, Documento, Cep, Logradouro, Numero, Complemento, Bairro, Cidade, Uf,
+    Telefone, Response: string;
 begin
   Clear;
   Writeln('Alterar Clientes');
+
+  Writeln;
+
+  Write('ID: ');
+  readln(Input, Id);
+
+  Write('Nome: ');
+  readln(Input, Nome);
+
+  Write('Documento: ');
+  readln(Input, Documento);
+
+  Write('Cep: ');
+  readln(Input, Cep);
+
+  Write('Logradouro: ');
+  readln(Input, Logradouro);
+
+  Write('Número: ');
+  readln(Input, Numero);
+
+  Write('Complemento: ');
+  readln(Input, Complemento);
+
+  Write('Bairro: ');
+  readln(Input, Bairro);
+
+  Write('Cidade: ');
+  readln(Input, Cidade);
+
+  Write('Uf: ');
+  readln(Input, Uf);
+
+  Write('Telefone: ');
+  readln(Input, Telefone);
+
+  Writeln;
+
+  Writeln('Resultado');
+
+  Writeln;
+
+  Response := FControllerCliente.Alterar(Id, Nome, Documento, Cep, Logradouro,
+    Numero, Complemento, Bairro, Cidade, Uf, Telefone);
+
+  Writeln(Response);
+
   readln;
   Menu;
 end;
 
 procedure ExcluirCliente;
+var
+  Id: Integer;
+  Response: String;
 begin
   Clear;
   Writeln('Excluir Clientes');
+  Writeln;
+
+  Write('ID: ');
+  readln(Input, Id);
+
+  Writeln;
+
+  Writeln('Resultado');
+
+  Writeln;
+
+  Response := FControllerCliente.Deletar(Id);
+
+  Writeln(Response);
+
   readln;
   Menu;
 end;
