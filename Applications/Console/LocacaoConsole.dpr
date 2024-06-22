@@ -33,7 +33,8 @@ uses
   CleanArchiteture.Controllers.ControllerVeiculo in '..\..\Controllers\CleanArchiteture.Controllers.ControllerVeiculo.pas',
   CleanArchiteture.Controllers.ControllerLocacao in '..\..\Controllers\CleanArchiteture.Controllers.ControllerLocacao.pas',
   CleanArchiteture.Presenters.IPresenter in '..\..\Presenters\CleanArchiteture.Presenters.IPresenter.pas',
-  CleanArchiteture.Presenters.PresenterStr in '..\..\Presenters\CleanArchiteture.Presenters.PresenterStr.pas';
+  CleanArchiteture.Presenters.PresenterStr in '..\..\Presenters\CleanArchiteture.Presenters.PresenterStr.pas',
+  CleanArchiteture.Presenters.PresenterJSON in '..\..\Presenters\CleanArchiteture.Presenters.PresenterJSON.pas';
 
 begin
   try

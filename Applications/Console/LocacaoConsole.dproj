@@ -124,6 +124,7 @@
         <DCCReference Include="..\..\Controllers\CleanArchiteture.Controllers.ControllerLocacao.pas"/>
         <DCCReference Include="..\..\Presenters\CleanArchiteture.Presenters.IPresenter.pas"/>
         <DCCReference Include="..\..\Presenters\CleanArchiteture.Presenters.PresenterStr.pas"/>
+        <DCCReference Include="..\..\Presenters\CleanArchiteture.Presenters.PresenterJSON.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
