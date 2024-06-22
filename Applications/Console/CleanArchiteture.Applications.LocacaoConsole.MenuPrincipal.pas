@@ -3,7 +3,38 @@ unit CleanArchiteture.Applications.LocacaoConsole.MenuPrincipal;
 interface
 
 uses
-  Winapi.Windows, System.SysUtils;
+  Winapi.Windows,
+  System.SysUtils,
+  System.DateUtils,
+  CleanArchiteture.Core.Models.Cliente,
+  CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Core.Models.Locacao,
+  CleanArchiteture.Core.Ports.IRepositoryCliente,
+  CleanArchiteture.Core.Ports.IRepositoryVeiculo,
+  CleanArchiteture.Core.Ports.IRepositoryLocacao,
+  CleanArchiteture.Repository.RepositoryCliente,
+  CleanArchiteture.Repository.RepositoryVeiculo,
+  CleanArchiteture.Repository.RepositoryLocacao,
+  CleanArchiteture.Controllers.ControllerCliente,
+  CleanArchiteture.Controllers.ControllerVeiculo,
+  CleanArchiteture.Controllers.ControllerLocacao,
+  CleanArchiteture.Presenters.IPresenter,
+  CleanArchiteture.Presenters.PresenterStr;
+
+var
+  FControllerCliente: TControllerCliente;
+  FControllerVeiculo: TControllerVeiculo;
+  FControllerLocacao: TControllerLocacao;
+
+  FRepositoryCliente: IRepositoryCliente;
+  FRepositoryVeiculo: IRepositoryVeiculo;
+  FRepositoryLocacao: IRepositoryLocacao;
+
+  FPresenter: IPresenter;
+
+procedure InjecaoDependencia;
+
+procedure Destroy;
 
 procedure Menu;
 
@@ -72,6 +103,24 @@ begin
     3:
       MenuLocacao;
   end;
+end;
+
+procedure InjecaoDependencia;
+begin
+  FRepositoryCliente := TRepositoryCliente.Create;
+  FRepositoryVeiculo := TRepositoryVeiculo.Create;
+  FRepositoryLocacao := TRepositoryLocacao.Create(FRepositoryCliente,
+    FRepositoryVeiculo);
+
+  FPresenter := TPresenterStr.Create;
+
+  FControllerCliente := TControllerCliente.Create(FRepositoryCliente,
+    FPresenter);
+  FControllerVeiculo := TControllerVeiculo.Create(FRepositoryVeiculo,
+    FPresenter);
+  FControllerLocacao := TControllerLocacao.Create(FRepositoryLocacao,
+    FRepositoryCliente, FRepositoryVeiculo, FPresenter);
+
 end;
 
 procedure MenuCliente;
@@ -279,6 +328,13 @@ function Modulos: String;
 begin
   Result := '1 - Cadastrar' + #13#10 + '2 - Alterar' + #13#10 + '3 - Excluir' +
     #13#10 + '4 - Consultar' + #13#10 + '5 - Consultar' + #13#10;
+end;
+
+procedure Destroy;
+begin
+  FControllerCliente.Free;
+  FControllerVeiculo.Free;
+  FControllerLocacao.Free;
 end;
 
 end.
