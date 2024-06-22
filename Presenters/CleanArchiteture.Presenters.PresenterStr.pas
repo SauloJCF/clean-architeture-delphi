@@ -49,9 +49,9 @@ var
   Objeto: TObject;
   I: Integer;
 begin
-  if Assigned(Lista) and not(Lista.count > 0) then
+  if Assigned(Lista) and not(Lista.count <= 0) then
   begin
-    for I := 0 to Lista.count do
+    for I := 0 to Lista.count - 1 do
     begin
 
       Objeto := Lista[I];

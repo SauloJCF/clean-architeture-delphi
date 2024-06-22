@@ -289,9 +289,32 @@ begin
 end;
 
 procedure ConsultarCliente;
+var
+  Id: Integer;
+  Nome, Documento, Response: String;
 begin
   Clear;
   Writeln('Consulta de Clientes');
+
+  Write('ID: ');
+  readln(Input, Id);
+
+  Write('Nome: ');
+  readln(Input, Nome);
+
+  Write('Documento: ');
+  readln(Input, Documento);
+
+  Writeln;
+
+  Writeln('Resultado');
+
+  Writeln;
+
+  Response := FControllerCliente.Consultar(Id, Nome, Documento);
+
+  Writeln(Response);
+
   readln;
   Menu;
 end;
@@ -440,7 +463,7 @@ end;
 function Modulos: String;
 begin
   Result := '1 - Cadastrar' + #13#10 + '2 - Alterar' + #13#10 + '3 - Excluir' +
-    #13#10 + '4 - Consultar' + #13#10 + '5 - Consultar' + #13#10;
+    #13#10 + '4 - Consultar' + #13#10 + '5 - Voltar' + #13#10;
 end;
 
 procedure Destroy;
