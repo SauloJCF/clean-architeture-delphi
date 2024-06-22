@@ -31,7 +31,8 @@ uses
   CleanArchiteture.Repository.RepositoryLocacao in '..\..\Repository\CleanArchiteture.Repository.RepositoryLocacao.pas',
   CleanArchiteture.Controllers.ControllerCliente in '..\..\Controllers\CleanArchiteture.Controllers.ControllerCliente.pas',
   CleanArchiteture.Controllers.ControllerVeiculo in '..\..\Controllers\CleanArchiteture.Controllers.ControllerVeiculo.pas',
-  CleanArchiteture.Controllers.ControllerLocacao in '..\..\Controllers\CleanArchiteture.Controllers.ControllerLocacao.pas';
+  CleanArchiteture.Controllers.ControllerLocacao in '..\..\Controllers\CleanArchiteture.Controllers.ControllerLocacao.pas',
+  CleanArchiteture.Presenters.IPresenter in '..\..\Presenters\CleanArchiteture.Presenters.IPresenter.pas';
 
 begin
   try
