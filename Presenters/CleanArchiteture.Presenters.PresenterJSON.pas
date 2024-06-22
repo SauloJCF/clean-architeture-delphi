@@ -8,7 +8,9 @@ uses
 
   CleanArchiteture.Core.Responses.Response,
   CleanArchiteture.Core.Models.Cliente,
-  CleanArchiteture.Presenters.IPresenter;
+  CleanArchiteture.Core.Models.Veiculo,
+  CleanArchiteture.Presenters.IPresenter,
+  CleanArchiteture.Core.Utils.Utils;
 
 type
 
@@ -16,6 +18,7 @@ type
 
     function ConverterReponse(const Response: TResponse): string;
     function ConverterCliente(const Cliente: TCliente): string;
+    function ConverterVeiculo(const Veiculo: TVeiculo): string;
     function ConverterLista(const Lista: TList<TObject>): string;
   end;
 
@@ -27,19 +30,17 @@ function TPresenterJSON.ConverterCliente(const Cliente: TCliente): string;
 var
   ClienteStr: string;
 begin
-  ClienteStr := '{' +
-    '"Id:" ' + IntToStr(Cliente.Id) + ',' + #13#10 +
-    '"Nome": ' + AnsiQuotedStr(Cliente.Nome.DeQuotedString, '"') + ',' + #13#10 +
-    '"Documento": ' + AnsiQuotedStr(Cliente.Documento, '"') + ',' + #13#10 +
+  ClienteStr := '{' + '"Id:" ' + IntToStr(Cliente.Id) + ',' + #13#10 +
+    '"Nome": ' + AnsiQuotedStr(Cliente.Nome.DeQuotedString, '"') + ',' + #13#10
+    + '"Documento": ' + AnsiQuotedStr(Cliente.Documento, '"') + ',' + #13#10 +
     '"Cep": ' + AnsiQuotedStr(Cliente.Cep, '"') + ',' + #13#10 +
     '"Logradouro": ' + AnsiQuotedStr(Cliente.Logradouro, '"') + ',' + #13#10 +
     '"Numero": ' + AnsiQuotedStr(Cliente.Numero, '"') + ',' + #13#10 +
     '"Complemento": ' + AnsiQuotedStr(Cliente.Complemento, '"') + ',' + #13#10 +
     '"Bairro": ' + AnsiQuotedStr(Cliente.Bairro, '"') + ',' + #13#10 +
-    '"Cidade": ' + AnsiQuotedStr(Cliente.Cidade, '"') + ',' + #13#10 +
-    '"UF": ' + AnsiQuotedStr(Cliente.UF, '"') + ',' + #13#10 + '"Telefone": ' +
-    AnsiQuotedStr(Cliente.Telefone, '"') +
-  '}';
+    '"Cidade": ' + AnsiQuotedStr(Cliente.Cidade, '"') + ',' + #13#10 + '"UF": '
+    + AnsiQuotedStr(Cliente.UF, '"') + ',' + #13#10 + '"Telefone": ' +
+    AnsiQuotedStr(Cliente.Telefone, '"') + '}';
 
   Result := ClienteStr;
 end;
@@ -58,6 +59,8 @@ begin
       Objeto := Lista[I];
       if Objeto is TCliente then
         ListaStr := ListaStr + ConverterCliente(TCliente(Objeto)) + #13#10;
+      if Objeto is TVeiculo then
+        ListaStr := ListaStr + ConverterVeiculo(TVeiculo(Objeto)) + #13#10;
     end;
   end;
 
@@ -73,14 +76,26 @@ begin
   else
     Success := 'false';
 
-  ResponseStr := '{'+
-    '"Success": ' + AnsiQuotedStr(Success, '"') + ',' + #13#10 +
-    '"ErrorCode": ' + IntToStr(Response.ErrorCode) + ',' + #13#10 +
+  ResponseStr := '{' + '"Success": ' + AnsiQuotedStr(Success, '"') + ',' +
+    #13#10 + '"ErrorCode": ' + IntToStr(Response.ErrorCode) + ',' + #13#10 +
     '"Message": ' + AnsiQuotedStr(Response.Message, '"') + ',' + #13#10 +
-    '"Data": ' + ConverterLista(Response.Data) +
-  '}';
+    '"Data": ' + ConverterLista(Response.Data) + '}';
 
   Result := ResponseStr;
+end;
+
+function TPresenterJSON.ConverterVeiculo(const Veiculo: TVeiculo): string;
+var
+  VeiculoJSON: String;
+begin
+  VeiculoJSON := '{' + '"Id:" ' + IntToStr(Veiculo.Id) + ',' + #13#10 +
+    '"Nome": ' + AnsiQuotedStr(Veiculo.Nome.DeQuotedString, '"') + ',' + #13#10
+    + '"Placa": ' + AnsiQuotedStr(Veiculo.Placa, '"') + ',' + #13#10 +
+    '"Valor": ' + AnsiQuotedStr(Veiculo.Valor.ToString.Replace(',', '.')
+    .Replace('R$', ''), '"') + ',' + #13#10 + '"Status": ' +
+    AnsiQuotedStr(ConverterStatusStr(Veiculo.Status), '"') + '}';
+
+  Result := VeiculoJSON;
 end;
 
 end.
