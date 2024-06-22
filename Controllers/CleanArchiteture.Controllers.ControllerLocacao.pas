@@ -24,6 +24,13 @@ uses
   CleanArchiteture.Core.Responses.Response,
   CleanArchiteture.Presenters.IPresenter;
 
+const
+  MSG_ERRO_ATUALIZAR_STATUS_VEICULO = 'Erro ao atualizar status veículo!';
+  DATA_VAZIA = '30/12/1899';
+  MSG_ID_VEICULO_INVALIDO = 'Id do veículo inválido!';
+  MSG_ID_CLIENTE_INVALIDO = 'Id do cliente inválido!';
+  MSG_ID_LOCACAO_INVALIDO = 'Id da locação inválido!';
+
 type
   TControllerLocacao = class
   private
@@ -81,7 +88,7 @@ begin
   if Response.Success and
     (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
   begin
-    Response.Message := 'Id da locação inválido!';
+    Response.Message := MSG_ID_LOCACAO_INVALIDO;
     Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
     Exit(FPresenter.ConverterReponse(Response));
   end;
@@ -96,7 +103,7 @@ begin
     if Response.Success and
       (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
     begin
-      Response.Message := 'Id do cliente inválido!';
+      Response.Message := MSG_ID_CLIENTE_INVALIDO;
       Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
       Exit(FPresenter.ConverterReponse(Response));
     end;
@@ -115,7 +122,7 @@ begin
     if Response.Success and
       (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
     begin
-      Response.Message := 'Id do veículo inválido!';
+      Response.Message := MSG_ID_VEICULO_INVALIDO;
       Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
       Exit(FPresenter.ConverterReponse(Response));
     end;
@@ -125,7 +132,7 @@ begin
     Locacao.Veiculo := Veiculo;
   end;
 
-  if DataDevolucao <> StrToDate('30/12/1899') then
+  if DataDevolucao <> StrToDate(DATA_VAZIA) then
     Locacao.DataDevolucao := DataDevolucao;
 
   Response := FUseCaseLocacao.Alterar(Locacao);
@@ -141,7 +148,7 @@ begin
         not(ResponseVeiculo.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO)
       then
       begin
-        ResponseVeiculo.Message := 'Erro ao atualizar status veículo!';
+        ResponseVeiculo.Message := MSG_ERRO_ATUALIZAR_STATUS_VEICULO;
         ResponseVeiculo.ErrorCode := RetornarErrorsCode.ERRO_BANCO_DADOS;
         Exit(FPresenter.ConverterReponse(ResponseVeiculo));
       end;
@@ -153,7 +160,7 @@ begin
         not(ResponseVeiculo.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO)
       then
       begin
-        ResponseVeiculo.Message := 'Erro ao atualizar status veículo!';
+        ResponseVeiculo.Message := MSG_ERRO_ATUALIZAR_STATUS_VEICULO;
         ResponseVeiculo.ErrorCode := RetornarErrorsCode.ERRO_BANCO_DADOS;
         Exit(FPresenter.ConverterReponse(ResponseVeiculo));
       end;
@@ -180,7 +187,7 @@ begin
   if Response.Success and
     (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
   begin
-    Response.Message := 'Id do cliente inválido!';
+    Response.Message := MSG_ID_CLIENTE_INVALIDO;
     Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
     Exit(FPresenter.ConverterReponse(Response));
   end;
@@ -194,7 +201,7 @@ begin
   if Response.Success and
     (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
   begin
-    Response.Message := 'Id do veículo inválido!';
+    Response.Message := MSG_ID_VEICULO_INVALIDO;
     Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
     Exit(FPresenter.ConverterReponse(Response));
   end;
@@ -217,7 +224,7 @@ begin
 
     ResponseVeiculo := FUseCaseVeiculo.Alterar(Veiculo);
 
-    ResponseVeiculo.Message := 'Erro ao atualizar status veículo!';
+    ResponseVeiculo.Message := MSG_ERRO_ATUALIZAR_STATUS_VEICULO;
     ResponseVeiculo.ErrorCode := RetornarErrorsCode.ERRO_BANCO_DADOS;
     Exit(FPresenter.ConverterReponse(ResponseVeiculo));
   end;
@@ -263,7 +270,7 @@ begin
   if Response.Success and
     (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
   begin
-    Response.Message := 'Id da locação inválido!';
+    Response.Message := MSG_ID_LOCACAO_INVALIDO;
     Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
     Exit(FPresenter.ConverterReponse(Response));
   end;
