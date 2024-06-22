@@ -6,9 +6,6 @@ uses
   Winapi.Windows,
   System.SysUtils,
   System.DateUtils,
-  CleanArchiteture.Core.Models.Cliente,
-  CleanArchiteture.Core.Models.Veiculo,
-  CleanArchiteture.Core.Models.Locacao,
   CleanArchiteture.Core.Ports.IRepositoryCliente,
   CleanArchiteture.Core.Ports.IRepositoryVeiculo,
   CleanArchiteture.Core.Ports.IRepositoryLocacao,
@@ -152,9 +149,56 @@ begin
 end;
 
 procedure CadastrarCliente;
+var
+  Nome, Documento, Cep, Logradouro, Numero, Complemento, Bairro, Cidade, Uf,
+    Telefone, response: string;
 begin
   Clear;
   Writeln('Cadastro de Clientes');
+
+  Writeln;
+
+  Write('Nome: ');
+  readln(Input, Nome);
+
+  Write('Documento: ');
+  readln(Input, Documento);
+
+  Write('Cep: ');
+  readln(Input, Cep);
+
+  Write('Logradouro: ');
+  readln(Input, Logradouro);
+
+  Write('Número: ');
+  readln(Input, Numero);
+
+  Write('Complemento: ');
+  readln(Input, Complemento);
+
+  Write('Bairro: ');
+  readln(Input, Bairro);
+
+  Write('Cidade: ');
+  readln(Input, Cidade);
+
+  Write('Uf: ');
+  readln(Input, Uf);
+
+  Write('Telefone: ');
+  readln(Input, Telefone);
+
+  WriteLn;
+
+  WriteLn('Resultado');
+
+  WriteLn;
+
+  response := FControllerCliente.Cadastrar(Nome, Documento, Cep, Logradouro,
+    Numero, Complemento, Bairro, Cidade, Uf, Telefone);
+
+  Writeln(response);
+
   readln;
   Menu;
 end;

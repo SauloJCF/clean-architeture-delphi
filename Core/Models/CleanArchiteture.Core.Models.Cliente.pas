@@ -115,7 +115,7 @@ begin
     ExceptionNome;
   end;
 
-  if Length(FNome) <= 4 then
+  if Length(FNome) < 4 then
   begin
     ExceptionMinimoNome;
   end;
@@ -125,7 +125,7 @@ begin
     ExceptionDocumento;
   end;
 
-  if Length(FDocumento) <= 4 then
+  if Length(FDocumento) < 4 then
   begin
     ExceptionMinimoDocumento;
   end;
@@ -135,7 +135,7 @@ begin
     ExceptionTelefone;
   end;
 
-  if Length(FTelefone) <= 8 then
+  if Length(FTelefone) < 8 then
   begin
     ExceptionMinimoTelefone;
   end;
