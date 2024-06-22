@@ -10,16 +10,20 @@ uses
   CleanArchiteture.Core.Responses.Response,
   CleanArchiteture.Core.DTO.DTOCliente,
   CleanArchiteture.Core.Models.Cliente,
-  CleanArchiteture.Core.Enums.Enums;
+  CleanArchiteture.Core.Enums.Enums,
+  CleanArchiteture.Presenters.IPresenter;
 
 type
 
   TControllerCliente = class
   private
     FUseCase: IUseCaseCliente;
+    FPresenter: IPresenter;
     procedure SetUseCase(const Value: IUseCaseCliente);
+    procedure SetPresenter(const Value: IPresenter);
   public
-    constructor Create(const Repository: IRepositoryCliente);
+    constructor Create(const Repository: IRepositoryCliente;
+      const Presenter: IPresenter);
     destructor Destroy; Override;
 
     function Cadastrar(const Nome, Documento, Cep, Logradouro, Numero,
@@ -34,6 +38,7 @@ type
       const Nome, Documento: string): string;
 
     property UseCase: IUseCaseCliente read FUseCase write SetUseCase;
+    property Presenter: IPresenter read FPresenter write SetPresenter;
   end;
 
 implementation
@@ -91,11 +96,7 @@ begin
 
     Response := FUseCase.Alterar(Cliente);
 
-    if Response.Success and
-      (Response.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO) then
-      Result := 'Alterado com sucesso!'
-    else
-      Result := 'Erro ao alterar!';
+    Result := FPresenter.ConverterReponse(Response);
   end;
 end;
 
@@ -121,34 +122,29 @@ begin
 
   Cliente.Free;
 
-  if Response.Success and
-    (Response.Message = RetornarMsgResponse.CADASTRADO_COM_SUCESSO) then
-    Result := 'Cadastrado com sucesso!'
-  else
-    Result := 'Erro ao cadastrar!';
+  Result := FPresenter.ConverterReponse(Response);
 end;
 
 function TControllerCliente.Consultar(const Id: Integer;
   const Nome, Documento: string): string;
 var
   Response: TResponse;
-  Dto: DTOCliente;
+  DTO: DTOCliente;
 begin
-  Dto.Id := Id;
-  Dto.Nome := Nome;
-  Dto.Documento := Documento;
+  DTO.Id := Id;
+  DTO.Nome := Nome;
+  DTO.Documento := Documento;
 
-  Response := FUseCase.Consultar(Dto);
+  Response := FUseCase.Consultar(DTO);
 
-  if Response.Success then
-    Result := Response.Message
-  else
-    Result := 'Erro ao consultar!';
+  Result := FPresenter.ConverterReponse(Response);
 end;
 
-constructor TControllerCliente.Create(const Repository: IRepositoryCliente);
+constructor TControllerCliente.Create(const Repository: IRepositoryCliente;
+  const Presenter: IPresenter);
 begin
   FUseCase := TUseCaseCliente.Create(Repository);
+  FPresenter := Presenter;
 end;
 
 function TControllerCliente.Deletar(const Id: Integer): string;
@@ -157,17 +153,18 @@ var
 begin
   Response := FUseCase.Deletar(Id);
 
-  if Response.Success and
-    (Response.Message = RetornarMsgResponse.DELETADO_COM_SUCESSO) then
-    Result := 'Excluído com sucesso!'
-  else
-    Result := 'Erro ao excluir!';
+  Result := FPresenter.ConverterReponse(Response);
 end;
 
 destructor TControllerCliente.Destroy;
 begin
 
   inherited;
+end;
+
+procedure TControllerCliente.SetPresenter(const Value: IPresenter);
+begin
+  FPresenter := Value;
 end;
 
 procedure TControllerCliente.SetUseCase(const Value: IUseCaseCliente);
