@@ -350,7 +350,6 @@ end;
 procedure CadastrarVeiculo;
 var
   Nome, Placa, Response: string;
-var
   Valor: Double;
 begin
   Clear;
@@ -382,17 +381,66 @@ begin
 end;
 
 procedure AlterarVeiculo;
+var
+  Nome, Placa, Status, Response: string;
+  Valor: Double;
+  Id: Integer;
 begin
   Clear;
   Writeln('Alterar Veículos');
+  Writeln;
+
+  Write('ID: ');
+  readln(Input, Id);
+
+  Write('Nome: ');
+  readln(Input, Nome);
+
+  Write('Placa: ');
+  readln(Input, Placa);
+
+  Write('Status: ');
+  readln(Input, Status);
+
+  Write('Valor: ');
+  readln(Input, Valor);
+
+  Writeln;
+
+  Writeln('Resultado');
+
+  Writeln;
+
+  Response := FControllerVeiculo.Alterar(Id, Nome, Placa, Status, Valor);
+
+  Writeln(Response);
+
   readln;
   Menu;
 end;
 
 procedure ExcluirVeiculo;
+var
+  Id: Integer;
+  Response: String;
 begin
   Clear;
   Writeln('Excluir Veículos');
+  Writeln;
+
+  Writeln('Resultado');
+
+  Writeln;
+
+  Write('ID: ');
+  readln(Input, Id);
+
+  Writeln;
+
+  Response := FControllerVeiculo.Deletar(Id);
+
+  Writeln(Response);
+
   readln;
   Menu;
 end;
