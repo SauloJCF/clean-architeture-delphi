@@ -224,9 +224,14 @@ begin
 
     ResponseVeiculo := FUseCaseVeiculo.Alterar(Veiculo);
 
-    ResponseVeiculo.Message := MSG_ERRO_ATUALIZAR_STATUS_VEICULO;
-    ResponseVeiculo.ErrorCode := RetornarErrorsCode.ERRO_BANCO_DADOS;
-    Exit(FPresenter.ConverterReponse(ResponseVeiculo));
+    if not ResponseVeiculo.Success and
+      not(ResponseVeiculo.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO)
+    then
+    begin
+      ResponseVeiculo.Message := MSG_ERRO_ATUALIZAR_STATUS_VEICULO;
+      ResponseVeiculo.ErrorCode := RetornarErrorsCode.ERRO_BANCO_DADOS;
+      Exit(FPresenter.ConverterReponse(ResponseVeiculo));
+    end;
   end;
 
   Result := FPresenter.ConverterReponse(Response);

@@ -428,12 +428,12 @@ begin
   Writeln('Excluir Veículos');
   Writeln;
 
-  Writeln('Resultado');
+  Write('ID: ');
+  readln(Input, Id);
 
   Writeln;
 
-  Write('ID: ');
-  readln(Input, Id);
+  Writeln('Resultado');
 
   Writeln;
 
@@ -462,6 +462,10 @@ begin
 
   Write('Placa: ');
   readln(Input, Placa);
+
+  Writeln;
+
+  Writeln('Resultado');
 
   Writeln;
 
@@ -502,9 +506,30 @@ begin
 end;
 
 procedure CadastrarLocacao;
+var
+  IdCliente, IdVeiculo: Integer;
+  Response: String;
 begin
   Clear;
   Writeln('Cadastro de Locação');
+  Writeln;
+
+  Write('Cliente: ');
+  readln(Input, IdCliente);
+
+  Write('Veículo: ');
+  readln(Input, IdVeiculo);
+
+  Writeln;
+
+  Writeln('Resultado');
+
+  Writeln;
+
+  Response := FControllerLocacao.Cadastrar(IdCliente, IdVeiculo);
+
+  Writeln(Response);
+
   readln;
   Menu;
 end;

@@ -117,7 +117,7 @@ end;
 
 procedure ExceptionLocacaoVeiculoAlugado;
 begin
-  raise EExceptionLocacaoVeiculoAlugado.Create('Veículo alugado!');
+  raise EExceptionLocacaoVeiculoAlugado.Create('Veículo já consta como alugado!');
 end;
 
 procedure ExceptionDatabase(const Message: string);
