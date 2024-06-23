@@ -446,9 +446,29 @@ begin
 end;
 
 procedure ConsultarVeiculo;
+var
+  Nome, Placa, Response: string;
+  Id: Integer;
 begin
   Clear;
   Writeln('Consulta de Veículos');
+  Writeln;
+
+  Write('ID: ');
+  readln(Input, Id);
+
+  Write('Nome: ');
+  readln(Input, Nome);
+
+  Write('Placa: ');
+  readln(Input, Placa);
+
+  Writeln;
+
+  Response := FControllerVeiculo.Consultar(Id, Nome, Placa);
+
+  Writeln(Response);
+
   readln;
   Menu;
 end;
