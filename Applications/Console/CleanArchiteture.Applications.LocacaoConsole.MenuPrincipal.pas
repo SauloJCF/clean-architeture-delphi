@@ -348,9 +348,35 @@ begin
 end;
 
 procedure CadastrarVeiculo;
+var
+  Nome, Placa, Response: string;
+var
+  Valor: Double;
 begin
   Clear;
   Writeln('Cadastro de Veículos');
+
+  Writeln;
+
+  Write('Nome: ');
+  readln(Input, Nome);
+
+  Write('Placa: ');
+  readln(Input, Placa);
+
+  Write('Valor: ');
+  readln(Input, Valor);
+
+  Writeln;
+
+  Writeln('Resultado');
+
+  Writeln;
+
+  Response := FControllerVeiculo.Cadastrar(Nome, Placa, Valor);
+
+  Writeln(Response);
+
   readln;
   Menu;
 end;
