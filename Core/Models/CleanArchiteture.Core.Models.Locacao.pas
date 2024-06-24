@@ -126,8 +126,16 @@ begin
     ExceptionLocacaoCliente;
   if FVeiculo = nil then
     ExceptionLocacaoVeiculo;
-  if FVeiculo.Status = Alugado then
-    ExceptionLocacaoVeiculoAlugado;
+  if FVeiculoAtual = nil then
+  begin
+    if (FVeiculo.Status = Alugado) then
+      ExceptionLocacaoVeiculoAlugado;
+  end
+  else
+  begin
+    if (FVeiculo.Id <> FVeiculoAtual.Id) and (FVeiculo.Status = Alugado) then
+      ExceptionLocacaoVeiculoAlugado;
+  end;
 
   FTotal := CalcularTotal;
 end;

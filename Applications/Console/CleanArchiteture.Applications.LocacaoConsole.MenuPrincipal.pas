@@ -535,17 +535,66 @@ begin
 end;
 
 procedure AlterarLocacao;
+var
+  Id, IdCliente, IdVeiculo: Integer;
+  DataDevolucao, Response: String;
 begin
   Clear;
   Writeln('Alterar Locação');
+  Writeln;
+
+  Write('ID: ');
+  readln(Input, Id);
+
+  Write('Cliente: ');
+  readln(Input, IdCliente);
+
+  Write('Veículo: ');
+  readln(Input, IdVeiculo);
+
+  Write('Devolução: ');
+  readln(Input, DataDevolucao);
+
+  if DataDevolucao = EmptyStr then
+    DataDevolucao := '30/12/1899';
+
+  Writeln;
+
+  Writeln('Resultado');
+
+  Writeln;
+
+  Response := FControllerLocacao.Alterar(Id, IdCliente, IdVeiculo,
+    StrToDate(DataDevolucao));
+
+  Writeln(Response);
+
   readln;
   Menu;
 end;
 
 procedure ExcluirLocacao;
+var
+  Id: Integer;
+  Response: String;
 begin
   Clear;
   Writeln('Excluir Locação');
+  Writeln;
+
+  Write('ID: ');
+  readln(Input, Id);
+
+  Writeln;
+
+  Writeln('Resultado');
+
+  Writeln;
+
+  Response := FControllerLocacao.Deletar(Id);
+
+  Writeln(Response);
+
   readln;
   Menu;
 end;
