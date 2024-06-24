@@ -119,7 +119,8 @@ const
     'WHERE 1 = 1 ';
   FILTRO_ID = 'AND L.ID = %d ';
   FILTRO_ID_CLIENTE = 'AND L.ID_CLIENTE = %d';
-  FILTRO_PLACA = 'AND L.DATA = %s ';
+  FILTRO_DATA_LOCACAO = 'AND L.DATA_LOCACAO = %s ';
+  FILTRO_DATA_DEVOLUCAO = 'AND L.DATA_DEVOLUCAO = %s ';
 var
   _DtoCliente: DTOCliente;
   _DtoVeiculo: DTOVeiculo;
@@ -142,14 +143,14 @@ begin
 
     if DTO.DataLocacao <> StrToDate('30/12/1899') then
     begin
-      BuilderSQL.AppendFormat(FILTRO_PLACA,
-        [QuotedStr(DateToStr(DTO.DataLocacao))]);
+      BuilderSQL.AppendFormat(FILTRO_DATA_LOCACAO,
+        [QuotedStr(FormatDateTime('dd.MM.yyyy', DTO.DataLocacao))]);
     end;
 
     if DTO.DataDevolucao <> StrToDate('30/12/1899') then
     begin
-      BuilderSQL.AppendFormat(FILTRO_PLACA,
-        [QuotedStr(DateToStr(DTO.DataDevolucao))]);
+      BuilderSQL.AppendFormat(FILTRO_DATA_DEVOLUCAO,
+        [QuotedStr(FormatDateTime('dd.MM.yyyy', DTO.DataDevolucao))]);
     end;
   end;
 
@@ -168,6 +169,7 @@ begin
         Locacao.Id := Query.FieldByName('ID').AsInteger;
         Locacao.DataLocacao := Query.FieldByName('DATA_LOCACAO').AsDateTime;
         Locacao.DataDevolucao := Query.FieldByName('DATA_DEVOLUCAO').AsDateTime;
+        Locacao.Total := Query.FieldByName('TOTAL').AsCurrency;
 
         _DtoCliente.Id := Query.FieldByName('ID_CLIENTE').AsInteger;
 

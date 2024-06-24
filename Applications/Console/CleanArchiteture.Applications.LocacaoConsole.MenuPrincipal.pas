@@ -600,9 +600,43 @@ begin
 end;
 
 procedure ConsultarLocacao;
+var
+  Id, IdCliente: Integer;
+  DataLocacao, DataDevolucao, Response: String;
 begin
   Clear;
   Writeln('Consulta de Locação');
+  Writeln;
+
+  Write('ID: ');
+  readln(Input, Id);
+
+  Write('Cliente: ');
+  readln(Input, IdCliente);
+
+  Write('Locação: ');
+  readln(Input, DataLocacao);
+
+  Write('Devolução: ');
+  readln(Input, DataDevolucao);
+
+  if DataLocacao = EmptyStr then
+    DataLocacao := '30/12/1899';
+
+  if DataDevolucao = EmptyStr then
+    DataDevolucao := '30/12/1899';
+
+  Writeln;
+
+  Writeln('Resultado');
+
+  Writeln;
+
+  Response := FControllerLocacao.Consultar(Id, IdCliente,
+    StrToDate(DataLocacao), StrToDate(DataDevolucao));
+
+  Writeln(Response);
+
   readln;
   Menu;
 end;
