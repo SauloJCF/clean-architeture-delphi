@@ -34,7 +34,8 @@ uses
   CleanArchiteture.Repository.RepositoryVeiculo in '..\..\Repository\CleanArchiteture.Repository.RepositoryVeiculo.pas',
   CleanArchiteture.Core.DTO.DTOCliente in '..\..\Core\DTO\CleanArchiteture.Core.DTO.DTOCliente.pas',
   CleanArchiteture.Core.DTO.DTOLocacao in '..\..\Core\DTO\CleanArchiteture.Core.DTO.DTOLocacao.pas',
-  CleanArchiteture.Core.DTO.DTOVeiculo in '..\..\Core\DTO\CleanArchiteture.Core.DTO.DTOVeiculo.pas';
+  CleanArchiteture.Core.DTO.DTOVeiculo in '..\..\Core\DTO\CleanArchiteture.Core.DTO.DTOVeiculo.pas',
+  CleanArchiteture.LocacaoAPI.Routes.Clientes in 'Routes\CleanArchiteture.LocacaoAPI.Routes.Clientes.pas';
 
 begin
   try

@@ -5,7 +5,8 @@ interface
 uses
   System.SysUtils,
   Horse,
-  Horse.Jhonson;
+  Horse.Jhonson,
+  CleanArchiteture.LocacaoAPI.Routes.Clientes;
 
 procedure Start;
 
@@ -33,6 +34,8 @@ begin
     end);
 
   // Rotas Clientes
+
+  RouteCliente;
 
   // Rotas Veiculos
 

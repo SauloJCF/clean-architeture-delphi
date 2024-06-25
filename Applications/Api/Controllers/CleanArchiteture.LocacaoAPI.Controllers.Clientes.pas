@@ -74,9 +74,9 @@ begin
 
   JsonValue := ConverterStrJSONParaObjectJson(Response);
 
-  Mensagem := JsonValue.GetValue<string>('message');
-  Sucesso := JsonValue.GetValue<Boolean>('sucesso');
-  ErrorCode := JsonValue.GetValue<Integer>('errorcode');
+  Mensagem := JsonValue.GetValue<string>('Message');
+  Sucesso := JsonValue.GetValue<Boolean>('Success');
+  ErrorCode := JsonValue.GetValue<Integer>('ErrorCode');
 
   if Mensagem = RetornarMsgResponse.CADASTRADO_COM_SUCESSO then
   begin
