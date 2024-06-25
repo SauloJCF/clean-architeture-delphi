@@ -5,7 +5,7 @@ program LocacaoConsole;
 
 uses
   System.SysUtils,
-  CleanArchiteture.Applications.LocacaoConsole.MenuPrincipal in 'CleanArchiteture.Applications.LocacaoConsole.MenuPrincipal.pas',
+  CleanArchiteture.LocacaoConsole.MenuPrincipal in 'CleanArchiteture.LocacaoConsole.MenuPrincipal.pas',
   CleanArchiteture.Core.Models.Cliente in '..\..\Core\Models\CleanArchiteture.Core.Models.Cliente.pas',
   CleanArchiteture.Core.Ports.IUseCaseCliente in '..\..\Core\Ports\CleanArchiteture.Core.Ports.IUseCaseCliente.pas',
   CleanArchiteture.Core.Responses.Response in '..\..\Core\Responses\CleanArchiteture.Core.Responses.Response.pas',

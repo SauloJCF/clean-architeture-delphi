@@ -1,4 +1,4 @@
-unit CleanArchiteture.Applications.LocacaoConsole.MenuPrincipal;
+unit CleanArchiteture.LocacaoConsole.MenuPrincipal;
 
 interface
 

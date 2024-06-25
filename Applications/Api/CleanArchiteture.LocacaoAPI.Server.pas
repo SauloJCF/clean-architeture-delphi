@@ -1,4 +1,4 @@
-unit CleanArchiteture.Applications.LocacaoAPI.Server;
+unit CleanArchiteture.LocacaoAPI.Server;
 
 interface
 

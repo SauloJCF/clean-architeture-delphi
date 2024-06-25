@@ -95,7 +95,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="CleanArchiteture.Applications.LocacaoConsole.MenuPrincipal.pas"/>
+        <DCCReference Include="CleanArchiteture.LocacaoConsole.MenuPrincipal.pas"/>
         <DCCReference Include="..\..\Core\Models\CleanArchiteture.Core.Models.Cliente.pas"/>
         <DCCReference Include="..\..\Core\Ports\CleanArchiteture.Core.Ports.IUseCaseCliente.pas"/>
         <DCCReference Include="..\..\Core\Responses\CleanArchiteture.Core.Responses.Response.pas"/>

@@ -5,6 +5,7 @@ interface
 uses
   System.SysUtils,
   System.Generics.Collections,
+  System.JSON,
   TypInfo,
   CleanArchiteture.Core.Responses.Response,
   CleanArchiteture.Core.Exceptions.Exceptions,
@@ -27,6 +28,8 @@ function ListaLocacaoParaListaGenerica(const ListaLocacoes: TList<TLocacao>)
 function ConverterStatusStr(const Value: Status): string;
 
 function ConverterStrStatus(const Value: string): Status;
+
+function ConverterStrJSONParaObjectJson(const JSON: String): TJsonValue;
 
 implementation
 
@@ -125,6 +128,11 @@ end;
 function ConverterStrStatus(const Value: string): Status;
 begin
   Result := Status(GetEnumValue(TypeInfo(Status), Value));
+end;
+
+function ConverterStrJSONParaObjectJson(const JSON: String): TJsonValue;
+begin
+  Result := TJsonObject.ParseJSONValue(JSON);
 end;
 
 end.
