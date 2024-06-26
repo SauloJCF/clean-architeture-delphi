@@ -13,6 +13,7 @@ implementation
 procedure RouteCliente;
 begin
   THorse.Post('/api/cliente', PostCliente);
+  THorse.Put('/api/cliente/:id', PutCliente);
 end;
 
 end.
