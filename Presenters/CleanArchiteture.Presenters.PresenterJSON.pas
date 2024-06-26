@@ -32,7 +32,7 @@ function TPresenterJSON.ConverterCliente(const Cliente: TCliente): string;
 var
   ClienteStr: string;
 begin
-  ClienteStr := '{' + '"Id:" ' + IntToStr(Cliente.Id) + ',' + #13#10 +
+  ClienteStr := '{' + '"Id": ' + IntToStr(Cliente.Id) + ',' + #13#10 +
     '"Nome": ' + AnsiQuotedStr(Cliente.Nome.DeQuotedString, '"') + ',' + #13#10
     + '"Documento": ' + AnsiQuotedStr(Cliente.Documento, '"') + ',' + #13#10 +
     '"Cep": ' + AnsiQuotedStr(Cliente.Cep, '"') + ',' + #13#10 +
@@ -49,33 +49,36 @@ end;
 
 function TPresenterJSON.ConverterLista(const Lista: TList<TObject>): string;
 var
-  ListaStr: String;
+  JSON: String;
   Objeto: TObject;
   I: Integer;
 begin
-  if Assigned(Lista) and not(Lista.count > 0) then
+  if Assigned(Lista) and not(Lista.count = 0) then
   begin
-    for I := 0 to Lista.count do
+    for I := 0 to Lista.Count - 1 do
     begin
 
       Objeto := Lista[I];
       if Objeto is TCliente then
-        ListaStr := ListaStr + ConverterCliente(TCliente(Objeto)) + ',' + #13#10;
+        JSON := JSON + ConverterCliente(TCliente(Objeto)) + #13#10;
       if Objeto is TVeiculo then
-        ListaStr := ListaStr + ConverterVeiculo(TVeiculo(Objeto)) + ',' + #13#10;
+        JSON := JSON + ConverterVeiculo(TVeiculo(Objeto)) + #13#10;
       if Objeto is TLocacao then
-        ListaStr := ListaStr + ConverterLocacao(TLocacao(Objeto)) + ',' + #13#10;
+        JSON := JSON + ConverterLocacao(TLocacao(Objeto)) + #13#10;
+
+      if (I < Lista.count - 1) then
+        JSON := JSON + ',' + #13#10;
     end;
   end;
 
-  Result := '[' + ListaStr + ']';
+  Result := '[' + JSON + ']';
 end;
 
 function TPresenterJSON.ConverterLocacao(const Locacao: TLocacao): string;
 var
   LocacaoJSON: String;
 begin
-  LocacaoJSON := '{' + '"Id:" ' + IntToStr(Locacao.Id) + ',' + #13#10 +
+  LocacaoJSON := '{' + '"Id": ' + IntToStr(Locacao.Id) + ',' + #13#10 +
     '"Cliente": ' + ConverterCliente(Locacao.Cliente) + ',' + #13#10 +
     '"Veiculo": ' + ConverterVeiculo(Locacao.Veiculo) + ',' + #13#10 +
     '"DataLocacao": ' + FormatDateTime('yyyy-MM-dd hh:mm:ss',
@@ -108,7 +111,7 @@ function TPresenterJSON.ConverterVeiculo(const Veiculo: TVeiculo): string;
 var
   VeiculoJSON: String;
 begin
-  VeiculoJSON := '{' + '"Id:" ' + IntToStr(Veiculo.Id) + ',' + #13#10 +
+  VeiculoJSON := '{' + '"Id": ' + IntToStr(Veiculo.Id) + ',' + #13#10 +
     '"Nome": ' + AnsiQuotedStr(Veiculo.Nome.DeQuotedString, '"') + ',' + #13#10
     + '"Placa": ' + AnsiQuotedStr(Veiculo.Placa, '"') + ',' + #13#10 +
     '"Valor": ' + AnsiQuotedStr(Veiculo.Valor.ToString.Replace(',', '.')

@@ -33,6 +33,7 @@ procedure Destroy;
 procedure PostCliente(Req: THorseRequest; Res: THorseResponse);
 procedure PutCliente(Req: THorseRequest; Res: THorseResponse);
 procedure DeleteCliente(Req: THorseRequest; Res: THorseResponse);
+procedure GetClientes(Req: THorseRequest; Res: THorseResponse);
 
 var
   FControllerCliente: TControllerCliente;
@@ -190,6 +191,52 @@ begin
   ErrorCode := JsonValue.GetValue<Integer>('ErrorCode');
 
   if Mensagem = RetornarMsgResponse.DELETADO_COM_SUCESSO then
+  begin
+    Status := HTTP_STATUS_SUCESSO;
+  end;
+
+  if ErrorCode > ZERO then
+  begin
+    Status := HTTP_STATUS_ENTIDADE_IMPROCESSAVEL;
+  end;
+
+  if ErrorCode = RetornarErrorsCode.ERRO_BANCO_DADOS then
+  begin
+    Status := HTTP_STATUS_ERRO_INTERNO_SERVIDOR;
+  end;
+
+  Res.Send(Response).Status(Status);
+
+  Destroy;
+end;
+
+procedure GetClientes(Req: THorseRequest; Res: THorseResponse);
+var
+  Mensagem, Response, Id, Nome, Documento: string;
+  Status, ErrorCode: Integer;
+  Sucesso: Boolean;
+  JsonValue: TJsonValue;
+begin
+  InjecaoDependencia;
+
+  Status := HTTP_STATUS_SUCESSO;
+
+  Id := Req.Query['id'];
+  Nome := Req.Query['nome'];
+  Documento := Req.Query['documento'];
+
+  if Id.IsEmpty then
+    Id := ZERO_STR;
+
+  Response := FControllerCliente.Consultar(StrToInt(Id), Nome, Documento);
+
+  JsonValue := ConverterStrJSONParaObjectJson(Response);
+
+  Mensagem := JsonValue.GetValue<string>('Message');
+  Sucesso := JsonValue.GetValue<Boolean>('Success');
+  ErrorCode := JsonValue.GetValue<Integer>('ErrorCode');
+
+  if Mensagem = RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO then
   begin
     Status := HTTP_STATUS_SUCESSO;
   end;
