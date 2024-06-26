@@ -20,6 +20,7 @@ uses
   CleanArchiteture.Repository.RepositoryCliente;
 
 const
+  ZERO_STR = '0';
   HTTP_STATUS_SUCESSO = 200;
   HTTP_STATUS_ERRO_INTERNO_SERVIDOR = 500;
   ZERO = 0;
@@ -31,6 +32,7 @@ procedure Destroy;
 
 procedure PostCliente(Req: THorseRequest; Res: THorseResponse);
 procedure PutCliente(Req: THorseRequest; Res: THorseResponse);
+procedure DeleteCliente(Req: THorseRequest; Res: THorseResponse);
 
 var
   FControllerCliente: TControllerCliente;
@@ -102,7 +104,6 @@ begin
   Destroy;
 end;
 
-
 procedure PutCliente(Req: THorseRequest; Res: THorseResponse);
 var
   Body: TJsonObject;
@@ -114,7 +115,10 @@ var
 begin
   InjecaoDependencia;
 
-  Id := req.Params['id'];
+  Id := Req.Params['id'];
+
+  if Id.IsEmpty then
+    Id := ZERO_STR;
 
   Status := HTTP_STATUS_SUCESSO;
 
@@ -131,8 +135,8 @@ begin
   Uf := Body.GetValue<string>('uf');
   Telefone := Body.GetValue<string>('telefone');
 
-  Response := FControllerCliente.Alterar(StrToInt(Id), Nome, Documento, Cep, Logradouro,
-    Numero, Complemento, Bairro, Cidade, Uf, Telefone);
+  Response := FControllerCliente.Alterar(StrToInt(Id), Nome, Documento, Cep,
+    Logradouro, Numero, Complemento, Bairro, Cidade, Uf, Telefone);
 
   JsonValue := ConverterStrJSONParaObjectJson(Response);
 
@@ -159,6 +163,50 @@ begin
 
   Destroy;
 
+end;
+
+procedure DeleteCliente(Req: THorseRequest; Res: THorseResponse);
+var
+  Id, Response, Mensagem: String;
+  Sucesso: Boolean;
+  JsonValue: TJsonValue;
+  Status, ErrorCode: Integer;
+begin
+  InjecaoDependencia;
+
+  Id := Req.Params['id'];
+
+  if Id.IsEmpty then
+    Id := ZERO_STR;
+
+  Status := HTTP_STATUS_SUCESSO;
+
+  Response := FControllerCliente.Deletar(StrToInt(Id));
+
+  JsonValue := ConverterStrJSONParaObjectJson(Response);
+
+  Mensagem := JsonValue.GetValue<string>('Message');
+  Sucesso := JsonValue.GetValue<Boolean>('Success');
+  ErrorCode := JsonValue.GetValue<Integer>('ErrorCode');
+
+  if Mensagem = RetornarMsgResponse.DELETADO_COM_SUCESSO then
+  begin
+    Status := HTTP_STATUS_SUCESSO;
+  end;
+
+  if ErrorCode > ZERO then
+  begin
+    Status := HTTP_STATUS_ENTIDADE_IMPROCESSAVEL;
+  end;
+
+  if ErrorCode = RetornarErrorsCode.ERRO_BANCO_DADOS then
+  begin
+    Status := HTTP_STATUS_ERRO_INTERNO_SERVIDOR;
+  end;
+
+  Res.Send(Response).Status(Status);
+
+  Destroy;
 end;
 
 procedure Destroy;
