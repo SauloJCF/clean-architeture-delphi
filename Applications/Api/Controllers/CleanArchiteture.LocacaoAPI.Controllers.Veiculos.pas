@@ -15,11 +15,12 @@ uses
   CleanArchiteture.Presenters.PresenterJSON,
   CleanArchiteture.LocacaoAPI.Controllers.Consts;
 
-procedure InjecaoDependecia;
+procedure InjecaoDependencia;
 procedure Destroy;
 
 procedure PostVeiculo(Req: THorseRequest; Res: THorseResponse);
 procedure PutVeiculo(Req: THorseRequest; Res: THorseResponse);
+procedure DeleteVeiculo(Req: THorseRequest; Res: THorseResponse);
 
 implementation
 
@@ -28,7 +29,7 @@ var
   FPresenter: IPresenter;
   FControllerVeiculo: TControllerVeiculo;
 
-procedure InjecaoDependecia;
+procedure InjecaoDependencia;
 begin
   FRepositoryVeiculo := TRepositoryVeiculo.Create;
   FPresenter := TPresenterJSON.Create;
@@ -50,7 +51,7 @@ var
   JsonValue: TJsonValue;
   Sucesso: Boolean;
 begin
-  InjecaoDependecia;
+  InjecaoDependencia;
 
   Status := HTTP_STATUS_SUCESSO;
 
@@ -98,7 +99,7 @@ var
   JsonValue: TJsonValue;
   Sucesso: Boolean;
 begin
-  InjecaoDependecia;
+  InjecaoDependencia;
 
   Status := HTTP_STATUS_SUCESSO;
 
@@ -123,6 +124,50 @@ begin
   ErrorCode := JsonValue.GetValue<Integer>('ErrorCode');
 
   if Mensagem = RetornarMsgResponse.ALTERADO_COM_SUCESSO then
+  begin
+    Status := HTTP_STATUS_SUCESSO;
+  end;
+
+  if ErrorCode > ZERO then
+  begin
+    Status := HTTP_STATUS_ENTIDADE_IMPROCESSAVEL;
+  end;
+
+  if ErrorCode = RetornarErrorsCode.ERRO_BANCO_DADOS then
+  begin
+    Status := HTTP_STATUS_ERRO_INTERNO_SERVIDOR;
+  end;
+
+  Res.Send(Response).Status(Status);
+
+  Destroy;
+end;
+
+procedure DeleteVeiculo(Req: THorseRequest; Res: THorseResponse);
+var
+  Id, Response, Mensagem: String;
+  Sucesso: Boolean;
+  JsonValue: TJsonValue;
+  Status, ErrorCode: Integer;
+begin
+  InjecaoDependencia;
+
+  Id := Req.Params['id'];
+
+  if Id.IsEmpty then
+    Id := ZERO_STR;
+
+  Status := HTTP_STATUS_SUCESSO;
+
+  Response := FControllerVeiculo.Deletar(StrToInt(Id));
+
+  JsonValue := ConverterStrJSONParaObjectJson(Response);
+
+  Mensagem := JsonValue.GetValue<string>('Message');
+  Sucesso := JsonValue.GetValue<Boolean>('Success');
+  ErrorCode := JsonValue.GetValue<Integer>('ErrorCode');
+
+  if Mensagem = RetornarMsgResponse.DELETADO_COM_SUCESSO then
   begin
     Status := HTTP_STATUS_SUCESSO;
   end;
