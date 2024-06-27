@@ -21,6 +21,7 @@ procedure Destroy;
 procedure PostVeiculo(Req: THorseRequest; Res: THorseResponse);
 procedure PutVeiculo(Req: THorseRequest; Res: THorseResponse);
 procedure DeleteVeiculo(Req: THorseRequest; Res: THorseResponse);
+procedure GetVeiculo(Req: THorseRequest; Res: THorseResponse);
 
 implementation
 
@@ -89,7 +90,6 @@ begin
   Destroy;
 end;
 
-
 procedure PutVeiculo(Req: THorseRequest; Res: THorseResponse);
 var
   Id, Nome, Placa, Mensagem, StatusVeiculo, Response: String;
@@ -115,7 +115,8 @@ begin
   StatusVeiculo := Body.GetValue<string>('status');
   Valor := Body.GetValue<Double>('valor');
 
-  Response := FControllerVeiculo.Alterar(StrToInt(Id), Nome, Placa, StatusVeiculo, Valor);
+  Response := FControllerVeiculo.Alterar(StrToInt(Id), Nome, Placa,
+    StatusVeiculo, Valor);
 
   JsonValue := ConverterStrJSONParaObjectJson(Response);
 
@@ -168,6 +169,52 @@ begin
   ErrorCode := JsonValue.GetValue<Integer>('ErrorCode');
 
   if Mensagem = RetornarMsgResponse.DELETADO_COM_SUCESSO then
+  begin
+    Status := HTTP_STATUS_SUCESSO;
+  end;
+
+  if ErrorCode > ZERO then
+  begin
+    Status := HTTP_STATUS_ENTIDADE_IMPROCESSAVEL;
+  end;
+
+  if ErrorCode = RetornarErrorsCode.ERRO_BANCO_DADOS then
+  begin
+    Status := HTTP_STATUS_ERRO_INTERNO_SERVIDOR;
+  end;
+
+  Res.Send(Response).Status(Status);
+
+  Destroy;
+end;
+
+procedure GetVeiculo(Req: THorseRequest; Res: THorseResponse);
+var
+  Id, Nome, Placa, Response, Mensagem: String;
+  Status, ErrorCode: Integer;
+  Sucesso: Boolean;
+  JsonValue: TJsonValue;
+begin
+  InjecaoDependencia;
+
+  Status := HTTP_STATUS_SUCESSO;
+
+  Id := Req.Query['id'];
+  Nome := Req.Query['nome'];
+  Placa := Req.Query['placa'];
+
+  if Id.IsEmpty then
+    Id := ZERO_STR;
+
+  Response := FControllerVeiculo.Consultar(StrToInt(Id), Nome, Placa);
+
+  JsonValue := ConverterStrJSONParaObjectJson(Response);
+
+  Mensagem := JsonValue.GetValue<string>('Message');
+  Sucesso := JsonValue.GetValue<Boolean>('Success');
+  ErrorCode := JsonValue.GetValue<Integer>('ErrorCode');
+
+  if Mensagem = RetornarMsgResponse.CONSULTA_REALIZADA_COM_SUCESSO then
   begin
     Status := HTTP_STATUS_SUCESSO;
   end;
