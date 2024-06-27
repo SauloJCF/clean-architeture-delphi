@@ -42,7 +42,7 @@ var
   SQLFormatado: String;
 begin
   SQLFormatado := Format(SQL, [Veiculo.Nome.QuotedString,
-    Veiculo.Placa.QuotedString, Veiculo.Valor.ToString.Replace('R$', '').Replace(',',
+    Veiculo.Placa.QuotedString, Veiculo.Valor.ToString.Replace('.', '').Replace('R$', '').Replace(',',
     '.').QuotedString, ConverterStatusStr(Veiculo.Status).QuotedString,
     Veiculo.Id]);
 
@@ -56,7 +56,7 @@ var
   SQLFormatado: String;
 begin
   SQLFormatado := Format(SQL, [Veiculo.Nome.QuotedString,
-    Veiculo.Valor.ToString.Replace('R$', '').Replace(',', '.').QuotedString,
+    Veiculo.Valor.ToString.Replace('R$', '').Replace('.', '').Replace(',', '.').QuotedString,
     Veiculo.Placa.QuotedString, ConverterStatusStr(Veiculo.Status)
     .QuotedString]);
 

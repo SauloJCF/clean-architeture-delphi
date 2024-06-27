@@ -17,15 +17,8 @@ uses
   CleanArchiteture.Presenters.IPresenter,
   CleanArchiteture.Presenters.PresenterJSON,
   CleanArchiteture.Core.Ports.IRepositoryCliente,
-  CleanArchiteture.Repository.RepositoryCliente;
-
-const
-  ZERO_STR = '0';
-  HTTP_STATUS_SUCESSO = 200;
-  HTTP_STATUS_ERRO_INTERNO_SERVIDOR = 500;
-  ZERO = 0;
-  HTTP_STATUS_ENTIDADE_IMPROCESSAVEL = 422;
-  HTTP_STATUS_CRIACAO = 201;
+  CleanArchiteture.Repository.RepositoryCliente,
+  CleanArchiteture.LocacaoAPI.Controllers.Consts;
 
 procedure InjecaoDependencia;
 procedure Destroy;

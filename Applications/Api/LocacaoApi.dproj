@@ -126,6 +126,9 @@
         <DCCReference Include="..\..\Core\DTO\CleanArchiteture.Core.DTO.DTOLocacao.pas"/>
         <DCCReference Include="..\..\Core\DTO\CleanArchiteture.Core.DTO.DTOVeiculo.pas"/>
         <DCCReference Include="Routes\CleanArchiteture.LocacaoAPI.Routes.Clientes.pas"/>
+        <DCCReference Include="Controllers\CleanArchiteture.LocacaoAPI.Controllers.Veiculos.pas"/>
+        <DCCReference Include="Controllers\CleanArchiteture.LocacaoAPI.Controllers.Consts.pas"/>
+        <DCCReference Include="Routes\CleanArchiteture.LocacaoAPI.Routes.Veiculos.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -167,7 +170,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Win32\Debug\LocacaoApi.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="LocacaoApi.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>LocacaoApi.exe</RemoteName>
                         <Overwrite>true</Overwrite>

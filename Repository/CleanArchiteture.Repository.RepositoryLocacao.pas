@@ -62,7 +62,7 @@ var
 begin
   SQLFormatado := Format(SQL_LOCACAO, [Locacao.Cliente.Id,
     Locacao.DataDevolucao.Format('dd.MM.yyyy').QuotedString,
-    Locacao.Total.ToString.Replace(',', '.').Replace('R$', '').QuotedString,
+    Locacao.Total.ToString.Replace(',', '.').Replace('.', '').Replace('R$', '').QuotedString,
     Locacao.Id]);
 
   FConfiguracaoDB.ExecSQL(SQLFormatado);
@@ -90,7 +90,7 @@ begin
     [Locacao.Cliente.Id.ToString.QuotedString,
     Locacao.DataLocacao.Format('dd.MM.yyyy').QuotedString,
     Locacao.DataDevolucao.Format('dd.MM.yyyy').QuotedString,
-    Locacao.CalcularTotal.ToString.Replace(',', '.').Replace('R$',
+    Locacao.CalcularTotal.ToString.Replace('.', '').Replace('.', '').Replace(',', '.').Replace('R$',
     '').QuotedString, Locacao.Hash.QuotedString]);
 
   FConfiguracaoDB.ExecSQL(SQLFormatado);

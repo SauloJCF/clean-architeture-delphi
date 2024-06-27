@@ -6,7 +6,8 @@ uses
   System.SysUtils,
   Horse,
   Horse.Jhonson,
-  CleanArchiteture.LocacaoAPI.Routes.Clientes;
+  CleanArchiteture.LocacaoAPI.Routes.Clientes,
+  CleanArchiteture.LocacaoAPI.Routes.Veiculos;
 
 procedure Start;
 
@@ -38,6 +39,8 @@ begin
   RouteCliente;
 
   // Rotas Veiculos
+
+  RouteVeiculo;
 
   // Rotas Locacao
 
