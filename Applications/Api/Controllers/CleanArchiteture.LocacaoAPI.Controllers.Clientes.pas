@@ -6,17 +6,13 @@ uses
   Horse,
   System.JSON,
   System.SysUtils,
-  CleanArchiteture.Core.Ports.IUseCaseCliente,
-  CleanArchiteture.Core.UseCases.UseCaseCliente,
   CleanArchiteture.Core.Responses.Response,
-  CleanArchiteture.Core.DTO.DTOCliente,
-  CleanArchiteture.Core.Models.Cliente,
   CleanArchiteture.Core.Enums.Enums,
   CleanArchiteture.Core.Utils.Utils,
+  CleanArchiteture.Core.Ports.IRepositoryCliente,
   CleanArchiteture.Controllers.ControllerCliente,
   CleanArchiteture.Presenters.IPresenter,
   CleanArchiteture.Presenters.PresenterJSON,
-  CleanArchiteture.Core.Ports.IRepositoryCliente,
   CleanArchiteture.Repository.RepositoryCliente,
   CleanArchiteture.LocacaoAPI.Controllers.Consts;
 

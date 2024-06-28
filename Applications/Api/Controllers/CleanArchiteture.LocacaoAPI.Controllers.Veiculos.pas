@@ -6,13 +6,13 @@ uses
   Horse,
   System.JSON,
   System.SysUtils,
-  CleanArchiteture.Controllers.ControllerVeiculo,
   CleanArchiteture.Core.Ports.IRepositoryVeiculo,
   CleanArchiteture.Core.Enums.Enums,
   CleanArchiteture.Core.Utils.Utils,
   CleanArchiteture.Repository.RepositoryVeiculo,
   CleanArchiteture.Presenters.IPresenter,
   CleanArchiteture.Presenters.PresenterJSON,
+  CleanArchiteture.Controllers.ControllerVeiculo,
   CleanArchiteture.LocacaoAPI.Controllers.Consts;
 
 procedure InjecaoDependencia;

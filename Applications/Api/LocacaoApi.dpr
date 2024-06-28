@@ -38,7 +38,9 @@ uses
   CleanArchiteture.LocacaoAPI.Routes.Clientes in 'Routes\CleanArchiteture.LocacaoAPI.Routes.Clientes.pas',
   CleanArchiteture.LocacaoAPI.Controllers.Veiculos in 'Controllers\CleanArchiteture.LocacaoAPI.Controllers.Veiculos.pas',
   CleanArchiteture.LocacaoAPI.Controllers.Consts in 'Controllers\CleanArchiteture.LocacaoAPI.Controllers.Consts.pas',
-  CleanArchiteture.LocacaoAPI.Routes.Veiculos in 'Routes\CleanArchiteture.LocacaoAPI.Routes.Veiculos.pas';
+  CleanArchiteture.LocacaoAPI.Routes.Veiculos in 'Routes\CleanArchiteture.LocacaoAPI.Routes.Veiculos.pas',
+  CleanArchiteture.LocacaoAPI.Controllers.Locacoes in 'Controllers\CleanArchiteture.LocacaoAPI.Controllers.Locacoes.pas',
+  CleanArchiteture.LocacaoAPI.Routes.Locacoes in 'Routes\CleanArchiteture.LocacaoAPI.Routes.Locacoes.pas';
 
 begin
   try

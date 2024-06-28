@@ -7,7 +7,8 @@ uses
   Horse,
   Horse.Jhonson,
   CleanArchiteture.LocacaoAPI.Routes.Clientes,
-  CleanArchiteture.LocacaoAPI.Routes.Veiculos;
+  CleanArchiteture.LocacaoAPI.Routes.Veiculos,
+  CleanArchiteture.LocacaoAPI.Routes.Locacoes;
 
 procedure Start;
 
@@ -43,6 +44,8 @@ begin
   RouteVeiculo;
 
   // Rotas Locacao
+
+  RouteLocacao;
 
   THorse.Listen(PORTA);
 end;

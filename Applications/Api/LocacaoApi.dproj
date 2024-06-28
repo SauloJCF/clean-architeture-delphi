@@ -129,6 +129,8 @@
         <DCCReference Include="Controllers\CleanArchiteture.LocacaoAPI.Controllers.Veiculos.pas"/>
         <DCCReference Include="Controllers\CleanArchiteture.LocacaoAPI.Controllers.Consts.pas"/>
         <DCCReference Include="Routes\CleanArchiteture.LocacaoAPI.Routes.Veiculos.pas"/>
+        <DCCReference Include="Controllers\CleanArchiteture.LocacaoAPI.Controllers.Locacoes.pas"/>
+        <DCCReference Include="Routes\CleanArchiteture.LocacaoAPI.Routes.Locacoes.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
