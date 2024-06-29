@@ -165,6 +165,20 @@ begin
         Exit(FPresenter.ConverterReponse(ResponseVeiculo));
       end;
     end;
+    if DataDevolucao <> StrToDate(DATA_VAZIA) then
+    begin
+      Locacao.Veiculo.Status := Disponivel;
+      ResponseVeiculo := FUseCaseVeiculo.Alterar(Locacao.Veiculo);
+
+      if not ResponseVeiculo.Success and
+        not(ResponseVeiculo.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO)
+      then
+      begin
+        ResponseVeiculo.Message := MSG_ERRO_ATUALIZAR_STATUS_VEICULO;
+        ResponseVeiculo.ErrorCode := RetornarErrorsCode.ERRO_BANCO_DADOS;
+        Exit(FPresenter.ConverterReponse(ResponseVeiculo));
+      end;
+    end;
   end;
 
   Result := FPresenter.ConverterReponse(Response);
