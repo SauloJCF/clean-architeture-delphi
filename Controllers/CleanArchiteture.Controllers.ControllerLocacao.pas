@@ -279,22 +279,40 @@ end;
 
 function TControllerLocacao.Deletar(const IdLocacao: integer): String;
 var
-  Response: TResponse;
+  Response, ResponseConsulta, ResponseVeiculo: TResponse;
   _DTOLocacao: DTOLocacao;
+  Locacao: TLocacao;
 begin
   _DTOLocacao.Id := IdLocacao;
 
-  Response := FUseCaseLocacao.Consultar(_DTOLocacao);
+  ResponseConsulta := FUseCaseLocacao.Consultar(_DTOLocacao);
 
-  if Response.Success and
-    (Response.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
+  if ResponseConsulta.Success and
+    (ResponseConsulta.Message = RetornarMsgResponse.CONSULTA_SEM_RETORNO) then
   begin
-    Response.Message := MSG_ID_LOCACAO_INVALIDO;
-    Response.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
-    Exit(FPresenter.ConverterReponse(Response));
+    ResponseConsulta.Message := MSG_ID_LOCACAO_INVALIDO;
+    ResponseConsulta.ErrorCode := RetornarErrorsCode.ID_INVALIDO;
+    Exit(FPresenter.ConverterReponse(ResponseConsulta));
   end;
 
   Response := FUseCaseLocacao.Deletar(IdLocacao);
+
+  if Response.Success and
+    (Response.Message = RetornarMsgResponse.DELETADO_COM_SUCESSO) then
+  begin
+    Locacao := TLocacao(ResponseConsulta.Data.First);
+    Locacao.Veiculo.Status := Disponivel;
+    ResponseVeiculo := FUseCaseVeiculo.Alterar(Locacao.Veiculo);
+
+    if not ResponseVeiculo.Success and
+      not(ResponseVeiculo.Message = RetornarMsgResponse.ALTERADO_COM_SUCESSO)
+    then
+    begin
+      ResponseVeiculo.Message := MSG_ERRO_ATUALIZAR_STATUS_VEICULO;
+      ResponseVeiculo.ErrorCode := RetornarErrorsCode.ERRO_BANCO_DADOS;
+      Exit(FPresenter.ConverterReponse(ResponseVeiculo));
+    end;
+  end;
 
   Result := FPresenter.ConverterReponse(Response);
 end;

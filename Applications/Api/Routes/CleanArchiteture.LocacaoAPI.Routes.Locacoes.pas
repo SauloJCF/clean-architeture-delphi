@@ -14,7 +14,7 @@ procedure RouteLocacao;
 begin
   THorse.Post('/api/locacao', PostLocacao);
   THorse.Put('/api/locacao/:id', PutLocacao);
-//  THorse.Delete('/api/locacao/:id', DeleteLocacao);
+  THorse.Delete('/api/locacao/:id', DeleteLocacao);
 //  THorse.Get('/api/locacao', GetLocacao);
 end;
 

@@ -25,6 +25,7 @@ procedure Destroy;
 
 procedure PostLocacao(Req: THorseRequest; Res: THorseResponse);
 procedure PutLocacao(Req: THorseRequest; Res: THorseResponse);
+procedure DeleteLocacao(Req: THorseRequest; Res: THorseResponse);
 
 implementation
 
@@ -124,6 +125,50 @@ begin
     DataDevolucao := '30/12/1899';
 
   Response := FControllerLocacao.Alterar(StrToInt(IdLocacao), IdCliente, IdVeiculo, StrToDate(DataDevolucao));
+
+  JsonValue := ConverterStrJSONParaObjectJson(Response);
+
+  Mensagem := JsonValue.GetValue<string>('Message');
+  Sucesso := JsonValue.GetValue<Boolean>('Success');
+  ErrorCode := JsonValue.GetValue<Integer>('ErrorCode');
+
+  if Mensagem = RetornarMsgResponse.ALTERADO_COM_SUCESSO then
+  begin
+    Status := HTTP_STATUS_SUCESSO;
+  end;
+
+  if ErrorCode > ZERO then
+  begin
+    Status := HTTP_STATUS_ENTIDADE_IMPROCESSAVEL;
+  end;
+
+  if ErrorCode = RetornarErrorsCode.ERRO_BANCO_DADOS then
+  begin
+    Status := HTTP_STATUS_ERRO_INTERNO_SERVIDOR;
+  end;
+
+  Res.Send(Response).Status(Status);
+
+  Destroy;
+end;
+
+procedure DeleteLocacao(Req: THorseRequest; Res: THorseResponse);
+var
+  Sucesso: Boolean;
+  JsonValue: TJsonValue;
+  Status, ErrorCode: Integer;
+  IdLocacao,  Mensagem, Response: string;
+begin
+  InjecaoDependencia;
+
+  Status := HTTP_STATUS_SUCESSO;
+
+  IdLocacao := Req.Params['id'];
+
+  if IdLocacao.IsEmpty then
+    IdLocacao := ZERO_STR;
+
+  Response := FControllerLocacao.Deletar(StrToInt(IdLocacao));
 
   JsonValue := ConverterStrJSONParaObjectJson(Response);
 
