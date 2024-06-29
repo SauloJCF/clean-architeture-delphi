@@ -81,9 +81,9 @@ begin
   LocacaoJSON := '{' + '"Id": ' + IntToStr(Locacao.Id) + ',' + #13#10 +
     '"Cliente": ' + ConverterCliente(Locacao.Cliente) + ',' + #13#10 +
     '"Veiculo": ' + ConverterVeiculo(Locacao.Veiculo) + ',' + #13#10 +
-    '"DataLocacao": ' + FormatDateTime('yyyy-MM-dd hh:mm:ss',
-    Locacao.DataLocacao) + ',' + #13#10 + '"DataDevolucao": ' +
-    FormatDateTime('yyyy-MM-dd hh:mm:ss', Locacao.DataDevolucao) + ',' + #13#10
+    '"DataLocacao": ' + AnsiQuotedStr(FormatDateTime('yyyy-MM-dd hh:mm:ss',
+    Locacao.DataLocacao), '"') + ',' + #13#10 + '"DataDevolucao": ' +
+    AnsiQuotedStr(FormatDateTime('yyyy-MM-dd hh:mm:ss', Locacao.DataDevolucao), '"') + ',' + #13#10
     + '"Total": ' + AnsiQuotedStr(Locacao.Total.ToString.Replace(',', '.')
     .Replace('R$', ''), '"') + '}';
 

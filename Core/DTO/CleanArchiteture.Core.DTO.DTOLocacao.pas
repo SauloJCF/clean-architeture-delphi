@@ -6,7 +6,7 @@ type
 
   DTOLocacao = record
     Id: Integer;
-    ClienteId: Integer;
+    IdCliente: Integer;
     DataLocacao: TDateTime;
     DataDevolucao: TDateTime;
     Status: String;

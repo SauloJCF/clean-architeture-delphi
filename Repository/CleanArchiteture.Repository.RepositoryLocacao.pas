@@ -136,9 +136,9 @@ begin
   end
   else
   begin
-    if DTO.ClienteId > 0 then
+    if DTO.IdCliente > 0 then
     begin
-      BuilderSQL.AppendFormat(FILTRO_ID_CLIENTE, [DTO.ClienteId]);
+      BuilderSQL.AppendFormat(FILTRO_ID_CLIENTE, [DTO.IdCliente]);
     end;
 
     if DTO.DataLocacao <> StrToDate('30/12/1899') then

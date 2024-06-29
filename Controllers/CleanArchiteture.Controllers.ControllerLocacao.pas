@@ -258,7 +258,7 @@ var
   DTO: DTOLocacao;
 begin
   DTO.Id := IdLocacao;
-  DTO.ClienteId := IdCliente;
+  DTO.IdCliente := IdCliente;
   DTO.DataLocacao := DataLocacao;
   DTO.DataDevolucao := DataDevolucao;
 

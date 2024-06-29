@@ -82,7 +82,7 @@ var
   _dtoLocacao: DTOLocacao;
 begin
   _dtoLocacao.Id := 2;
-  _dtoLocacao.ClienteId := 0;
+  _dtoLocacao.IdCliente := 0;
 
   Response := FUseCaseLocacao.Consultar(_dtoLocacao);
 

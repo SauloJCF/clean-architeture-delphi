@@ -15,7 +15,7 @@ begin
   THorse.Post('/api/locacao', PostLocacao);
   THorse.Put('/api/locacao/:id', PutLocacao);
   THorse.Delete('/api/locacao/:id', DeleteLocacao);
-//  THorse.Get('/api/locacao', GetLocacao);
+  THorse.Get('/api/locacoes', GetLocacoes);
 end;
 
 end.
