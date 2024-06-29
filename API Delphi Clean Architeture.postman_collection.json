@@ -1,0 +1,390 @@
+{
+	"info": {
+		"_postman_id": "9b173398-66c2-4efe-949f-629ca3161097",
+		"name": "API Delphi Clean Architeture",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13644079"
+	},
+	"item": [
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Cliente cadastro API\",\r\n    \"documento\": \"987654\",\r\n    \"cep\": \"98000000\",\r\n    \"logradouro\": \"Rua cliente API\",\r\n    \"numero\": \"01\",\r\n    \"complemento\": \"Casa\",\r\n    \"bairro\": \"Centro\",\r\n    \"cidade\": \"São João Evangelista\",\r\n    \"uf\": \"MG\",\r\n    \"telefone\": \"33999987777\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}cliente",
+							"host": [
+								"{{URL_BASE}}cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"yyyyy\",\r\n    \"documento\": \"987654\",\r\n    \"cep\": \"98000000\",\r\n    \"logradouro\": \"Rua cliente API\",\r\n    \"numero\": \"01\",\r\n    \"complemento\": \"Casa\",\r\n    \"bairro\": \"Centro\",\r\n    \"cidade\": \"São João Evangelista\",\r\n    \"uf\": \"MG\",\r\n    \"telefone\": \"33999987777\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}cliente/2",
+							"host": [
+								"{{URL_BASE}}cliente"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}clientes?nome=&documento=&id=0",
+							"host": [
+								"{{URL_BASE}}clientes"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": ""
+								},
+								{
+									"key": "documento",
+									"value": ""
+								},
+								{
+									"key": "id",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}cliente/21",
+							"host": [
+								"{{URL_BASE}}cliente"
+							],
+							"path": [
+								"21"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Veiculos",
+			"item": [
+				{
+					"name": "Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Gol Quadrado\",\r\n    \"placa\": \"1234567\",\r\n    \"valor\": 70.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}veiculo",
+							"host": [
+								"{{URL_BASE}}veiculo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Teste\",\r\n    \"placa\": \"1234567\",\r\n    \"status\": \"Alugado\",\r\n    \"valor\": 90.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}veiculo/45",
+							"host": [
+								"{{URL_BASE}}veiculo"
+							],
+							"path": [
+								"45"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}veiculos?id=0&nome=&placa=",
+							"host": [
+								"{{URL_BASE}}veiculos"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "0"
+								},
+								{
+									"key": "nome",
+									"value": ""
+								},
+								{
+									"key": "placa",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}veiculo/19",
+							"host": [
+								"{{URL_BASE}}veiculo"
+							],
+							"path": [
+								"19"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Locacoes",
+			"item": [
+				{
+					"name": "Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCliente\": 54,\r\n    \"idVeiculo\": 44\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}locacao",
+							"host": [
+								"{{URL_BASE}}locacao"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCliente\": 0,\r\n    \"idVeiculo\": 0,\r\n    \"dataDevolucao\": \"28/06/2024\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}locacao/30",
+							"host": [
+								"{{URL_BASE}}locacao"
+							],
+							"path": [
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}veiculos?id=&nome=&placa=123456",
+							"host": [
+								"{{URL_BASE}}veiculos"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								},
+								{
+									"key": "nome",
+									"value": ""
+								},
+								{
+									"key": "placa",
+									"value": "123456"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}locacao/19",
+							"host": [
+								"{{URL_BASE}}locacao"
+							],
+							"path": [
+								"19"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_BASE}}ping",
+					"host": [
+						"{{URL_BASE}}ping"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "URL_BASE",
+			"value": "http://localhost:3000/api/"
+		}
+	]
+}
