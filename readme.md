@@ -46,7 +46,10 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
 
 ## Configurando o projeto
 
-### Instalação e Configuração do Delphi
+<details>
+    <summary>
+        Instalação e Configuração do Delphi
+    </summary>
 
 1. Acesse o [site oficial da Embarcadero](https://www.embarcadero.com/products/delphi/starter/free-download).
 2. Crie uma conta.
@@ -55,21 +58,36 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
 5. Faça download do wizard e instale o [Horse](https://github.com/HashLoad/horse).
 6. Faça download do wizard e instale o [MMX](https://www.mmx-delphi.de/downloads/).
 7. Faça download do wizard e instale o [TestInsight](https://files.spring4d.com/TestInsight/latest/TestInsightSetup.zip).
+   
+</details>
 
-### Instalação do Postman
+<details>
+    <summary>
+        Instalação do Postman
+    </summary>
 
 1. Baixe o Postman pelo [site oficial](https://www.postman.com/downloads/).
 2. Poderá ser necessário criar uma conta.
 3. Instale e configure o Postman no computador.
 
-### Configuração do Banco de Dados
+</details>
+
+<details>
+    <summary>
+        Configuração do Banco de Dados
+    </summary>
 
 1. Faça download da versão 2.5 do Firebird no [site oficial](https://firebirdsql.org/en/firebird-2-5/).
 2. Instale o Firebird em sua máquina.
 3. Também faça a instalação de alguma ferramenta de interface gráfica para administração de bancos Firebird, como o [IBExpert na versão gratuita](https://www.ibexpert.net/downloadcenter/).
 4. Acesse o arquivo de Aliases do Firebird, geralmente localizado em `C:\Program Files\Firebird\Firebird_2_5\aliases.conf`, e configure uma banco com o alias LOCACAO.
 
-### Clonando e Configurando o Projeto
+</details>
+
+<details>
+    <summary>
+        Clonando e Configurando o Projeto
+    </summary>
 
 1. Clone o projeto executando o seguinte comando no terminal:
 
@@ -83,3 +101,5 @@ git clone https://github.com/SauloJCF/clean-architeture-delphi.git
 5. Execute o projeto **LocacaoConsole**, para abrir a aplicação console.
 6. Execute o projeto **LocacaoAPI**, para iniciar a API.
 7. Execute o projeto **LocacaoTeste** para rodar os testes do projeto.
+
+</details>
