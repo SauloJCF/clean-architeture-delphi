@@ -4,7 +4,23 @@
 
 Este projeto foi desenvolvido durante o curso [Aplicando clean architecture com Delphi](https://www.udemy.com/course/aplicandocleanarchitecturecomdelphi), que tem como objetivo aplicar de forma prática os princípios da [Arquitetura Limpa](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) utilizando a linguagem de programação Delphi.
 
-## ⚙️ Funcionalidades
+## 📑 Tabela de conteúdos
+
+<!--ts-->
+- [Clean Architeture com Delphi](#clean-architeture-com-delphi)
+  - [🚀 Sobre o projeto](#-sobre-o-projeto)
+  - [📑 Tabela de conteúdos](#-tabela-de-conteúdos)
+  - [💥 Funcionalidades](#-funcionalidades)
+  - [🛠️ Tecnologias](#️-tecnologias)
+    - [Liguagem de programação e IDE](#liguagem-de-programação-e-ide)
+    - [Construção da API](#construção-da-api)
+    - [Implementação dos testes](#implementação-dos-testes)
+    - [Banco de Dados](#banco-de-dados)
+    - [Versionamento](#versionamento)
+  - [⚙️ Configurando o projeto](#️-configurando-o-projeto)
+<!--te-->
+
+## 💥 Funcionalidades
 
 Trata-se de um projeto que busca representar o domínio de um sistema de Locação de Veículos, onde o usuário pode cadastrar Clientes, Veículos e Locações.
 
@@ -44,7 +60,7 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
 - [Github](https://github.com/).
 - [Github Desktop](https://desktop.github.com/).
 
-## Configurando o projeto
+## ⚙️ Configurando o projeto
 
 <details>
     <summary>
