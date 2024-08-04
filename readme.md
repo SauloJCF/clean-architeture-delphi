@@ -37,7 +37,7 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
 ### Liguagem de programação e IDE
 
 - [Delphi 11.3 Alexandria Community](https://www.embarcadero.com/br/products/rad-studio/whats-new-in-11-alexandria).
-- [MMX](https://www.mmx-delphi.de/) (Ferramenta com atalhos pra acelerar o desenvolvimento no Delphi)
+- [MMX](https://www.mmx-delphi.de/) (Ferramenta com atalhos pra acelerar o desenvolvimento no Delphi).
 
 ### Construção da API
 
@@ -47,7 +47,7 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
 ### Implementação dos testes
 
 - [DUnitX](https://github.com/VSoftTechnologies/DUnitX).
-- [TestInsight](https://bitbucket.org/sglienke/testinsight/wiki/Home) (ferramenta para visualização gráfica dos resultados de testes)
+- [TestInsight](https://bitbucket.org/sglienke/testinsight/wiki/Home) (ferramenta para visualização gráfica dos resultados de testes).
 
 ### Banco de Dados
 
